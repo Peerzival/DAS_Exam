@@ -1,4 +1,4 @@
-package de.leuphana.component.shop.structure;
+package de.leuphana.component.article.structure;
 
 public enum BookCategory {
 	CRIME,

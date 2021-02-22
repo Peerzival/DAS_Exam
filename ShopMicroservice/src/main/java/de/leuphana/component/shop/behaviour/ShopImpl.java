@@ -4,13 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import de.leuphana.component.shop.structure.Article;
-import de.leuphana.component.shop.structure.Cart;
-import de.leuphana.component.shop.structure.CartItem;
-import de.leuphana.component.shop.structure.Catalog;
-import de.leuphana.component.shop.structure.Customer;
-import de.leuphana.component.shop.structure.Order;
-import de.leuphana.component.shop.structure.OrderPosition;
+import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.article.structure.Catalog;
+import de.leuphana.component.customer.structure.Cart;
+import de.leuphana.component.customer.structure.CartItem;
+import de.leuphana.component.customer.structure.Customer;
+import de.leuphana.component.order.structure.Order;
+import de.leuphana.component.order.structure.OrderPosition;
 
 public class ShopImpl implements ConsumerShopService, ProducerShopService {
 	private Catalog catalog;

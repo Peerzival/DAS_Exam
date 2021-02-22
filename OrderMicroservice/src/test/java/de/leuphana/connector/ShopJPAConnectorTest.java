@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import de.leuphana.component.shop.structure.Article;
-import de.leuphana.component.shop.structure.Order;
-import de.leuphana.component.shop.structure.OrderPosition;
+import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.order.structure.Order;
+import de.leuphana.component.order.structure.OrderPosition;
 
 class ShopJPAConnectorTest {
 

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import de.leuphana.component.shop.structure.Article;
+import de.leuphana.component.article.structure.Article;
 
 class ShopJPAConnectorTest {
 

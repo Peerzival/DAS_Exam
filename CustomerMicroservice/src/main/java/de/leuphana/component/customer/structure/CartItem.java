@@ -1,4 +1,6 @@
-package de.leuphana.component.shop.structure;
+package de.leuphana.component.customer.structure;
+
+import de.leuphana.component.article.structure.Article;
 
 public class CartItem {
 

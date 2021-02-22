@@ -3,7 +3,7 @@ package de.leuphana.connector.mapper;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 
-import de.leuphana.component.shop.structure.Order;
+import de.leuphana.component.order.structure.Order;
 import de.leuphana.connector.entity.OrderEntity;
 
 public class OrderMapper {
