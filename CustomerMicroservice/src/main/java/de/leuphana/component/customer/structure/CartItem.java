@@ -1,6 +1,6 @@
 package de.leuphana.component.customer.structure;
 
-import de.leuphana.component.article.structure.Article;
+import de.leuphana.connector.Article;
 
 public class CartItem {
 

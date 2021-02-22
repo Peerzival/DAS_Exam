@@ -1,6 +1,6 @@
 package de.leuphana.component.order.structure;
 
-import de.leuphana.component.article.structure.Article;
+import de.leuphana.connector.Article;
 
 public class OrderPosition {
 

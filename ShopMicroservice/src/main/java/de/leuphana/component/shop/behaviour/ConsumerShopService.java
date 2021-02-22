@@ -2,9 +2,9 @@ package de.leuphana.component.shop.behaviour;
 
 import java.util.Set;
 
-import de.leuphana.component.article.structure.Article;
 import de.leuphana.component.customer.structure.Cart;
 import de.leuphana.component.order.structure.Order;
+import de.leuphana.connector.Article;
 
 public interface ConsumerShopService {
 

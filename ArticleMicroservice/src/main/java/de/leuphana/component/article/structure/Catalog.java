@@ -3,6 +3,8 @@ package de.leuphana.component.article.structure;
 import java.util.HashSet;
 import java.util.Set;
 
+import de.leuphana.connector.Article;
+
 public class Catalog {
 
 	private int catalogId;

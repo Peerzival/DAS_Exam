@@ -1,20 +1,27 @@
-package de.leuphana.connector.entity;
+package de.leuphana.connector;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-//@Table(name="ARTICLE")
-public class ArticleEntity {
+public class Article {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer articleId;
 	private String manufactor;
 	private String name;
 	private float price;
+	
+	protected Article() {};
+	
+	public Article(String name, String manufactor, float price) {
+		this.name = name;
+		this.manufactor = manufactor;
+		this.price = price;
+	}
 
 	public void setArticleId(Integer articleId) {
 		this.articleId = articleId;
