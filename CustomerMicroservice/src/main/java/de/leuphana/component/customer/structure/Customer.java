@@ -1,7 +1,9 @@
-package de.leuphana.component.shop.structure;
+package de.leuphana.component.customer.structure;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import de.leuphana.component.order.structure.Order;
 
 public class Customer {
 	private static Integer lastGeneratedCustomerId = 0;

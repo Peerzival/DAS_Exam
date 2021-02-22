@@ -1,4 +1,4 @@
-package de.leuphana.component.shop.structure;
+package de.leuphana.component.article.structure;
 
 import java.util.HashSet;
 import java.util.Set;

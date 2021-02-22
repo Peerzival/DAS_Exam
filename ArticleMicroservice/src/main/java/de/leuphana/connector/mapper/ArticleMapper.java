@@ -3,7 +3,7 @@ package de.leuphana.connector.mapper;
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 
-import de.leuphana.component.shop.structure.Article;
+import de.leuphana.component.article.structure.Article;
 import de.leuphana.connector.entity.ArticleEntity;
 
 public class ArticleMapper {

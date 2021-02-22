@@ -1,8 +1,10 @@
-package de.leuphana.component.shop.structure;
+package de.leuphana.component.customer.structure;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import de.leuphana.component.article.structure.Article;
 
 public class Cart {
 
