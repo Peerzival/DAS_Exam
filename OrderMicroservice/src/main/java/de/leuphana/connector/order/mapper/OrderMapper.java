@@ -1,10 +1,10 @@
-package de.leuphana.connector.mapper;
+package de.leuphana.connector.order.mapper;
 
 import org.dozer.DozerBeanMapperSingletonWrapper;
 import org.dozer.Mapper;
 
 import de.leuphana.component.order.structure.Order;
-import de.leuphana.connector.entity.OrderEntity;
+import de.leuphana.connector.order.entity.OrderEntity;
 
 public class OrderMapper {
 	// Dozer (JavaBean-Mapper)

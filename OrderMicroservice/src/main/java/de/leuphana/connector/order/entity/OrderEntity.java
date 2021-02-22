@@ -1,4 +1,4 @@
-package de.leuphana.connector.entity;
+package de.leuphana.connector.order.entity;
 
 import java.util.ArrayList;
 import java.util.List;

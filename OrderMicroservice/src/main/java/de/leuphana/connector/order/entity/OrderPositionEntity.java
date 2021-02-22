@@ -1,10 +1,12 @@
-package de.leuphana.connector.entity;
+package de.leuphana.connector.order.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
+import de.leuphana.connector.entity.ArticleEntity;
 
 @Entity
 //@Table(name="DB_ORDERPOSITION")
@@ -13,7 +15,7 @@ public class OrderPositionEntity {
 	private Integer positionId;
 	private int articleQuantity;
 	
-	// Association in JPA nicht möglich über Id's !!! nur Referenzen erlaubt
+	// Association in JPA nicht mï¿½glich ï¿½ber Id's !!! nur Referenzen erlaubt
 	private ArticleEntity article;
 
 	@Id
