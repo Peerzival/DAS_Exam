@@ -14,6 +14,9 @@ import javax.persistence.OneToMany;
 @Entity
 //@Table(name="DB_ORDER")
 public class OrderEntity {
+
+	@Id
+	@GeneratedValue
 	private Integer orderId;
 	private int customerId;
 	
@@ -23,8 +26,6 @@ public class OrderEntity {
 		orderPositions = new ArrayList<OrderPositionEntity>();
 	}
 	
-	@Id
-	@GeneratedValue
 	public Integer getOrderId() {
 		return orderId;
 	}

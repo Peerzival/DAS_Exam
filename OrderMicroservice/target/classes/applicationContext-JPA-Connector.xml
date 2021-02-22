@@ -10,6 +10,9 @@
 	
 	<import resource="applicationContext-JDBC-Connector-Datasource.xml"/>
 	
+	<!-- Added for Spring Data JPA -->
+	<import resource="applicationContext-SpringDataJPA-Connector.xml"/>
+	
 	<bean id="shopJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 		<property name="showSql" value="true"/>
 		<property name="generateDdl" value="true"/>
