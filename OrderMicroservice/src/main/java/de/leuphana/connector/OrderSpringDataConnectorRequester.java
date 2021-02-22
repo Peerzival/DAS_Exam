@@ -15,11 +15,11 @@ import de.leuphana.connector.mapper.ArticleMapper;
 import de.leuphana.connector.mapper.OrderMapper;
 
 @Transactional()
-public class ShopJPAConnector {
+public class OrderSpringDataConnectorRequester {
 
 	private EntityManager entityManager;
 
-	public ShopJPAConnector() {
+	public OrderSpringDataConnectorRequester() {
 	}
 
 	@PersistenceContext(type = PersistenceContextType.TRANSACTION)

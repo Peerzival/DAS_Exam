@@ -16,7 +16,7 @@ import de.leuphana.component.order.structure.OrderPosition;
 
 class ShopJPAConnectorTest {
 
-	private ShopJPAConnector shopJPAConnector;
+	private OrderSpringDataConnectorRequester shopJPAConnector;
 	private Integer createdArticleId;
 	private Integer createdOrderId;
 	
@@ -25,7 +25,7 @@ class ShopJPAConnectorTest {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
 				"applicationContext-JPA-Connector.xml");
 		
-		shopJPAConnector = (ShopJPAConnector)applicationContext.getBean("shopJPAConnector");
+		shopJPAConnector = (OrderSpringDataConnectorRequester)applicationContext.getBean("shopJPAConnector");
 				
 		Article article = new Article();
 		article.setName("Weihnachtsmann");
