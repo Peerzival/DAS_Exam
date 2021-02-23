@@ -13,10 +13,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import de.leuphana.component.article.structure.Article;
 import de.leuphana.component.order.structure.Order;
 import de.leuphana.component.order.structure.OrderPosition;
+import de.leuphana.connector.order.OrderSpringDataConnectorRequester;
 
 class ShopJPAConnectorTest {
 
-	private ShopJPAConnector shopJPAConnector;
+	private OrderSpringDataConnectorRequester shopJPAConnector;
 	private Integer createdArticleId;
 	private Integer createdOrderId;
 	
@@ -25,7 +26,7 @@ class ShopJPAConnectorTest {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
 				"applicationContext-JPA-Connector.xml");
 		
-		shopJPAConnector = (ShopJPAConnector)applicationContext.getBean("shopJPAConnector");
+		shopJPAConnector = (OrderSpringDataConnectorRequester)applicationContext.getBean("shopJPAConnector");
 				
 		Article article = new Article();
 		article.setName("Weihnachtsmann");
