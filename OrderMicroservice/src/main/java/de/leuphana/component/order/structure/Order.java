@@ -3,7 +3,7 @@ package de.leuphana.component.order.structure;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.leuphana.connector.Article;
+import de.leuphana.component.article.structure.Article;
 
 public class Order {
 

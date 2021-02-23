@@ -1,7 +1,5 @@
 package de.leuphana.component.article.structure;
 
-import de.leuphana.connector.Article;
-
 public class CD extends Article {
 
 	private String artist;

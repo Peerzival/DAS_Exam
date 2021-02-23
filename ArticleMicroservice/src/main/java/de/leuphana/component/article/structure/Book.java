@@ -1,7 +1,5 @@
 package de.leuphana.component.article.structure;
 
-import de.leuphana.connector.Article;
-
 public class Book extends Article {
 
 	private String author;

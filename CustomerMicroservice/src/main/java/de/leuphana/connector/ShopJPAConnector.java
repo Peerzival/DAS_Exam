@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContextType;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import de.leuphana.component.article.structure.Article;
 import de.leuphana.component.order.structure.Order;
 import de.leuphana.connector.entity.ArticleEntity;
 import de.leuphana.connector.entity.OrderEntity;

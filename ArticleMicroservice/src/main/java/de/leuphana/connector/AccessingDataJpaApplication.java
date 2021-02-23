@@ -1,4 +1,8 @@
+
 package de.leuphana.connector;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +14,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.article.structure.ArticleRepository;
+
 @SpringBootApplication
+@EnableJpaRepositories("de.leuphana.component.article.structure")
+@ComponentScan(basePackages = { "de.leuphana.component.article.structure" })
+@EntityScan("de.leuphana.component.article.structure")   
 public class AccessingDataJpaApplication {
 
 	public static final Logger log = LoggerFactory.getLogger(AccessingDataJpaApplication.class);
@@ -22,11 +32,14 @@ public class AccessingDataJpaApplication {
 	@Bean
 	public CommandLineRunner demo(ArticleRepository repository) {
 		return (args) -> {
-			repository.save(new Article("iPhone X", "Apple Inc.", 999.90f));
-			repository.save(new Article("iPhone XS", "Apple Inc.", 1299.90f));
-			repository.save(new Article("Galaxy S21", "Samsung.", 799.90f));
-			repository.save(new Article("Galaxy Note 8", "Samsung", 599.90f));
-			repository.save(new Article("Mate X", "Huawei", 399.90f));
+			
+			Map<String, String> reviews = new HashMap<String, String>();
+			
+			repository.save(new Article("iPhone X", "Apple Inc.", 999.90f, reviews));
+			repository.save(new Article("iPhone XS", "Apple Inc.", 1299.90f, reviews));
+			repository.save(new Article("Galaxy S21", "Samsung", 799.90f, reviews));
+			repository.save(new Article("Galaxy Note 8", "Samsung", 599.90f, reviews));
+			repository.save(new Article("Mate X", "Huawei", 399.90f, reviews));
 			
 			log.info("Articles found with findAll():");
 			log.info("-------------------------------");

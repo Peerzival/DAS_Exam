@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.leuphana.connector.Article;
+import de.leuphana.component.article.structure.Article;
 
 public class Cart {
 
