@@ -14,11 +14,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import de.leuphana.component.article.behaviour.ArticleRepository;
 import de.leuphana.component.article.structure.Article;
-import de.leuphana.component.article.structure.ArticleRepository;
 
 @SpringBootApplication
-@EnableJpaRepositories("de.leuphana.component.article.structure")
+@EnableJpaRepositories("de.leuphana.component.article.behaviour")
 @ComponentScan(basePackages = { "de.leuphana.component.article.structure" })
 @EntityScan("de.leuphana.component.article.structure")   
 public class AccessingDataJpaApplication {
