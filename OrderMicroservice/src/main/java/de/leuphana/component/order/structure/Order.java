@@ -14,7 +14,7 @@ public class Order {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer oId;
 	private int cId;
-	
+	private String useless;
 //    private List<OrderPositionEntity> orderPositions;
 	
 //	public OrderEntity() {
