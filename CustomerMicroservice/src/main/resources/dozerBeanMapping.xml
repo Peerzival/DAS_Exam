@@ -5,18 +5,7 @@
       http://dozer.sourceforge.net/schema/beanmapping.xsd">
 
 	<mapping>
-		<class-a>de.leuphana.component.shop.structure.Article</class-a>
-		<class-b>de.leuphana.connector.entity.ArticleEntity</class-b>
+		<class-a>de.leuphana.component.customer.structure.Customer</class-a>
+		<class-b>de.leuphana.connector.entity.CustomerEntity</class-b>
 	</mapping>
-	
-	<mapping>
-		<class-a>de.leuphana.component.shop.structure.Order</class-a>
-		<class-b>de.leuphana.connector.entity.OrderEntity</class-b>
-	</mapping>
-	
-	<mapping>
-		<class-a>de.leuphana.component.shop.structure.OrderPosition</class-a>
-		<class-b>de.leuphana.connector.entity.OrderPositionEntity</class-b>
-	</mapping>
-
 </mappings>

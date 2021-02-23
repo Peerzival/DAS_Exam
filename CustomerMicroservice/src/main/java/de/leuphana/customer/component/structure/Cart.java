@@ -1,4 +1,4 @@
-package de.leuphana.component.customer.structure;
+package de.leuphana.customer.component.structure;
 
 import java.util.Collection;
 import java.util.HashMap;
