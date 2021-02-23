@@ -8,4 +8,5 @@
 		<class-a>de.leuphana.component.customer.structure.Customer</class-a>
 		<class-b>de.leuphana.connector.entity.CustomerEntity</class-b>
 	</mapping>
+
 </mappings>
