@@ -1,60 +1,50 @@
 package de.leuphana.component.order.structure;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import de.leuphana.component.article.structure.Article;
-
+@Entity
+@Table(name="DB_ORDER")
 public class Order {
 
-	private Integer orderId;
-	private int customerId;
-	private List<OrderPosition> orderPositions;
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer oId;
+	private int cId;
 	
-	public Order() {
-		orderPositions = new ArrayList<OrderPosition>();
-	}
-
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
-	}
-
+//    private List<OrderPositionEntity> orderPositions;
+	
+//	public OrderEntity() {
+//		orderPositions = new ArrayList<OrderPositionEntity>();
+//	}
+	
 	public Integer getOrderId() {
-		return orderId;
+		return oId;
 	}
-
+	
+	public void setOrderId(Integer orderId) {
+		this.oId = orderId;
+	}
+	
 	public int getCustomerId() {
-		return customerId;
+		return cId;
 	}
 
 	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
+		this.cId = customerId;
 	}
+	
+//	@OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+//	@JoinColumn(name = "fk_orderId", referencedColumnName = "orderId")
+//	public List<OrderPositionEntity> getOrderPositions() {
+//		return orderPositions;
+//	}
+//
+//	public void setOrderPositions(List<OrderPositionEntity> orderPositions) {
+//		this.orderPositions = orderPositions;
+//	}
 
-	public int getNumberOfArticles() {
-		
-		// TODO has to be implemented later
-		return 0;
-	}
-
-	public double getTotalPrice() {
-		double totalPrice = 0.0;
-
-		Article article;
-		for (OrderPosition orderPosition : orderPositions) {
-			article = orderPosition.getArticle();
-
-			totalPrice += orderPosition.getArticleQuantity() * article.getPrice();
-		}
-
-		return totalPrice;
-	}
-
-	public List<OrderPosition> getOrderPositions() {
-		return orderPositions;
-	}
-
-	public void setOrderPositions(List<OrderPosition> orderPositions) {
-		this.orderPositions = orderPositions;
-	}
 }

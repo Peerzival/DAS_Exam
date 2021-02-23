@@ -1,25 +1,22 @@
 package de.leuphana.connector.order.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
-import de.leuphana.connector.entity.ArticleEntity;
 
 @Entity
 //@Table(name="DB_ORDERPOSITION")
 public class OrderPositionEntity {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer positionId;
 	private int articleQuantity;
 	
 	// Association in JPA nicht m�glich �ber Id's !!! nur Referenzen erlaubt
-	private ArticleEntity article;
+//	private ArticleEntity article;
 
-	@Id
-	@GeneratedValue
 	public Integer getPositionId() {
 		return positionId;
 	}
@@ -36,13 +33,13 @@ public class OrderPositionEntity {
 		this.articleQuantity = articleQuantity;
 	}
 	
-	@OneToOne(fetch=FetchType.LAZY)
-	public ArticleEntity getArticle() {
-		return article;
-	}
-
-	public void setArticle(ArticleEntity article) {
-		this.article = article;
-	}
+//	@OneToOne(fetch=FetchType.LAZY)
+//	public ArticleEntity getArticle() {
+//		return article;
+//	}
+//
+//	public void setArticle(ArticleEntity article) {
+//		this.article = article;
+//	}
 
 }

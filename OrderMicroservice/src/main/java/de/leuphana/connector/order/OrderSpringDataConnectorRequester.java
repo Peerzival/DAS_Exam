@@ -1,108 +1,41 @@
 package de.leuphana.connector.order;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
-import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.order.behaviour.OrderRepository;
 import de.leuphana.component.order.structure.Order;
-import de.leuphana.connector.entity.ArticleEntity;
-import de.leuphana.connector.mapper.ArticleMapper;
-import de.leuphana.connector.order.entity.OrderEntity;
-import de.leuphana.connector.order.mapper.OrderMapper;
 
-@Transactional()
+//@Service
+//@Transactional()
 public class OrderSpringDataConnectorRequester {
 
-	private EntityManager entityManager;
+//	@Autowired // wenn eine Instanz des Orderservice erzeugt wird, dann wird auch eine Instanz
+	// für das mit Autowired gekennzeichnete Objekt erzeugt.
+	private OrderRepository orderRepository;
 
 	public OrderSpringDataConnectorRequester() {
 	}
 
-	@PersistenceContext(type = PersistenceContextType.TRANSACTION)
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager = entityManager;
+	public List<Order> getAllOrders() {
+		List<Order> orders = new ArrayList<>();
+		orderRepository.findAll().forEach(orders::add);
+		return orders;
 	}
 
-	// DML
-	public int createArticle(Article article) {
-		int articleId = 0;
-
-		try {
-			ArticleEntity articleEntity = ArticleMapper.mapArticleToArticleEntity(article);
-			entityManager.persist(articleEntity);
-			articleId = articleEntity.getArticleId();
-		} catch (EntityExistsException entityExistsException) {
-			// Logger
-			System.out.println("EntityExistsException" + entityExistsException.toString());
-		}
-
-		return articleId;
-	}
-	
-	public int createOrder(Order order) {
-		int orderId = 0;
-		
-		try {
-			OrderEntity orderEntity = OrderMapper.mapOrderToOrderEntity(order);
-			entityManager.persist(orderEntity);
-			orderId = orderEntity.getOrderId();
-		} catch (EntityExistsException entityExistsException) {
-			// Logger
-			System.out.println("EntityExistsException" + entityExistsException.toString());
-		}
-		
-		return orderId;
+	public void addOrder(Order order) {
+		orderRepository.save(order);
 	}
 
-	public boolean deleteArticle(Integer articleId) {
-		boolean isArticleRemoved = false;
-		
-		try {
-			ArticleEntity articleEntity = entityManager.find(ArticleEntity.class, articleId);
-			entityManager.remove(articleEntity);
-			ArticleEntity articleEntityFound = entityManager.find(ArticleEntity.class, articleId);
-			if(articleEntityFound == null) {
-				isArticleRemoved = true;
-			}
-		} catch (EntityExistsException entityExistsException) {
-			// Logger
-			System.out.println("EntityExistsException" + entityExistsException.toString());
-		}
-		
-		return isArticleRemoved;
+	public Order getOrder(int orderId) {
+		return orderRepository.findById(orderId);
 	}
 
-	public Article getArticle(Integer articleId) {
-		ArticleEntity articleEntity = entityManager.find(ArticleEntity.class, Integer.valueOf(articleId));
-
-		return ArticleMapper.mapArticleEntityToArticle(articleEntity);
-	}
-	
-	public boolean deleteOrder(Integer orderId) {
-		boolean isOrderRemoved = false;
-		
-		try {
-			OrderEntity orderEntity = entityManager.find(OrderEntity.class, orderId);
-			entityManager.remove(orderEntity);
-			OrderEntity orderEntityFound = entityManager.find(OrderEntity.class, orderId);
-			if(orderEntityFound == null) {
-				isOrderRemoved = true;
-			}
-		} catch (EntityExistsException entityExistsException) {
-			// Logger
-			System.out.println("EntityExistsException" + entityExistsException.toString());
-		}
-		
-		return isOrderRemoved;
+	public void updateOrder(Order order) {
+		orderRepository.save(order);
 	}
 
-	public Order getOrder(Integer orderId) {
-		OrderEntity orderEntity = entityManager.find(OrderEntity.class, Integer.valueOf(orderId));
-
-		return OrderMapper.mapOrderEntityToOrder(orderEntity);
+	public void deleteOrder(Integer orderId) {
+		orderRepository.deleteById(orderId);
 	}
 }
