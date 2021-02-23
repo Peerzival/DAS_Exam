@@ -17,8 +17,8 @@
 		<property name="databasePlatform" value="org.hibernate.dialect.MariaDB103Dialect"/>
 	</bean>
 	
-	<bean id="shopEntityManagerFactoryBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="shopDataSource"/>
+	<bean id="orderEntityManagerFactoryBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="orderDataSource"/>
 		<property name="jpaVendorAdapter" ref="shopJpaAdapter"/>
 		
 		<property name="packagesToScan" value="de.leuphana.connector.entity"/>
@@ -32,8 +32,8 @@
 		</property>
 	</bean>
 	
-	<bean id="shopTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="shopEntityManagerFactoryBean"/>
+	<bean id="orderTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="orderEntityManagerFactoryBean"/>
 	</bean>
 	
 	<bean
@@ -41,5 +41,5 @@
 		
 	<tx:annotation-driven transaction-manager="shopTransactionManager" />	
 	
-	<bean id="shopJPAConnector" class="de.leuphana.connector.ShopJPAConnector"/>
+	<bean id="orderSpringDataConnectorRequester" class="de.leuphana.connector.order.OrderSpringDataConnectorRequester"/>
 </beans>

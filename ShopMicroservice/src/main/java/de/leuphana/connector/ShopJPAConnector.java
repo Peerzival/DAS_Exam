@@ -10,9 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import de.leuphana.component.article.structure.Article;
 import de.leuphana.component.order.structure.Order;
 import de.leuphana.connector.entity.ArticleEntity;
-import de.leuphana.connector.entity.OrderEntity;
 import de.leuphana.connector.mapper.ArticleMapper;
-import de.leuphana.connector.mapper.OrderMapper;
+import de.leuphana.connector.order.entity.OrderEntity;
+import de.leuphana.connector.order.mapper.OrderMapper;
 
 @Transactional()
 public class ShopJPAConnector {
