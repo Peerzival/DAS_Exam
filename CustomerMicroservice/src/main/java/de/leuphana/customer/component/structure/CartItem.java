@@ -1,4 +1,4 @@
-package de.leuphana.component.customer.structure;
+package de.leuphana.customer.component.structure;
 
 import de.leuphana.component.article.structure.Article;
 

@@ -8,19 +8,18 @@
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns="http://www.springframework.org/schema/beans">
 	
-	<import resource="applicationContext-JDBC-Connector-Datasource.xml"/>
+	<import resource="applicationContext-JDBC-Connector-Datasource-Customer.xml"/>
 	
-	<bean id="shopJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+	<bean id="customerJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 		<property name="showSql" value="true"/>
 		<property name="generateDdl" value="true"/>
 		<!--  property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect"/ -->
 		<property name="databasePlatform" value="org.hibernate.dialect.MariaDB103Dialect"/>
 	</bean>
 	
-	<bean id="shopEntityManagerFactoryBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="shopDataSource"/>
-		<property name="jpaVendorAdapter" ref="shopJpaAdapter"/>
-		
+	<bean id="customerEntityManagerFactoryBean" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="customerDataSource"/>
+		<property name="jpaVendorAdapter" ref="customerJpaAdapter"/>		
 		<property name="packagesToScan" value="de.leuphana.connector.entity"/>
 		
 		<property name="jpaPropertyMap">
@@ -33,7 +32,7 @@
 	</bean>
 	
 	<bean id="shopTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="shopEntityManagerFactoryBean"/>
+		<property name="entityManagerFactory" ref="customerEntityManagerFactoryBean"/>
 	</bean>
 	
 	<bean
@@ -41,5 +40,5 @@
 		
 	<tx:annotation-driven transaction-manager="shopTransactionManager" />	
 	
-	<bean id="shopJPAConnector" class="de.leuphana.connector.ShopJPAConnector"/>
+	<bean id="customerJPAConnector" class="de.leuphana.connector.CustomerJPAConnector"/>
 </beans>
