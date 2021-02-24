@@ -15,7 +15,7 @@ import de.leuphana.component.order.structure.Order;
 
 @SpringBootApplication
 @EnableJpaRepositories("de.leuphana.component.order.behaviour")
-@EntityScan("de.leuphana.component.order.structure")
+@EntityScan("de.leuphana.component.*.*")
 @ComponentScan(basePackages = {"de.leuphana.component.order.structure"})
 public class AccessingDataJpaApplication {
 
