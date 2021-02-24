@@ -21,20 +21,14 @@ public class Article {
 	private String manufactor;
 	private String name;
 	private float price;
-	@ElementCollection
-	@MapKeyColumn(name = "name")
-	@Column(name = "value")
-	@CollectionTable(name = "example_attributes", joinColumns = @JoinColumn(name = "example_id"))
-	private Map<String, String> reviews;
 
 	protected Article() {
 	};
 
-	public Article(String name, String manufactor, float price, Map<String, String> reviews) {
+	public Article(String name, String manufactor, float price) {
 		this.name = name;
 		this.manufactor = manufactor;
 		this.price = price;
-		this.reviews = reviews;
 	}
 
 	public void setArticleId(Integer articleId) {

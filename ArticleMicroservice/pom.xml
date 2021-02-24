@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>de.leuphana.component.das</groupId>
-	<artifactId>ArticleMicroService_Maven</artifactId>
+	<artifactId>ArticleMicroService_Maven_MySQL</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ArticleMicroService_Maven</name>
-	<description>Demo project for Spring Boot (ArticleMicroService)</description>
+	<name>ArticleMicroService_Maven_MySQL</name>
+	<description>ArticleMicroService with Spring Data and MySQL</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -21,10 +21,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -42,5 +46,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
