@@ -19,11 +19,9 @@ import javax.persistence.Table;
 public class Order {
 
 	private Integer orderId;
-	
-	
+
 	private Integer customerId;
 
-	
 	private List<OrderPosition> orderPositions;
 
 	public Order() {
@@ -40,8 +38,8 @@ public class Order {
 		this.orderId = orderId;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = )
-	@JoinColumn(name = "CUSTOMER_ID")
+//	@ManyToOne(fetch = FetchType.LAZY, targetEntity = de.leuphana.customer.component.structure.Customer.Class()) //TODO entkommentieren, wenn das API Gateway erstellt wurde
+//	@JoinColumn(name = "CUSTOMER_ID")
 	public Integer getCustomerId() {
 		return customerId;
 	}
@@ -51,7 +49,8 @@ public class Order {
 	}
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "positionId") //vielleicht später hinzufügen, weil originär: name = "positionId", referencedColumnName = "orderId"
+	@JoinColumn(name = "positionId") // vielleicht später hinzufügen, weil originär: name = "positionId",
+										// referencedColumnName = "orderId"
 	public List<OrderPosition> getOrderPositions() {
 		return orderPositions;
 	}
