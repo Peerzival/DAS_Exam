@@ -1,42 +1,63 @@
 package de.leuphana.connector;
 
 
+import javax.persistence.EntityManager;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import de.leuphana.component.article.behaviour.ArticleRepository;
 import de.leuphana.component.article.structure.Article;
-import de.leuphana.connector.accessingdatamysql.AccessingDataJpaApplication;
-import de.leuphana.connector.accessingdatamysql.MainController;
 
+@ExtendWith(SpringExtension.class)
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ArticleJPATest {
 
-	private int createdArticleId;
-	private MainController mainController;
+	@Autowired private EntityManager entityManager;
+	@Autowired private ArticleRepository articleRepository;
+	
+	private Logger logger;
 	
 	@BeforeEach
 	void setUp() throws Exception {			
-		Article article = new Article("Weihnachtsmann", "Leuphana", 7.77f);
-		
-		AccessingDataJpaApplication.main(new String[]{"",""});
-		
-		mainController = new MainController();
-		createdArticleId = mainController.addNewArticle(article.getName(), 
-				article.getManufactor(), article.getPrice());
-	
-		//Article foundArticle = shopJPAConnector.getArticle(createdArticleId);
+		logger = LogManager.getLogger(this.getClass());
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-//		Assertions.assertTrue(shopJPAConnector.deleteOrder(createdOrderId));
 //		Assertions.assertTrue(shopJPAConnector.deleteArticle(createdArticleId));
 	}
 
 	@Test
-	void canArticleBeFetched() {
-		Assertions.assertNotNull(mainController.getArticle(createdArticleId));
+	void injectedComponentsAreNotNull() {
+		Assertions.assertNotNull(entityManager);
+		Assertions.assertNotNull(articleRepository);
+	}
+	
+	@Test
+	void canArticleBePersisted() {
+		Article article = new Article("Weihnachtsmann", "Leuphana", 7.77f);
+		
+		// Persist
+		articleRepository.save(article);
+		
+		// Check persistence
+		Assertions.assertNotNull(articleRepository.findByName("Weihnachtsmann"));
+		
+		// additional logs TODO remove or change to DEBUG instead of INFO
+		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getName());
+		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getManufactor());
+		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getPrice());
 	}
 
 }
