@@ -1,24 +1,18 @@
 
-package de.leuphana.connector.accessingdatamysql;
-
-import java.util.HashMap;
-import java.util.Map;
+package de.leuphana.connector;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import de.leuphana.component.article.behaviour.ArticleRepository;
-import de.leuphana.component.article.structure.Article;
 
-
-// curl localhost:8080/demo/add -d name=Weihnachtsmann -d manufactor=Leuphana -d price=1.5f
+// Test-commands for Curl
+// curl localhost:8080/demo/add -d name=Weihnachtsmann -d manufactor=Leuphana -d price=10.5f
+// curl 'localhost:8080/demo/all'
+// curl localhost:8080/demo/get -d articleId=9
 
 @SpringBootApplication
 @EnableJpaRepositories("de.leuphana.component.article.behaviour")
@@ -63,7 +57,7 @@ public class AccessingDataJpaApplication {
 //		    });
 //		    log.info("");
 //		};
-//	
-//
 //	}
+	
+	
 }

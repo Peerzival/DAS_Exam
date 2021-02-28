@@ -40,20 +40,6 @@
 //		return articleId;
 //	}
 //	
-////	public int createOrder(Order order) {
-////		int orderId = 0;
-////		
-////		try {
-////			OrderEntity orderEntity = OrderMapper.mapOrderToOrderEntity(order);
-////			entityManager.persist(orderEntity);
-////			orderId = orderEntity.getOrderId();
-////		} catch (EntityExistsException entityExistsException) {
-////			// Logger
-////			System.out.println("EntityExistsException" + entityExistsException.toString());
-////		}
-////		
-////		return orderId;
-////	}
 //
 //	public boolean deleteArticle(Integer articleId) {
 //		boolean isArticleRemoved = false;
@@ -79,27 +65,4 @@
 //		return ArticleMapper.mapArticleEntityToArticle(articleEntity);
 //	}
 //	
-////	public boolean deleteOrder(Integer orderId) {
-////		boolean isOrderRemoved = false;
-////		
-////		try {
-////			OrderEntity orderEntity = entityManager.find(OrderEntity.class, orderId);
-////			entityManager.remove(orderEntity);
-////			OrderEntity orderEntityFound = entityManager.find(OrderEntity.class, orderId);
-////			if(orderEntityFound == null) {
-////				isOrderRemoved = true;
-////			}
-////		} catch (EntityExistsException entityExistsException) {
-////			// Logger
-////			System.out.println("EntityExistsException" + entityExistsException.toString());
-////		}
-////		
-////		return isOrderRemoved;
-////	}
-////
-////	public Order getOrder(Integer orderId) {
-////		OrderEntity orderEntity = entityManager.find(OrderEntity.class, Integer.valueOf(orderId));
-////
-////		return OrderMapper.mapOrderEntityToOrder(orderEntity);
-////	}
 //}
