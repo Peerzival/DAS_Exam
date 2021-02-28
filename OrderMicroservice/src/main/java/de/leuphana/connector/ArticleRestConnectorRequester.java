@@ -1,4 +1,4 @@
-package de.leuphana.connector.order;
+package de.leuphana.connector;
 
 public class ArticleRestConnectorRequester {
 
