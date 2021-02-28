@@ -18,7 +18,10 @@ import de.leuphana.component.article.behaviour.ArticleRepository;
 import de.leuphana.component.article.structure.Article;
 
 
-// curl localhost:8080/demo/add -d name=Weihnachtsmann -d manufactor=Leuphana -d price=1.5f
+// Test-commands for Curl
+// curl localhost:8080/demo/add -d name=Weihnachtsmann -d manufactor=Leuphana -d price=10.5f
+// curl 'localhost:8080/demo/all'
+// curl localhost:8080/demo/get -d id=9
 
 @SpringBootApplication
 @EnableJpaRepositories("de.leuphana.component.article.behaviour")
@@ -63,7 +66,7 @@ public class AccessingDataJpaApplication {
 //		    });
 //		    log.info("");
 //		};
-//	
-//
 //	}
+	
+	
 }

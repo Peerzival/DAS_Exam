@@ -12,22 +12,33 @@ import de.leuphana.component.article.behaviour.ArticleRepository;
 import de.leuphana.component.article.structure.Article;
 
 @Controller
-@RequestMapping(path="/demo")
+@RequestMapping(path = "/demo")
 public class MainController {
-  @Autowired 
-  private ArticleRepository articleRepository;
 
-  @PostMapping(path="/add") // Map ONLY POST Requests
-  public @ResponseBody String addNewArticle (@RequestParam String name
-      , @RequestParam String manufactor, @RequestParam float price) {
+	@Autowired
+	private ArticleRepository articleRepository;
 
-    Article article = new Article(name, manufactor, price);
-    articleRepository.save(article);
-    return "Saved";
-  }
+	@PostMapping(path = "/add") // Map ONLY POST Requests
+	public @ResponseBody int addNewArticle(@RequestParam String name, @RequestParam String manufactor,
+			@RequestParam float price) {
 
-  @GetMapping(path="/all")
-  public @ResponseBody Iterable<Article> getAllArticles() {
-    return articleRepository.findAll();
-  }
+		Article article = new Article(name, manufactor, price);
+		articleRepository.save(article);
+
+		// Check persistence
+		article = articleRepository.findById((int) article.getArticleId());
+
+		return article.getArticleId();
+	}
+
+	@PostMapping(path = "/get")
+	public @ResponseBody Article getArticle(@RequestParam int articleId) {
+		return articleRepository.findById(articleId);
+	}
+	
+	@GetMapping(path = "/all")
+	public @ResponseBody Iterable<Article> getAllArticles() {
+		return articleRepository.findAll();
+	}
+
 }
