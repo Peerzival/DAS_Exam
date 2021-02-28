@@ -12,7 +12,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import de.leuphana.component.order.structure.Order;
 import de.leuphana.component.order.structure.OrderPosition;
-import de.leuphana.connector.order.OrderSpringDataConnectorRequester;
 
 class OrderSpringDataConnectorRequesterTest {
 
