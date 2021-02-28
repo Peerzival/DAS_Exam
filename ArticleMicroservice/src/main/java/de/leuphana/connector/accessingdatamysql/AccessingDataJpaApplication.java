@@ -18,14 +18,10 @@ import de.leuphana.component.article.behaviour.ArticleRepository;
 import de.leuphana.component.article.structure.Article;
 
 
-// curl -v localhost:3306/demo/add -d name=Weihnachtsmann -d manufactor=Leuphana -d price=1.5f -O
-
-
-
+// curl localhost:8080/demo/add -d name=Weihnachtsmann -d manufactor=Leuphana -d price=1.5f
 
 @SpringBootApplication
 @EnableJpaRepositories("de.leuphana.component.article.behaviour")
-@ComponentScan(basePackages = { "de.leuphana.component.article.structure" })
 @EntityScan("de.leuphana.component.article.structure")   
 public class AccessingDataJpaApplication {
 
