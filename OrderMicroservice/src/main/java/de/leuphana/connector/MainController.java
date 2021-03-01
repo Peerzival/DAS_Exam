@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import de.leuphana.component.order.behaviour.OrderRepository;
-import de.leuphana.component.order.structure.Order;
+import de.leuphana.component.behaviour.OrderRepository;
+import de.leuphana.component.structure.Order;
 
 @Controller
 @RequestMapping(path = "/demo")

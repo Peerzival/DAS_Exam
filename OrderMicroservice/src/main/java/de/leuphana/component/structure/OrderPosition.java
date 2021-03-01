@@ -1,14 +1,15 @@
-package de.leuphana.component.order.structure;
+package de.leuphana.component.structure;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.structure.Article;
 
 @Entity
 @Table(name = "DB_ORDERPOSITION")
@@ -16,11 +17,7 @@ public class OrderPosition {
 
 	private Integer positionId;
 	private int articleQuantity;
-
-//	@ManyToOne				//vielleicht entkommentieren, wenn name = "positionId", referencedColumnName = "orderId" 
-//							in Joincolumn hinzugefügt wird
-//	private Order order; 
-
+			
 	private Article article;
 
 	public void setPositionId(Integer positionId) {
@@ -34,6 +31,7 @@ public class OrderPosition {
 	}
 
 	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "articleId")
 	public Article getArticle() {
 		return article;
 	}

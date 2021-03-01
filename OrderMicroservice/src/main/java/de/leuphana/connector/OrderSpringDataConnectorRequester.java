@@ -3,8 +3,8 @@ package de.leuphana.connector;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.leuphana.component.order.behaviour.OrderRepository;
-import de.leuphana.component.order.structure.Order;
+import de.leuphana.component.behaviour.OrderRepository;
+import de.leuphana.component.structure.Order;
 
 //@Service
 //@Transactional()

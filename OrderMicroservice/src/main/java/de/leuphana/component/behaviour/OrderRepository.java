@@ -1,8 +1,8 @@
-package de.leuphana.component.order.behaviour;
+package de.leuphana.component.behaviour;
 
 import org.springframework.data.repository.CrudRepository;
 
-import de.leuphana.component.order.structure.Order;
+import de.leuphana.component.structure.Order;
 
 public interface OrderRepository extends CrudRepository<Order, Integer>{
 
