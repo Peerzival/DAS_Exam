@@ -1,24 +1,28 @@
-package de.leuphana.customer.component.structure;
+package de.leuphana.component.structure;
 
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import de.leuphana.component.article.structure.Article;
 
 @Entity
+@Table(name = "DB_CART")
 public class Cart {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	int cartId;
 	
-	
+	@OneToMany(cascade = { CascadeType.ALL })
 	private Map<Integer, CartItem> cartItems;
 	private int numberOfArticles;
 
