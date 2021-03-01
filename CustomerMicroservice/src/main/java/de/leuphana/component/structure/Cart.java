@@ -12,24 +12,21 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import de.leuphana.component.article.structure.Article;
-
 @Entity
 @Table(name = "DB_CART")
 public class Cart {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	int cartId;
-	
+
 	@OneToMany(cascade = { CascadeType.ALL })
 	private Map<Integer, CartItem> cartItems;
 	private int numberOfArticles;
 
 	public Cart() {
 		cartItems = new HashMap<Integer, CartItem>();
-		
-		
+
 		numberOfArticles = 0;
 	}
 

@@ -1,6 +1,5 @@
 package de.leuphana.component.structure;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -8,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -26,14 +24,13 @@ public class Customer {
 	private String name;
 	private String address;
 
-	@OneToOne(cascade = CascadeType.ALL )
+	@OneToOne(cascade = CascadeType.ALL)
 	private Cart cart;
 
-	@OneToMany(cascade = CascadeType.ALL , targetEntity =de.leuphana.component.structure.Order.class, mappedBy = "customerId")
+	@OneToMany(cascade = CascadeType.ALL, targetEntity = de.leuphana.component.structure.Order.class, mappedBy = "customerId")
 	@MapKeyColumn(name = "orderId")
-	//@JoinColumn(name = "orderId")
+	// @JoinColumn(name = "orderId")
 	private Map<Integer, Order> orders;
-
 
 	protected Customer() {
 	}

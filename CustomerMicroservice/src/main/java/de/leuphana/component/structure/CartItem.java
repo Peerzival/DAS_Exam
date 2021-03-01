@@ -11,8 +11,6 @@ import javax.persistence.Table;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-import de.leuphana.component.article.structure.Article;
-
 @Entity
 @Table(name = "DB_CARTITEM")
 @EntityScan("de.leuphana.component.structure.Article")
@@ -21,11 +19,11 @@ public class CartItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cartItemId;
-	
-	@OneToOne(cascade = CascadeType.ALL , targetEntity = de.leuphana.component.structure.Article.class)
+
+	@OneToOne(cascade = CascadeType.ALL, targetEntity = de.leuphana.component.structure.Article.class)
 	@JoinColumn(name = "articleId")
 	private Article article;
-	
+
 	private int quantity;
 
 	public CartItem(Article article) {
@@ -48,7 +46,7 @@ public class CartItem {
 	public void incrementQuantity() {
 		quantity++;
 	}
-	
+
 	public void decrementQuantity() {
 		quantity--;
 	}
