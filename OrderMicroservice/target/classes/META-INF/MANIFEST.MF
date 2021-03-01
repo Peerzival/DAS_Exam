@@ -1,6 +1,4 @@
 Manifest-Version: 1.0
-Built-By: henrik
-Build-Jdk: 14
 Build-Jdk-Spec: 14
 Implementation-Title: DAS_OrderMicroservice_Maven
 Implementation-Version: 0.0.1-SNAPSHOT
