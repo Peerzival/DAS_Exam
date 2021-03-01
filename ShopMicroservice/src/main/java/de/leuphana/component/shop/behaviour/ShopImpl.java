@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import de.leuphana.component.article.structure.Article;
-import de.leuphana.component.article.structure.Catalog;
 import de.leuphana.component.order.structure.Order;
 import de.leuphana.component.order.structure.OrderPosition;
+import de.leuphana.component.structure.Article;
+import de.leuphana.component.structure.Catalog;
 import de.leuphana.customer.component.structure.Cart;
 import de.leuphana.customer.component.structure.CartItem;
 import de.leuphana.customer.component.structure.Customer;

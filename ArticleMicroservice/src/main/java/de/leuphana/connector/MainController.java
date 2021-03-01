@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import de.leuphana.component.article.behaviour.ArticleRepository;
-import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.behaviour.ArticleRepository;
+import de.leuphana.component.structure.Article;
 
 @Controller
 @RequestMapping(path = "/demo")

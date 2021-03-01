@@ -1,6 +1,6 @@
 package de.leuphana.component.shop.behaviour;
 
-import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.structure.Article;
 
 public interface ProducerShopService {
 	

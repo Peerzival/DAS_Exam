@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.structure.Article;
 
 @Entity
 @Table(name = "DB_ORDERPOSITION")

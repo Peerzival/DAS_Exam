@@ -3,7 +3,7 @@ package de.leuphana.customer.component.structure;
 import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 
-import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.structure.Article;
 
 public class CartItem {
 

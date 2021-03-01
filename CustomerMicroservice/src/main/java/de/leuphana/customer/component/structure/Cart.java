@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.structure.Article;
 
 @Entity
 public class Cart {
