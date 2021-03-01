@@ -1,15 +1,29 @@
-package de.leuphana.customer.component.structure;
+package de.leuphana.component.structure;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import de.leuphana.component.article.structure.Article;
 
+@Entity
+@Table(name = "DB_CARTITEM")
+@EntityScan("de.leuphana.component.structure.Article")
 public class CartItem {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cartItemId;
 	
-	@OneToOne(cascade = { CascadeType.ALL })
+	@OneToOne(cascade = CascadeType.ALL , targetEntity = de.leuphana.component.structure.Article.class)
+	@JoinColumn(name = "articleId")
 	private Article article;
 	
 	private int quantity;

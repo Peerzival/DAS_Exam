@@ -1,4 +1,4 @@
-package de.leuphana.customer.component.structure;
+package de.leuphana.component.structure;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,11 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import de.leuphana.component.order.structure.Order;
 
 @Entity
+@Table(name = "DB_CUSTOMER")
 public class Customer {
 
 	@Id
@@ -21,11 +26,14 @@ public class Customer {
 	private String name;
 	private String address;
 
-	@OneToOne(cascade = { CascadeType.ALL })
+	@OneToOne(cascade = CascadeType.ALL )
 	private Cart cart;
 
+	@OneToMany(cascade = CascadeType.ALL , targetEntity =de.leuphana.component.structure.Order.class, mappedBy = "customerId")
+	@MapKeyColumn(name = "orderId")
+	//@JoinColumn(name = "orderId")
 	private Map<Integer, Order> orders;
-	// List / Map Orders
+
 
 	protected Customer() {
 	}
@@ -34,7 +42,7 @@ public class Customer {
 		this.name = name;
 		this.address = address;
 		this.cart = cart;
-		this.orders = new HashMap<>();
+//		this.orders = new HashMap<>();
 
 	}
 
@@ -66,11 +74,11 @@ public class Customer {
 		return cart;
 	}
 
-	public void addOrder(Order order) {
-		orders.put(order.getOrderId(), order);
-	}
-	public Map<Integer, Order> getOrders() {
-		return this.orders;
-	}
+//	public void addOrder(Order order) {
+//		orders.put(order.getOrderId(), order);
+//	}
+//	public Map<Integer, Order> getOrders() {
+//		return this.orders;
+//	}
 
 }

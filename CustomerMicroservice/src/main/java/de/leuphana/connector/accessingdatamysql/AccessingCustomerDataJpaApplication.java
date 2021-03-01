@@ -1,4 +1,4 @@
-package de.leuphana.customer.connector.accessingdatamysql;
+package de.leuphana.connector.accessingdatamysql;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,11 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 
-import de.leuphana.customer.component.structure.Cart;
-import de.leuphana.customer.component.structure.Customer;
+import de.leuphana.component.structure.Cart;
+import de.leuphana.component.structure.Customer;
 
 @SpringBootApplication()
-@EntityScan("de.leuphana.customer.component.structure")
+@EntityScan("de.leuphana.*")
 public class AccessingCustomerDataJpaApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(AccessingCustomerDataJpaApplication.class);
@@ -21,7 +21,5 @@ public class AccessingCustomerDataJpaApplication {
 
 		SpringApplication.run(AccessingCustomerDataJpaApplication.class, args);
 	}
-
-
 
 }
