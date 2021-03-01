@@ -1,4 +1,4 @@
-package de.leuphana.component.order.structure;
+package de.leuphana.component.structure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,11 @@ import javax.persistence.Table;
 @Table(name = "DB_ORDER")
 public class Order {
 
-	private Integer orderId;
+	private int orderId;
 
-	private Integer customerId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CUSTOMER_ID")
+	private int customerId;
 
 	private List<OrderPosition> orderPositions;
 
@@ -28,9 +30,13 @@ public class Order {
 		orderPositions = new ArrayList<OrderPosition>();
 	}
 
+	public int getCustomerId() {
+		return customerId;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Integer getOrderId() {
+	public int getOrderId() {
 		return orderId;
 	}
 
@@ -38,19 +44,12 @@ public class Order {
 		this.orderId = orderId;
 	}
 
-//	@ManyToOne(fetch = FetchType.LAZY, targetEntity = de.leuphana.customer.component.structure.Customer.Class()) //TODO entkommentieren, wenn das API Gateway erstellt wurde
-//	@JoinColumn(name = "CUSTOMER_ID")
-	public Integer getCustomerId() {
-		return customerId;
-	}
-
 	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
 	}
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "positionId") // vielleicht später hinzufügen, weil originär: name = "positionId",
-										// referencedColumnName = "orderId"
+	@JoinColumn(name = "positionId")
 	public List<OrderPosition> getOrderPositions() {
 		return orderPositions;
 	}

@@ -11,12 +11,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import de.leuphana.component.order.behaviour.OrderRepository;
-import de.leuphana.component.order.structure.Order;
+import de.leuphana.component.behaviour.OrderRepository;
+import de.leuphana.component.structure.Order;
 
 @SpringBootApplication // exclude= {DataSourceAutoConfiguration.class})
-@EnableJpaRepositories("de.leuphana.component.order.behaviour")
-@EntityScan("de.leuphana.component.*.*")
+@EnableJpaRepositories("de.leuphana.component.behaviour")
+@EntityScan("de.leuphana.component.*")
 //@ComponentScan(basePackages = {"de.leuphana.component.order.structure"})
 public class AccessingDataJpaApplication {
 

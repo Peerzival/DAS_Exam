@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import de.leuphana.component.order.structure.Order;
-import de.leuphana.component.order.structure.OrderPosition;
+import de.leuphana.component.structure.Order;
+import de.leuphana.component.structure.OrderPosition;
 
 class OrderSpringDataConnectorRequesterTest {
 
