@@ -1,4 +1,4 @@
-package de.leuphana.component.article.structure;
+package de.leuphana.component.structure;
 
 public class CD extends Article {
 

@@ -15,8 +15,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import de.leuphana.component.article.behaviour.ArticleRepository;
-import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.behaviour.ArticleRepository;
+import de.leuphana.component.structure.Article;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

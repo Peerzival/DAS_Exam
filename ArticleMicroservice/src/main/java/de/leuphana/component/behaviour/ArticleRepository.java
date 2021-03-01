@@ -1,10 +1,10 @@
-package de.leuphana.component.article.behaviour;
+package de.leuphana.component.behaviour;
 
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import de.leuphana.component.article.structure.Article;
+import de.leuphana.component.structure.Article;
 
 public interface ArticleRepository extends CrudRepository<Article, Integer> {
 	
