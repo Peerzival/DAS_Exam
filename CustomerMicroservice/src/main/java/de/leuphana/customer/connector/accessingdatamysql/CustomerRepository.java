@@ -1,4 +1,4 @@
-package de.leuphana.customer.connector.database;
+package de.leuphana.customer.connector.accessingdatamysql;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ public interface CustomerRepository extends CrudRepository<Customer, Integer> {
 	
 	Customer findById(int customerId);
 	List<Customer> findByName(String name);
+
 
 	
 }
