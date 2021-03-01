@@ -15,8 +15,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 // curl localhost:8080/demo/get -d articleId=9
 
 @SpringBootApplication
-@EnableJpaRepositories("de.leuphana.component.article.behaviour")
-@EntityScan("de.leuphana.component.article.structure")   
+@EnableJpaRepositories("de.leuphana.component.behaviour")
+@EntityScan("de.leuphana.component.structure")   
 public class AccessingDataJpaApplication {
 
 	public static final Logger log = LoggerFactory.getLogger(AccessingDataJpaApplication.class);
