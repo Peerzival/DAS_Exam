@@ -4,15 +4,28 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import de.leuphana.component.article.structure.Article;
 
+@Entity
 public class Cart {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	int cartId;
+	
+	
 	private Map<Integer, CartItem> cartItems;
 	private int numberOfArticles;
 
 	public Cart() {
 		cartItems = new HashMap<Integer, CartItem>();
+		
+		
 		numberOfArticles = 0;
 	}
 
