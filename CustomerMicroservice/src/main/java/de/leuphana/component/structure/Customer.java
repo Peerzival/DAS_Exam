@@ -1,5 +1,6 @@
 package de.leuphana.component.structure;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -39,7 +40,7 @@ public class Customer {
 		this.name = name;
 		this.address = address;
 		this.cart = cart;
-//		this.orders = new HashMap<>();
+		this.orders = new HashMap<>();
 
 	}
 
