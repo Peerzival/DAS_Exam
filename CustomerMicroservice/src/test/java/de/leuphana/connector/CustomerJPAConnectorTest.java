@@ -2,7 +2,6 @@ package de.leuphana.connector;
 
 import javax.persistence.EntityManager;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -14,10 +13,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import de.leuphana.component.structure.Cart;
+import de.leuphana.component.behaviour.CustomerRepository;
 import de.leuphana.component.structure.Customer;
-import de.leuphana.connector.accessingdatamysql.CustomerRepository;
-import net.bytebuddy.asm.Advice.This;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -32,14 +29,14 @@ class CustomerJPAConnectorTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		logger = LogManager.getLogger(This.class);
+//		logger = LogManager.getLogger(this.getClass());
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-		entityManager = null;
-		customerRepository = null;
-		logger = null;
+//		entityManager = null;
+//		customerRepository = null;
+//		logger = null;
 
 	}
 
@@ -51,7 +48,7 @@ class CustomerJPAConnectorTest {
 
 	@Test
 	void canCustomerBePersisted() {
-		Customer customer = new Customer("Harald Krull", "St. Pauli Reeperbahn", new Cart());
+		Customer customer = new Customer("Harald Krull", "St. Pauli Reeperbahn", null);
 
 		// Persist
 		customerRepository.save(customer);
@@ -60,9 +57,9 @@ class CustomerJPAConnectorTest {
 		Assertions.assertNotNull(customerRepository.findByName("Harald Krull"));
 
 		// additional logs TODO remove or change to DEBUG instead of INFO
-		logger.info(customerRepository.findByName("Harald Krull").get(0).getName());
-		logger.info(customerRepository.findByName("Harald Krull").get(0).getAddress());
-		logger.info(customerRepository.findByName("Harald Krull").get(0).getCart());
+//		logger.info(customerRepository.findByName("Harald Krull").get(0).getName());
+//		logger.info(customerRepository.findByName("Harald Krull").get(0).getAddress());
+//		logger.info(customerRepository.findByName("Harald Krull").get(0).getCart());
 	}
 
 }

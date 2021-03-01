@@ -9,36 +9,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.leuphana.component.behaviour.CustomerRepository;
-import de.leuphana.component.structure.Article;
+import de.leuphana.component.structure.Cart;
+import de.leuphana.component.structure.Customer;
 
 @Controller
 @RequestMapping(path = "/demo")
 public class MainController {
 
 	@Autowired
-	private CustomerRepository articleRepository;
+	private CustomerRepository customerRepository;
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
-	public @ResponseBody int addNewArticle(@RequestParam String name, @RequestParam String manufactor,
-			@RequestParam float price) {
+	public @ResponseBody int addNewCustomer(@RequestParam String name, @RequestParam String address,
+			@RequestParam Cart cart) {
 
-		Article article = new Article(name, manufactor, price);
-		articleRepository.save(article);
+		Customer customer = new Customer(name, address, cart);
+		customerRepository.save(customer);
 
 		// Check persistence
-		article = articleRepository.findById((int) article.getArticleId());
+		customer = customerRepository.findById((int) customer.getCustomerId());
 
-		return article.getArticleId();
+		return customer.getCustomerId();
 	}
 
 	@PostMapping(path = "/get")
-	public @ResponseBody Article getArticle(@RequestParam int articleId) {
-		return articleRepository.findById(articleId);
+	public @ResponseBody Customer getCustomer(@RequestParam int customerId) {
+		return customerRepository.findById(customerId);
 	}
 	
 	@GetMapping(path = "/all")
-	public @ResponseBody Iterable<Article> getAllArticles() {
-		return articleRepository.findAll();
+	public @ResponseBody Iterable<Customer> getAllCustomers() {
+		return customerRepository.findAll();
 	}
 
 }

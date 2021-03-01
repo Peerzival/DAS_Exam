@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import de.leuphana.component.order.structure.Order;
+import de.leuphana.component.structure.Order;
 
 @Entity
 @Table(name = "DB_CUSTOMER")

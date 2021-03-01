@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @Entity
 @Table(name = "DB_CARTITEM")
-@EntityScan("de.leuphana.component.structure.Article")
+//@EntityScan("de.leuphana.component.structure.Article")
 public class CartItem {
 
 	@Id

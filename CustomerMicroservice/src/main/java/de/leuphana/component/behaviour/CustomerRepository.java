@@ -1,4 +1,4 @@
-package de.leuphana.connector.accessingdatamysql;
+package de.leuphana.component.behaviour;
 
 import java.util.List;
 
