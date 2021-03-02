@@ -13,15 +13,15 @@ import de.leuphana.component.structure.Cart;
 import de.leuphana.component.structure.Customer;
 
 @SpringBootApplication()
-@EntityScan("de.leuphana.*")
-@EnableJpaRepositories("de.leuphana.*")
-public class AccessingCustomerDataJpaApplication {
+@EntityScan("de.leuphana.component.*")
+@EnableJpaRepositories("de.leuphana.component.*")
+public class AccessingDataJpaApplication {
 
-	private static final Logger log = LoggerFactory.getLogger(AccessingCustomerDataJpaApplication.class);
+	private static final Logger log = LoggerFactory.getLogger(AccessingDataJpaApplication.class);
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(AccessingCustomerDataJpaApplication.class, args);
+		SpringApplication.run(AccessingDataJpaApplication.class, args);
 	}
 
 }

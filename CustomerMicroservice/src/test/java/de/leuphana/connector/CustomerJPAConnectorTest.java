@@ -2,6 +2,7 @@ package de.leuphana.connector;
 
 import javax.persistence.EntityManager;
 
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -29,14 +30,14 @@ class CustomerJPAConnectorTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-//		logger = LogManager.getLogger(this.getClass());
+		logger = LogManager.getLogger(this.getClass());
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-//		entityManager = null;
-//		customerRepository = null;
-//		logger = null;
+		entityManager = null;
+		customerRepository = null;
+		logger = null;
 
 	}
 
@@ -56,10 +57,10 @@ class CustomerJPAConnectorTest {
 		// Check persistence
 		Assertions.assertNotNull(customerRepository.findByName("Harald Krull"));
 
-		// additional logs TODO remove or change to DEBUG instead of INFO
-//		logger.info(customerRepository.findByName("Harald Krull").get(0).getName());
-//		logger.info(customerRepository.findByName("Harald Krull").get(0).getAddress());
-//		logger.info(customerRepository.findByName("Harald Krull").get(0).getCart());
+		 // additional logs TODO remove or change to DEBUG instead of INFO
+		logger.info(customerRepository.findByName("Harald Krull").get(0).getName());
+		logger.info(customerRepository.findByName("Harald Krull").get(0).getAddress());
+		logger.info(customerRepository.findByName("Harald Krull").get(0).getCart());
 	}
 
 }
