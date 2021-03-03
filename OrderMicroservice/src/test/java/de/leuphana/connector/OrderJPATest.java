@@ -56,7 +56,7 @@ class OrderJPATest {
 		
 		// Check persistence
 		Assertions.assertNotNull(orderRepository.findById(order.getOrderId()));
-		logger.info(orderRepository.findById(order.getOrderId()).getOrderPositions().get(0).getArticle().getName());
+//		logger.info(orderRepository.findById(order.getOrderId()).getOrderPositions().get(0).getArticle().getName());
 //		orderRepository.deleteAll();
 //		logger.info(orderRepository.findByName("Weihnachtsmann").get(0).getName());
 //		logger.info(orderRepository.findByName("Weihnachtsmann").get(0).getManufactor());
