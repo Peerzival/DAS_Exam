@@ -49,7 +49,7 @@ class OrderJPATest {
 	void canOrderBePersisted() {
 		Order order = new Order();
 		OrderPosition orderPosition = new OrderPosition();
-		orderPosition.setArticle(new Article("Nutella", "Andy", 0.99f));
+		orderPosition.setArticleId(3);;
 		order.getOrderPositions().add(orderPosition);
 		// Persist
 		orderRepository.save(order);
