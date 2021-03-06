@@ -25,6 +25,8 @@ public class Order {
 	private int customerId;
 
 	private List<OrderPosition> orderPositions;
+	
+	private static int lastId = 0;
 
 	public Order() {
 		orderPositions = new ArrayList<OrderPosition>();
@@ -40,8 +42,8 @@ public class Order {
 		return orderId;
 	}
 
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
+	public void setOrderId() {
+		this.orderId = ++lastId;
 	}
 
 	public void setCustomerId(Integer customerId) {
@@ -56,6 +58,10 @@ public class Order {
 
 	public void setOrderPositions(List<OrderPosition> orderPositions) {
 		this.orderPositions = orderPositions;
+	}
+	
+	public void addOrderPosition(OrderPosition orderPosition) {
+		orderPositions.add(orderPosition);
 	}
 
 }

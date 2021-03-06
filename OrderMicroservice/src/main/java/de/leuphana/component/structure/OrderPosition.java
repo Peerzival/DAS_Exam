@@ -15,6 +15,7 @@ import de.leuphana.component.structure.Article;
 @Table(name = "DB_ORDERPOSITION")
 public class OrderPosition {
 
+	private static int lastId = 0;
 	private Integer positionId;
 	private int articleQuantity;
 			
@@ -32,8 +33,8 @@ public class OrderPosition {
 		this.articleId = articleId;
 	}
 
-	public void setPositionId(Integer positionId) {
-		this.positionId = positionId;
+	public void setPositionId() {
+		this.positionId = ++lastId;
 	}
 
 	@Id

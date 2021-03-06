@@ -1,10 +1,6 @@
 Manifest-Version: 1.0
-Built-By: max
-Build-Jdk: 15.0.1
+Build-Jdk-Spec: 15
 Implementation-Title: DAS_OrderMicroservice_Maven
 Implementation-Version: 0.0.1-SNAPSHOT
-Implementation-Vendor-Id: de.leuphana.component.das
-Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
- -starter-parent/DAS_OrderMicroservice_Maven
 Created-By: Maven Integration for Eclipse
 

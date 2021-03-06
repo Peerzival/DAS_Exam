@@ -31,8 +31,8 @@ public class MainController {
 		return article.getArticleId();
 	}
 
-	@PostMapping(path = "/get")
-	public @ResponseBody Article getArticle(@RequestParam int articleId) {
+	@PostMapping(path = "/getArticleById/{articleId}")
+	public @ResponseBody Article getArticleById(@RequestParam int articleId) {
 		return articleRepository.findById(articleId);
 	}
 	
