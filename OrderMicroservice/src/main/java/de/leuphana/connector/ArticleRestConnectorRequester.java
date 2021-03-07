@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.leuphana.component.structure.Article;
 
-@FeignClient(name = "articleRestConnectorRequester", url = "http://localhost:8082/articleMicroservice/")
+@FeignClient(name = "articleService", url = "http://localhost:8082/articleMicroservice/")
 public interface ArticleRestConnectorRequester {
 
 	@GetMapping(path = "/getArticleById/{articleId}")
