@@ -12,7 +12,7 @@ import de.leuphana.component.behaviour.CustomerRepository;
 import de.leuphana.component.structure.Article;
 
 @Controller
-@RequestMapping(path = "/demo")
+@RequestMapping(path = "/article-maincontroller")
 public class MainController {
 
 	@Autowired
@@ -31,7 +31,7 @@ public class MainController {
 		return article.getArticleId();
 	}
 
-	@PostMapping(path = "/getArticleById/{articleId}")
+	@GetMapping(path = "/getArticleById/{articleId}")
 	public @ResponseBody Article getArticleById(@RequestParam int articleId) {
 		return articleRepository.findById(articleId);
 	}

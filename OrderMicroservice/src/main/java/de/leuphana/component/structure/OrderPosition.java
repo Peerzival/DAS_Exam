@@ -36,6 +36,13 @@ public class OrderPosition {
 	public void setPositionId() {
 		this.positionId = ++lastId;
 	}
+	
+	//because hibernate expects a standard JavaBean pattern
+	//we would get an Exception if we delete this setter
+	//because we dont need the setter, its private 
+	private void setPositionId(int positonId) {
+		this.positionId = positionId;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

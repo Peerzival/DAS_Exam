@@ -16,8 +16,11 @@ import de.leuphana.component.structure.OrderPosition;
 import de.leuphana.component.structure.exception.OrderNotFoundException;
 
 @RestController
-@RequestMapping(path = "/demo")
+@RequestMapping(path = "/order-maincontroller")
 public class MainController {
+	
+//	@Value("${server.port}")
+//	private int port;
 
 	@Autowired
 	private OrderRepository orderRepository;

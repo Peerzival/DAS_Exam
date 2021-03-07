@@ -14,9 +14,8 @@ import de.leuphana.configuration.OrderConfiguration;
 @SpringBootApplication // exclude= {DataSourceAutoConfiguration.class})
 @EnableJpaRepositories("de.leuphana.component.*")
 @EntityScan("de.leuphana.component.*")
-//@ComponentScan(basePackages = {"de.leuphana.component.order.structure"})
 @EnableFeignClients
-@EnableConfigurationProperties(OrderConfiguration.class)
+//@EnableConfigurationProperties(OrderConfiguration.class)
 public class AccessingDataJpaApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(AccessingDataJpaApplication.class);

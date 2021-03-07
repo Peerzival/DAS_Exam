@@ -45,6 +45,13 @@ public class Order {
 	public void setOrderId() {
 		this.orderId = ++lastId;
 	}
+	
+	//because hibernate expects a standard JavaBean pattern
+	//we would get an Exception if we delete this setter
+	//because we dont need the setter, its private 
+	private void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
 
 	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
