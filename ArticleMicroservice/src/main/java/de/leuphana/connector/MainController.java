@@ -1,22 +1,27 @@
 package de.leuphana.connector;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import de.leuphana.component.behaviour.CustomerRepository;
 import de.leuphana.component.structure.Article;
 
-@Controller
+@RestController
 @RequestMapping(path = "/article-maincontroller")
 public class MainController {
 
 	@Autowired
 	private CustomerRepository articleRepository;
+	
+	@RequestMapping("/")
+	  public String home() {
+	    return "Hello Docker World";
+	  }
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
 	public @ResponseBody int addNewArticle(@RequestParam String name, @RequestParam String manufactor,
