@@ -1,19 +1,20 @@
 package de.leuphana.connector;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import de.leuphana.component.behaviour.CustomerRepository;
 import de.leuphana.component.structure.Cart;
 import de.leuphana.component.structure.Customer;
 
-@Controller
-@RequestMapping(path = "/demo")
+@RestController
 public class MainController {
 
 	@Autowired
@@ -31,15 +32,27 @@ public class MainController {
 
 		return customer.getCustomerId();
 	}
+	@RequestMapping(path = "/demo")
+	public String home() {
+		return "Henrik Prüß, Andeas Bächler und Max sind die geilsten hier";
+	}
+	
 
-	@PostMapping(path = "/get")
+	@PostMapping(path = "/getcustomer/{customerId}")
 	public @ResponseBody Customer getCustomer(@RequestParam int customerId) {
 		return customerRepository.findById(customerId);
 	}
-	
-	@GetMapping(path = "/all")
+
+	@GetMapping(path = "/getAllCustomers")
 	public @ResponseBody Iterable<Customer> getAllCustomers() {
 		return customerRepository.findAll();
 	}
+	
+	@DeleteMapping("/deleteCustomer/{customerId}")
+	public @ResponseBody String deleteOrder(@PathVariable int customerId) {
+		customerRepository.deleteById(customerId);
+		return "Deleted\n";
+	}
+
 
 }
