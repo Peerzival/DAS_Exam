@@ -1,15 +1,10 @@
 package de.leuphana.component.structure;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @Entity
 @Table(name = "DB_CARTITEM")
@@ -20,14 +15,12 @@ public class CartItem {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cartItemId;
 
-	@OneToOne(cascade = CascadeType.ALL, targetEntity = de.leuphana.component.structure.Article.class)
-	@JoinColumn(name = "articleId")
-	private Article article;
+	
+	private int articleId;
 
 	private int quantity;
 
-	public CartItem(Article article) {
-		this.article = article;
+	public CartItem() {
 		quantity = 1;
 	}
 
@@ -35,8 +28,11 @@ public class CartItem {
 		return cartItemId;
 	}
 
-	public Article getArticle() {
-		return article;
+	public int getArticleId() {
+		return articleId;
+	}
+	public void setArticleId(int articleId) {
+		this.articleId = articleId;
 	}
 
 	public int getQuantity() {

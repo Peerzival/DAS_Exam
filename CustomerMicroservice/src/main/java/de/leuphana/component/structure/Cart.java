@@ -30,14 +30,14 @@ public class Cart {
 		numberOfArticles = 0;
 	}
 
-	public void addCartItem(Article article) {
-		Integer articleId = article.getArticleId();
+	public void addCartItem(int articleId) {
 		CartItem cartItem;
 		if (cartItems.containsKey(articleId)) {
 			cartItem = cartItems.get(articleId);
 			cartItem.incrementQuantity();
 		} else {
-			cartItem = new CartItem(article);
+			cartItem = new CartItem();
+			cartItem.setArticleId(articleId);
 			cartItems.put(articleId, cartItem);
 		}
 		numberOfArticles++;
@@ -45,7 +45,7 @@ public class Cart {
 
 	public void deleteCartItem(int articleId) {
 		for (CartItem cartItem : cartItems.values()) {
-			if (cartItem.getArticle().getArticleId() == (articleId)) {
+			if (cartItem.getArticleId() == (articleId)) {
 				cartItems.remove(cartItem.getCartItemId());
 				break;
 			}
@@ -72,17 +72,17 @@ public class Cart {
 		return numberOfArticles;
 	}
 
-	public double getTotalPrice() {
-		double totalPrice = 0.0;
-
-		Article article;
-		for (CartItem cartItem : getCartItems()) {
-			article = cartItem.getArticle();
-
-			totalPrice += cartItem.getQuantity() * article.getPrice();
-		}
-
-		return totalPrice;
-	}
+//	public double getTotalPrice() {
+//		double totalPrice = 0.0;
+//
+//		Article article;
+//		for (CartItem cartItem : getCartItems()) {
+//			article = cartItem.getArticle();
+//
+//			totalPrice += cartItem.getQuantity() * article.getPrice();
+//		}
+//
+//		return totalPrice;
+//	}
 
 }

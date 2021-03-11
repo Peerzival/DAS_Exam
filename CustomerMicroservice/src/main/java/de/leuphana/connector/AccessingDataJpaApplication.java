@@ -12,9 +12,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import de.leuphana.component.structure.Cart;
 import de.leuphana.component.structure.Customer;
 
-@SpringBootApplication()
-@EntityScan("de.leuphana.component.*")
-@EnableJpaRepositories("de.leuphana.component.*")
+@SpringBootApplication
+@EnableJpaRepositories("de.leuphana.component.behaviour")
+@EntityScan("de.leuphana.component.structure")   
 public class AccessingDataJpaApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(AccessingDataJpaApplication.class);
