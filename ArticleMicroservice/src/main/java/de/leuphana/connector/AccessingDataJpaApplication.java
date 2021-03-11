@@ -10,9 +10,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 // Test-commands for Curl
-// curl localhost:8080/demo/add -d name=Weihnachtsmann -d manufactor=Leuphana -d price=10.5f
-// curl 'localhost:8080/demo/all'
-// curl localhost:8080/demo/get -d articleId=9
+// curl localhost:8080/add -d name=Weihnachtsmann -d manufactor=Leuphana -d price=10.5f
+// curl localhost:8080/all
+// curl localhost:8080/get -d articleId=9
+
+// Commands for docker deployment
+// cd C:\Users\henri\git\DAS_Exam\ArticleMicroservice
+// mvn -N io.takari:maven:wrapper
+// mvnw package && java -jar target/ArticleMicroService.jar
+// docker build -t springio/articlemicroservice .
+// docker run -p 8081:8080 springio/articlemicroservice
 
 @SpringBootApplication
 @EnableJpaRepositories("de.leuphana.component.behaviour")
