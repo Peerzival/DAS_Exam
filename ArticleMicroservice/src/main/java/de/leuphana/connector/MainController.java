@@ -36,6 +36,7 @@ public class MainController {
 		return articleRepository.findById(articleId);
 	}
 	
+	
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Article> getAllArticles() {
 		return articleRepository.findAll();

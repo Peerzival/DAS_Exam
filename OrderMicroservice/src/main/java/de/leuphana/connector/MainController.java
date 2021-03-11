@@ -19,25 +19,20 @@ import de.leuphana.component.structure.exception.OrderNotFoundException;
 @RequestMapping(path = "/order-maincontroller")
 public class MainController {
 	
-//	@Value("${server.port}")
-//	private int port;
-
 	@Autowired
 	private OrderRepository orderRepository;
 	@Autowired
 	private ArticleRestConnectorRequester articleRestConnectorRequester;
 
-	@PostMapping(path = "/addArticleToOrder/{article}") // Map ONLY POST Requests
-	public @ResponseBody String addNewOrder(@PathVariable Article article) {
+	@PostMapping(path = "/addArticleToOrder/{articleName}") // Map ONLY POST Requests
+	public @ResponseBody String addNewOrder(@PathVariable String articleName) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 
-		int articleId = articleRestConnectorRequester.getArticleById(article.getArticleId().toString()).getArticleId();
+		int articleId = articleRestConnectorRequester.getArticleById(articleName).getArticleId();
 		OrderPosition orderPosition = new OrderPosition();
 		orderPosition.setArticleId(articleId);
-		orderPosition.setPositionId();
 		Order order = new Order();
-		order.setOrderId();
 		order.addOrderPosition(orderPosition);
 		orderRepository.save(order);
 		return "Saved\n";

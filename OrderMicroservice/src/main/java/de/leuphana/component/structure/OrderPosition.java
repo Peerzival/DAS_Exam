@@ -16,7 +16,7 @@ import de.leuphana.component.structure.Article;
 public class OrderPosition {
 
 	private static int lastId = 0;
-	private Integer positionId;
+	private int positionId;
 	private int articleQuantity;
 			
 //	private Article article;
@@ -33,15 +33,8 @@ public class OrderPosition {
 		this.articleId = articleId;
 	}
 
-	public void setPositionId() {
-		this.positionId = ++lastId;
-	}
-	
-	//because hibernate expects a standard JavaBean pattern
-	//we would get an Exception if we delete this setter
-	//because we dont need the setter, its private 
-	private void setPositionId(int positonId) {
-		this.positionId = positionId;
+	public void setPositionId(int positonId) {
+		this.positionId = positonId;
 	}
 
 	@Id
