@@ -1,4 +1,4 @@
-package de.leuphana.component.structure.exception;
+package de.leuphana.component.behaviour.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class OrderNotFoundAdvice {
+public class ArticleNotFoundAdvice {
 
 	@ResponseBody
-	@ExceptionHandler(OrderNotFoundException.class)
+	@ExceptionHandler(ArticleNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	String orderNotFoundHandler(OrderNotFoundException ex) {
+	String orderNotFoundHandler(ArticleNotFoundException ex) {
 		return ex.getMessage();
 	}
 }

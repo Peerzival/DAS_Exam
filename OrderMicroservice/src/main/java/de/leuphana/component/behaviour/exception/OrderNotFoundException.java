@@ -1,4 +1,4 @@
-package de.leuphana.component.structure.exception;
+package de.leuphana.component.behaviour.exception;
 
 public class OrderNotFoundException extends RuntimeException{
 
