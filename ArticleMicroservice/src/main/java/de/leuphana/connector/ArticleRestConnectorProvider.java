@@ -4,13 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.leuphana.component.behaviour.CustomerRepository;
+import de.leuphana.component.behaviour.ArticleRepository;
 import de.leuphana.component.behaviour.exception.ArticleNotFoundException;
 import de.leuphana.component.structure.Article;
 
@@ -19,16 +20,16 @@ import de.leuphana.component.structure.Article;
 public class ArticleRestConnectorProvider {
 
 	@Autowired
-	private CustomerRepository articleRepository;
+	private ArticleRepository articleRepository;
 
-	@RequestMapping("/")
-	public String home() {
-		return "Hello Docker World";
-	}
+//	@RequestMapping("/")
+//	public String home() {
+//		return "Hello Docker World";
+//	}
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
-	public @ResponseBody int addNewArticle(@RequestParam("name") String name, @RequestParam("manufactor") String manufactor,
-			@RequestParam("price") float price) {
+	public @ResponseBody int addNewArticle(@RequestParam String name, @RequestParam String manufactor,
+			@RequestParam float price) {
 
 		Article article = new Article(name, manufactor, price);
 		if (!checkIfArticleNameAlreadyExists(article)) {
@@ -44,9 +45,8 @@ public class ArticleRestConnectorProvider {
 
 	}
 
-	@GetMapping
-	@PostMapping(path = "/getArticleById/{articleId}")
-	public @ResponseBody Article getArticleById(@RequestParam("articleId") int articleId) {
+	@GetMapping(path = "/getArticleById/{articleId}")
+	public Article getArticleById(@PathVariable(name="articleId") int articleId) {
 		return articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException(articleId));
 	}
 

@@ -26,7 +26,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories("de.leuphana.component.behaviour")
 @EntityScan("de.leuphana.component.structure") 
-@ComponentScan("de.leuphana.component.*")
+@ComponentScan("de.leuphana.connector")
 @EnableDiscoveryClient
 public class AccessingDataJpaApplication {
 

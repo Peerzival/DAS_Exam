@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication // exclude= {DataSourceAutoConfiguration.class})
 @EnableJpaRepositories("de.leuphana.component.*")
 @EntityScan("de.leuphana.component.*")
-@ComponentScan("de.leuphana.component.*")
+@ComponentScan("de.leuphana.connector")
 @EnableFeignClients
 @EnableDiscoveryClient
 public class AccessingDataJpaApplication {

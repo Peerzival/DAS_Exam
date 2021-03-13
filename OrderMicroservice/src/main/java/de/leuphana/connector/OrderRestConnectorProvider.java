@@ -3,6 +3,7 @@ package de.leuphana.connector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,15 +19,19 @@ import de.leuphana.component.structure.OrderPosition;
 @RestController
 @RequestMapping(path = "/order")
 public class OrderRestConnectorProvider {
-	
+
 	@Autowired
 	private OrderRepository orderRepository;
+	final ArticleRestConnectorRequester articleRestConnectorRequester;
+	
 	@Autowired
-	private ArticleRestConnectorRequester articleRestConnectorRequester;
+	public OrderRestConnectorProvider(ArticleRestConnectorRequester articleRestConnectorRequester) {
+		this.articleRestConnectorRequester = articleRestConnectorRequester;
+	}
+//	public ArticleRestConnectorRequester articleRestConnectorRequester;
 
-	@GetMapping
-	@PostMapping(path = "/addArticleToOrder/{articleId}") // Map ONLY POST Requests
-	public @ResponseBody String addNewOrder(@RequestParam("articleId") int articleId) {
+	@GetMapping(path = "/addArticleToOrder/{articleId}") // Map ONLY POST Requests
+	public @ResponseBody String addNewOrder(@PathVariable(name="articleId") int articleId) {
 		// @ResponseBody means the returned String is the response, not a view name
 		// @RequestParam means it is a parameter from the GET or POST request
 
@@ -39,8 +44,8 @@ public class OrderRestConnectorProvider {
 		return "Saved\n";
 	}
 
-	@PostMapping(path = "/getOrder/{orderId}")
-	public @ResponseBody Order getOrder(@RequestParam("orderId") int orderId) {
+	@GetMapping(path = "/getOrder")
+	public @ResponseBody Order getOrder(@RequestParam int orderId) {
 		return orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
 	}
 
@@ -50,8 +55,8 @@ public class OrderRestConnectorProvider {
 		return orderRepository.findAll();
 	}
 
-	@DeleteMapping(path = "/deleteOrder/{orderId}")
-	public @ResponseBody String deleteOrder(@RequestParam("orderId") int orderId) {
+	@DeleteMapping(path = "/deleteOrder")
+	public @ResponseBody String deleteOrder(@RequestParam int orderId) {
 		orderRepository.deleteById(orderId);
 		return "Deleted\n";
 	}

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.leuphana.component.behaviour.CustomerRepository;
+import de.leuphana.component.behaviour.ArticleRepository;
 import de.leuphana.component.structure.Cart;
 import de.leuphana.component.structure.Customer;
 
@@ -18,7 +18,7 @@ import de.leuphana.component.structure.Customer;
 public class MainController {
 
 	@Autowired
-	private CustomerRepository customerRepository;
+	private ArticleRepository customerRepository;
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
 	public @ResponseBody int addNewCustomer(@RequestParam String name, @RequestParam String address,
@@ -34,7 +34,7 @@ public class MainController {
 	}
 	@RequestMapping(path = "/demo")
 	public String home() {
-		return "Henrik Prüß, Andeas Bächler und Max sind die geilsten hier";
+		return "Henrik Prï¿½ï¿½, Andeas Bï¿½chler und Max sind die geilsten hier";
 	}
 	
 

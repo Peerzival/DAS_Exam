@@ -14,7 +14,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import de.leuphana.component.behaviour.CustomerRepository;
+import de.leuphana.component.behaviour.ArticleRepository;
 import de.leuphana.component.structure.Customer;
 
 @ExtendWith(SpringExtension.class)
@@ -25,7 +25,7 @@ class CustomerJPAConnectorTest {
 	@Autowired
 	private EntityManager entityManager;
 	@Autowired
-	private CustomerRepository customerRepository;
+	private ArticleRepository customerRepository;
 	private Logger logger;
 
 	@BeforeEach
