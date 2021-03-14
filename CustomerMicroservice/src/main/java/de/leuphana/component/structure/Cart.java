@@ -22,6 +22,7 @@ public class Cart {
 
 	@OneToMany(cascade = { CascadeType.ALL })
 	private Map<Integer, CartItem> cartItems;
+	
 	private int numberOfArticles;
 
 	public Cart() {
