@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import de.leuphana.component.structure.Article;
 
-@FeignClient("article")
+@FeignClient(name = "article", url = "localhost:8180/article")
 public interface ArticleRestConnectorRequester {
 
 	@GetMapping(path = "/getArticleById/{articleId}")

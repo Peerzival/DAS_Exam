@@ -3,7 +3,6 @@ package de.leuphana.connector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,16 +29,29 @@ public class OrderRestConnectorProvider {
 	}
 //	public ArticleRestConnectorRequester articleRestConnectorRequester;
 
-	@GetMapping(path = "/addArticleToOrder/{articleId}") // Map ONLY POST Requests
-	public @ResponseBody String addNewOrder(@PathVariable(name="articleId") int articleId) {
-		// @ResponseBody means the returned String is the response, not a view name
-		// @RequestParam means it is a parameter from the GET or POST request
-
+	@PostMapping(path = "/addArticleToOrder")
+	public String addArticleToOrder(@RequestParam int articleId, @RequestParam int quantity, @RequestParam int orderId) {
+		
+		// TODO Exceptions
+		// Check if article exists
 		Article article = articleRestConnectorRequester.getArticleById(articleId);
+		
+		// Get Order
+		Order order;
+		try {
+			order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));;	
+		} catch(OrderNotFoundException ex) {
+			order = new Order();
+		}
+		
+		// Create new OrderPosition and add to Order
 		OrderPosition orderPosition = new OrderPosition();
-		orderPosition.setArticleId(article.getArticleId());
-		Order order = new Order();
+		
+		orderPosition.setArticleId(articleId);
+		orderPosition.setArticleQuantity(quantity);
 		order.addOrderPosition(orderPosition);
+		
+		// Persist to DB
 		orderRepository.save(order);
 		return "Saved\n";
 	}

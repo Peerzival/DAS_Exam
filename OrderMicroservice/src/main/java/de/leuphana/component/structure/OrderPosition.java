@@ -1,29 +1,20 @@
 package de.leuphana.component.structure;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.annotation.Generated;
+import javax.persistence.Embeddable;
 
-import de.leuphana.component.structure.Article;
+import org.hibernate.annotations.GenerationTime;
 
-@Entity
-@Table(name = "DB_ORDERPOSITION")
+//@Entity
+//@Table(name = "DB_ORDERPOSITION")
+@Embeddable
 public class OrderPosition {
 
-	private static int lastId = 0;
-	private int positionId;
-	private int articleQuantity;
-			
-//	private Article article;
-	
-//	@OneToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "articleId")
+	private int orderPositionId;
 	private int articleId;
+	private int articleQuantity;
+	
+	public OrderPosition() {}
 
 	public int getArticleId() {
 		return articleId;
@@ -33,25 +24,13 @@ public class OrderPosition {
 		this.articleId = articleId;
 	}
 
-	public void setPositionId(int positonId) {
-		this.positionId = positonId;
+	public void setOrderPositionId(int orderPositonId) {
+		this.orderPositionId = orderPositonId;
 	}
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Integer getPositionId() {
-		return positionId;
+	public int getOrderPositionId() {
+		return orderPositionId;
 	}
-
-//	@OneToOne(fetch = FetchType.LAZY)
-//	@JoinColumn(name = "articleId")
-//	public Article getArticle() {
-//		return article;
-//	}
-//
-//	public void setArticle(Article article) {
-//		this.article = article;
-//	}
 
 	public int getArticleQuantity() {
 		return articleQuantity;

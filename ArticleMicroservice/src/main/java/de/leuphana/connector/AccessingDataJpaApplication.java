@@ -12,9 +12,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 // Test-commands for Curl
-// curl localhost:8080/add -d name=Weihnachtsmann -d manufactor=Leuphana -d price=10.5f
-// curl localhost:8080/all
-// curl localhost:8080/get -d articleId=9
+// curl localhost:8180/article/add -d name=Weihnachtsmann -d manufactor=Leuphana -d price=10.5f
+// curl localhost:8180/article/all
+// curl localhost:8180/article/get -d articleId=9
 
 // Commands for docker deployment
 // cd C:\Users\henri\git\DAS_Exam\ArticleMicroservice
