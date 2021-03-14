@@ -1,5 +1,7 @@
 package de.leuphana.component.structure;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
@@ -25,7 +27,7 @@ public class Customer {
 	private Cart cart;
 
 	@ElementCollection
-	private Map<Integer, Integer> orderIds;
+	private List<Integer> orderIds;
 
 	protected Customer() {
 	}
@@ -34,15 +36,12 @@ public class Customer {
 		this.name = name;
 		this.address = address;
 		this.cart = cart;
+		orderIds = new ArrayList<Integer>();
 
 	}
 
-	public Map<Integer, Integer> getOrderIds() {
+	public List<Integer> getOrderIds() {
 		return orderIds;
-	}
-
-	public void setOrderIds(Map<Integer, Integer> orderIds) {
-		this.orderIds = orderIds;
 	}
 
 	public void setCart(Cart cart) {
@@ -76,10 +75,10 @@ public class Customer {
 	public Cart getCart() {
 		return cart;
 	}
-
-//	public void addOrder(Order order) {
-//		orders.put(order.getOrderId(), order);
-//	}
+	
+	public void addOrder(int orderId) {
+		orderIds.add(orderId);
+	}
 //	public Map<Integer, Order> getOrders() {
 //		return this.orders;
 //	}

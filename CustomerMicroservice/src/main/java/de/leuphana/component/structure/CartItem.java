@@ -1,5 +1,6 @@
 package de.leuphana.component.structure;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,9 +16,10 @@ public class CartItem {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int cartItemId;
 
-	
+	@Column(name="ArticleId")
 	private int articleId;
 
+	@Column(name="ArticleQuantity")
 	private int quantity;
 
 	public CartItem() {
