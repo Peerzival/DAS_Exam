@@ -28,28 +28,31 @@ public class ArticleRestConnectorProvider {
 //	}
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
-	public @ResponseBody int addNewArticle(@RequestParam String name, @RequestParam String manufactor,
+	public @ResponseBody String addNewArticle(@RequestParam String name, @RequestParam String manufactor,
 			@RequestParam float price) {
-
 		Article article = new Article(name, manufactor, price);
 		if (!checkIfArticleNameAlreadyExists(article)) {
 			articleRepository.save(article);
 			// Check persistence
 			int articleId = article.getArticleId();
 			article = articleRepository.findById(article.getArticleId()).orElseThrow(() -> new ArticleNotFoundException(articleId));
-
-			return article.getArticleId();
+			return "Article with Id " + article.getArticleId() + " got added.";
 		}
 
-		return -1;
+		return "The article you want to add already exist in our database. Pls. add a different article.";
 
 	}
 
+	@GetMapping(path = "/checkArticleId/{articleId}")
+	public int checkArticleId(@PathVariable(name="articleId") int articleId) {
+		return articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException(articleId)).getArticleId();
+	}
+	
 	@GetMapping(path = "/getArticleById/{articleId}")
 	public Article getArticleById(@PathVariable(name="articleId") int articleId) {
 		return articleRepository.findById(articleId).orElseThrow(() -> new ArticleNotFoundException(articleId));
 	}
-
+	
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Article> getAllArticles() {
 		return articleRepository.findAll();

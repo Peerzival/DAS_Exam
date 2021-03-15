@@ -10,10 +10,12 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication // exclude= {DataSourceAutoConfiguration.class})
+@SpringBootApplication 
 @EnableJpaRepositories("de.leuphana.component.*")
 @EntityScan("de.leuphana.component.*")
-@ComponentScan("de.leuphana.connector")
+
+//If the class with the annotation RestController is in a different package, this is necessary. 
+@ComponentScan("de.leuphana.connector") 
 @EnableFeignClients
 @EnableDiscoveryClient
 public class AccessingDataJpaApplication {

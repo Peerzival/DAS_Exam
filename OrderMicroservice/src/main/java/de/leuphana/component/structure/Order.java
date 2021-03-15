@@ -60,13 +60,20 @@ public class Order {
 		this.orderPositions = orderPositions;
 	}
 	
+//	It is ensured that the order position we add is always assigned the smallest available ID. 
 	public void addOrderPosition(OrderPosition orderPosition) {
+		//Set of all awarded id´s
 		Set<Integer> ids = new HashSet<Integer>();
 		for (OrderPosition orderPositionIterator : orderPositions) {
 			ids.add(orderPositionIterator.getOrderPositionId());
-			System.out.println(orderPositionIterator.getOrderPositionId());
 		}
 		
+		if (ids.size() == 0) {
+			orderPosition.setOrderPositionId(1);
+			orderPositions.add(orderPosition);
+			return;
+		}
+		//The lowest id that is not taken will assigned to the order position that we will add.
 		boolean isContained = false;
 		for(int i=1; i<=ids.size()+1; i++) {
 			for (Integer integer : ids) {
@@ -76,27 +83,12 @@ public class Order {
 				}  	
 			}
 			if(!isContained) {
+				//add order position with assigned id.
 				orderPosition.setOrderPositionId(i);
-				orderPositions.add(i, orderPosition);
+				orderPositions.add(orderPosition);
 				return;
 			}
 			isContained = false;
 		}
 	}
-//		int i;
-//		for (i = 0; i <= orderPositions.size() - 1; i++) {
-//			if(orderPositions.get(i) == null) {
-//				orderPosition.setOrderPositionId(i+1);
-//				orderPositions.add(i, orderPosition);
-//				break;
-//			}
-//			System.out.println("OrderPosition: " + i);
-//		}
-//		if(i == orderPositions.re() -1) {
-//			System.out.println("In der IF");
-//			orderPosition.setOrderPositionId(i+2);
-//			orderPositions.add(i+1, orderPosition);
-//		}
-//	}
-
 }

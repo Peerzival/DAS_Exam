@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.leuphana.component.behaviour.OrderRepository;
 import de.leuphana.component.behaviour.exception.OrderNotFoundException;
-import de.leuphana.component.structure.Article;
 import de.leuphana.component.structure.Order;
 import de.leuphana.component.structure.OrderPosition;
 
@@ -22,38 +21,46 @@ public class OrderRestConnectorProvider {
 	@Autowired
 	private OrderRepository orderRepository;
 	final ArticleRestConnectorRequester articleRestConnectorRequester;
-	
+
 	@Autowired
 	public OrderRestConnectorProvider(ArticleRestConnectorRequester articleRestConnectorRequester) {
 		this.articleRestConnectorRequester = articleRestConnectorRequester;
 	}
-//	public ArticleRestConnectorRequester articleRestConnectorRequester;
 
+	//TODO later change reponsebody String to int 
 	@PostMapping(path = "/addArticleToOrder")
-	public String addArticleToOrder(@RequestParam int articleId, @RequestParam int quantity, @RequestParam int orderId) {
-		
+	public String addArticleToOrder(@RequestParam int articleId, @RequestParam int quantity,
+			@RequestParam int orderId, @RequestParam int customerId) {
+
 		// TODO Exceptions
 		// Check if article exists
-		Article article = articleRestConnectorRequester.getArticleById(articleId);
-		
+		int idOfArticle = -1;
+		try {
+			idOfArticle = articleRestConnectorRequester.checkArticleId(articleId);
+		} catch(RuntimeException ex){
+			return ex.getClass().getSimpleName() + ex.getMessage();
+		}
+
 		// Get Order
 		Order order;
 		try {
-			order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));;	
-		} catch(OrderNotFoundException ex) {
+			order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
+		} catch (OrderNotFoundException ex) {
 			order = new Order();
+			order.setCustomerId(customerId);
 		}
-		
+
 		// Create new OrderPosition and add to Order
 		OrderPosition orderPosition = new OrderPosition();
-		
-		orderPosition.setArticleId(articleId);
+
+		orderPosition.setArticleId(idOfArticle);
 		orderPosition.setArticleQuantity(quantity);
 		order.addOrderPosition(orderPosition);
-		
+
 		// Persist to DB
 		orderRepository.save(order);
-		return "Saved\n";
+		//should later return orderId
+		return "Article got added to order with id" + orderId + "\n";
 	}
 
 	@GetMapping(path = "/getOrder")
@@ -70,6 +77,6 @@ public class OrderRestConnectorProvider {
 	@DeleteMapping(path = "/deleteOrder")
 	public @ResponseBody String deleteOrder(@RequestParam int orderId) {
 		orderRepository.deleteById(orderId);
-		return "Deleted\n";
+		return "order deleted with id: " + orderId;
 	}
 }
