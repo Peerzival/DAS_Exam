@@ -90,7 +90,8 @@ public class ArticleRestConnectorProvider {
 	
 	@GetMapping(path = "/getArticleByName/{name}")
 	public Article getArticleByName(@PathVariable(name="name") String name) {
-		return articleRepository.findByName(name).orElseThrow(() -> new ArticleNotFoundException(name));
+		return articleRepository.findByName(name).orElseThrow(() 
+				-> new ArticleNotFoundException(name));
 	}
 	
 	@GetMapping(path = "/getAllArticles")
@@ -99,7 +100,7 @@ public class ArticleRestConnectorProvider {
 	}
 	
 	@PostMapping(path = "/checkArticleId")
-	public int checkArticleId(@RequestParam int articleId) {
+	public int checkArticleId(@RequestParam(name="articleId") int articleId) {
 		
 		return articleRepository.findById(articleId)
 				.orElseThrow(() -> 

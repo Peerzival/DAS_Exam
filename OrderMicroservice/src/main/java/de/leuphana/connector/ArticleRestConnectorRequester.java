@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ArticleRestConnectorRequester {
 
 	@PostMapping(path = "/checkArticleId")
-	int checkArticleId(@RequestParam int articleId);
+	int checkArticleId(@RequestParam(name="articleId") int articleId);
 	
 }

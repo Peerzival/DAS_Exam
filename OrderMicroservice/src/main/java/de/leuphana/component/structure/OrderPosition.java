@@ -1,20 +1,17 @@
 package de.leuphana.component.structure;
 
-import javax.annotation.Generated;
-import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import org.hibernate.annotations.GenerationTime;
-
-//@Entity
-//@Table(name = "DB_ORDERPOSITION")
-@Embeddable
+@Entity
+@Table(name = "DB_ORDERPOSITION")
 public class OrderPosition {
 
+	@Id
 	private int orderPositionId;
 	private int articleId;
 	private int articleQuantity;
-	
-	public OrderPosition() {}
 
 	public int getArticleId() {
 		return articleId;
