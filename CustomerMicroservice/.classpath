@@ -34,7 +34,5 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/ArticleMicroservice"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/OrderMicroservice"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

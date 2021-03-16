@@ -23,7 +23,7 @@ public class Customer {
 	private String name;
 	private String address;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval=true)
 	private Cart cart;
 
 	@ElementCollection
