@@ -28,6 +28,10 @@ public class OrderRestConnectorProvider {
 	}
 
 	//TODO later change reponsebody String to int 
+	
+	// Curl
+	// curl localhost:8280/order/addArticleToOrder -d articleId=2 -d quantity=27 -d orderId=2 -d customerId=1
+	
 	@PostMapping(path = "/addArticleToOrder")
 	public String addArticleToOrder(@RequestParam int articleId, @RequestParam int quantity,
 			@RequestParam int orderId, @RequestParam int customerId) {
