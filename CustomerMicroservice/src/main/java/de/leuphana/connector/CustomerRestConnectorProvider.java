@@ -20,7 +20,7 @@ import de.leuphana.component.structure.Customer;
 
 @RestController
 @RequestMapping(path = "/customer")
-public class MainController {
+public class CustomerRestConnectorProvider {
 
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -85,19 +85,6 @@ public class MainController {
 		return "changed name of selected customer to: " + name;
 	}
 
-	// curl -X POST -d "name=value&address=value"
-	// http://localhost:8281/customer/addcustomer
-	@PostMapping(path = "/addcustomer")
-	public @ResponseBody String addNewCustomer(
-		@RequestParam String name,
-		@RequestParam String address) {
-		Cart cart = new Cart();
-		Customer customer = new Customer(name, address, cart);
-		customer = customerRepository.save(customer);
-		return "new customer created with id: "
-				+ customer.getCustomerId();
-	}
-	
 	// -------------------------------------------------------------------------
 	// DELETE
 	
@@ -111,13 +98,6 @@ public class MainController {
 		return "customer deleted with id: " + customerId;
 	}
 
-	// http://localhost:8281/customer/getcustomer/
-	@GetMapping(path = "/getcustomer/{customerId}")
-	public @ResponseBody Customer getCustomer(
-		@PathVariable(value = "customerId") int customerId) {
-		return customerRepository.findById(customerId);
-	}
-	
 	// -------------------------------------------------------------------------
 	// READ
 	
