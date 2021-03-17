@@ -11,8 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,7 +27,7 @@ public class Order {
 	public Order() {
 		orderPositions = new ArrayList<OrderPosition>();
 	}
-	
+
 	public Order(int customerId) {
 		this.customerId = customerId;
 		orderPositions = new ArrayList<OrderPosition>();
@@ -59,8 +57,7 @@ public class Order {
 //	@CollectionTable(name = "db_orderposition",
 //		joinColumns = @JoinColumn(name="relatedOrderId"))
 //	@Column(name="orderId")
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,
-			orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<OrderPosition> getOrderPositions() {
 		return orderPositions;
 	}
@@ -70,7 +67,7 @@ public class Order {
 	}
 
 	public void addOrderPosition(OrderPosition orderPosition) {
-		// Set of all awarded id´s
+		// Set of all awarded id´s for order positions
 		Set<Integer> ids = new HashSet<Integer>();
 		for (OrderPosition orderPositionIterator : orderPositions) {
 			ids.add(orderPositionIterator.getOrderPositionId());
@@ -99,5 +96,17 @@ public class Order {
 			}
 			isContained = false;
 		}
+	}
+
+	public OrderPosition deleteOrderPosition(
+		int orderPositionId) {
+		for (OrderPosition orderPosition : orderPositions) {
+			if (orderPosition
+					.getOrderPositionId() == orderPositionId) {
+				orderPositions.remove(orderPosition);
+				return orderPosition;
+			}
+		}
+		return null;
 	}
 }
