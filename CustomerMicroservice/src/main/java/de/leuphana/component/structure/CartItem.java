@@ -2,8 +2,6 @@ package de.leuphana.component.structure;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,9 +11,6 @@ import javax.persistence.Table;
 public class CartItem {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int cartItemId;
-
 	@Column(name="ArticleId")
 	private int articleId;
 
@@ -24,10 +19,6 @@ public class CartItem {
 
 	public CartItem() {
 		quantity = 1;
-	}
-
-	public int getCartItemId() {
-		return cartItemId;
 	}
 
 	public int getArticleId() {

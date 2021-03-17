@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,8 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int cartId;
 
-	@OneToMany(cascade = { CascadeType.ALL })
+	@OneToMany(cascade = { CascadeType.ALL }, orphanRemoval=true)
+//	@ElementCollection
 	private Map<Integer, CartItem> cartItems;
 	
 	private int numberOfArticles;
@@ -47,13 +49,13 @@ public class Cart {
 	public void deleteCartItem(int articleId) {
 		for (CartItem cartItem : cartItems.values()) {
 			if (cartItem.getArticleId() == (articleId)) {
-				cartItems.remove(cartItem.getCartItemId());
+				cartItems.remove(articleId);
 				break;
 			}
 		}
 	}
 
-	public void decrementArticleQuantity(Integer articleId) {
+	public void decrementArticleQuantity(int articleId) {
 		if (cartItems.containsKey(articleId)) {
 			CartItem cartItem = (CartItem) cartItems.get(articleId);
 			cartItem.decrementQuantity();
