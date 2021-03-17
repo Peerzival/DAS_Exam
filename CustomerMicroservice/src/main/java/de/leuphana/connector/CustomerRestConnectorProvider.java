@@ -65,37 +65,37 @@ public class MainController {
 	// curl -X POST -d "customerId=value&address=value" http://localhost:8281/customer/changecustomer/address
 	@PostMapping(path = "/changecustomer/address")
 	public @ResponseBody String changeCustomerAddress(
-			@RequestParam int customerId, 
-			@RequestParam String address) {
-		
+		@RequestParam int customerId,
+		@RequestParam String address) {
 		Customer customer = getCustomer(customerId);
 		customer.setAddress(address);
 		customerRepository.save(customer);
-		return "changed address of selected customer to: " + address;
+		return "changed address of selected customer to: "
+				+ address;
 	}
 	
 	// curl -X POST -d "customerId=value&name=value" http://localhost:8281/customer/changecustomer/name
 	@PostMapping(path = "/changecustomer/name")
 	public @ResponseBody String changeCustomerName(
-			@RequestParam int customerId, 
-			@RequestParam String name) {
-		
+		@RequestParam int customerId,
+		@RequestParam String name) {
 		Customer customer = getCustomer(customerId);
 		customer.setName(name);
 		customerRepository.save(customer);
 		return "changed name of selected customer to: " + name;
 	}
-	
-	// curl -X POST -d "customerId=value&orderId=value" http://localhost:8281/customer/addordertocustomer
-	@PostMapping(path="/addordertocustomer")
-	public @ResponseBody String addOrderToCustomer(
-			@RequestParam int customerId, 
-			@RequestParam Integer orderId) {
-		
-		Customer customer = getCustomer(customerId);
-		customer.addOrder(orderId);
-		customerRepository.save(customer);
-		return "Order: " + orderId + " added";
+
+	// curl -X POST -d "name=value&address=value"
+	// http://localhost:8281/customer/addcustomer
+	@PostMapping(path = "/addcustomer")
+	public @ResponseBody String addNewCustomer(
+		@RequestParam String name,
+		@RequestParam String address) {
+		Cart cart = new Cart();
+		Customer customer = new Customer(name, address, cart);
+		customer = customerRepository.save(customer);
+		return "new customer created with id: "
+				+ customer.getCustomerId();
 	}
 	
 	// -------------------------------------------------------------------------
@@ -103,32 +103,19 @@ public class MainController {
 	
 	// curl -X DELETE -d "customerId=value" http://localhost:8281/customer/deletecustomer
 	@DeleteMapping("/deletecustomer")
-	public @ResponseBody String deleteCustomer(@RequestParam int customerId) {
-		
-		Customer customer = customerRepository.findById(customerId);
+	public @ResponseBody String deleteCustomer(
+		@RequestParam int customerId) {
+		Customer customer = customerRepository
+				.findById(customerId);
 		customerRepository.delete(customer);
 		return "customer deleted with id: " + customerId;
 	}
-	
-	// -------------------------------------------------------------------------
-	// END OF CRUD OPERATIONS: CUSTOMER
-	// -------------------------------------------------------------------------
-	
-	
-	// CRUD OPERATIONS: CART ITEMS
-	// -------------------------------------------------------------------------
-	// CREATE / UPDATE
-	
-	// curl -X POST -d "customerId=value&articleId=value" http://localhost:8281/customer/addcartitemtocart
-	@PostMapping(path="/addcartitemtocart")
-	public @ResponseBody String addCartItemToCustomer(
-			@RequestParam int customerId, 
-			@RequestParam int articleId) {
-		
-		Customer customer = getCustomer(customerId);
-		customer.getCart().addCartItem(articleId);
-		customerRepository.save(customer);
-		return "added article with id: " + articleId;
+
+	// http://localhost:8281/customer/getcustomer/
+	@GetMapping(path = "/getcustomer/{customerId}")
+	public @ResponseBody Customer getCustomer(
+		@PathVariable(value = "customerId") int customerId) {
+		return customerRepository.findById(customerId);
 	}
 	
 	// -------------------------------------------------------------------------
