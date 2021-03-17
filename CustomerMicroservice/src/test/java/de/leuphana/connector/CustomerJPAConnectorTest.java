@@ -49,7 +49,7 @@ class CustomerJPAConnectorTest {
 
 	@Test
 	void canCustomerBePersisted() {
-		Customer customer = new Customer("Harald Krull", "St. Pauli Reeperbahn", null);
+		Customer customer = new Customer("Harald Krull", "St. Pauli Reeperbahn");
 
 		// Persist
 		customerRepository.save(customer);

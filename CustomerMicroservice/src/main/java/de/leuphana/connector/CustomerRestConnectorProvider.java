@@ -27,7 +27,7 @@ public class CustomerRestConnectorProvider {
 	
 	// CRUD OPERATIONS: CUSTOMER
 	// -------------------------------------------------------------------------
-	// CREATE
+	// CREATE 
 	
 	// curl -X POST -d "name=value&address=value" http://localhost:8281/customer/addcustomer
 	@PostMapping(path = "/addcustomer") 
@@ -35,20 +35,34 @@ public class CustomerRestConnectorProvider {
 			@RequestParam String name, 
 			@RequestParam String address) {
 		
-		Cart cart = new Cart();
-		Customer customer = new Customer(name, address, cart);
+		Customer customer = new Customer(name, address);
 		customer = customerRepository.save(customer);	
+		
+		Cart cart = new Cart();
+		cart.setCartId(customer.getCustomerId());
+		customer.setCart(cart);
+		customer = customerRepository.save(customer);
+		
 		return "new customer created with id: " + customer.getCustomerId();
 	}
+	
+	/* createOrder(customerID)
+	 * 
+	 * int orderId = orderRepositry.createOrder(customerId)
+	 * 
+	 * foreach { CartItem cartItem: Customer) orderRepository.addArticleToOrder(...) }
+	 * 
+	 * 
+	 */
 	
 	// -------------------------------------------------------------------------
 	// READ
 	
-	// curl -X POST -d "customerId=value" http://localhost:8281/customer/getCustomer
+	// curl -X POST -d "customerId=value" http://localhost:8281/customer/getcustomer
 	@PostMapping(path = "/getcustomer")
 	public @ResponseBody Customer getCustomer(
 			@RequestParam int customerId) {
-		
+
 		return customerRepository.findById(customerId);
 	}
 	
@@ -97,7 +111,29 @@ public class CustomerRestConnectorProvider {
 		customerRepository.delete(customer);
 		return "customer deleted with id: " + customerId;
 	}
+	
+	// -------------------------------------------------------------------------
+	// END OF CRUD OPERATIONS: CUSTOMER
+	// -------------------------------------------------------------------------
 
+	
+	// CRUD OPERATIONS: CART ITEM
+	// -------------------------------------------------------------------------
+	// CREATE	
+	
+	// curl -X POST -d "customerId=value&articleId=value" http://localhost:8281/customer/addcartitem
+		@PostMapping(path = "/addcartitem") 
+		public @ResponseBody String addCartItem(
+				@RequestParam int customerId, 
+				@RequestParam int articleId) {
+			
+			Customer customer = customerRepository.findById(customerId);
+			customer.getCart().addCartItem(articleId);
+			customerRepository.save(customer);
+			
+			return "new cartitem created with id: " + customer.getCustomerId();
+		}
+	
 	// -------------------------------------------------------------------------
 	// READ
 	
@@ -120,6 +156,19 @@ public class CustomerRestConnectorProvider {
 		return "cartitems:\n" + cartItemsInCustomer;
 	}
 
+	// curl -X POST -d "customerId=value&articleId=value" http://localhost:8281/customer/decrementcartitem
+	@PostMapping(path="/decrementcartitem")
+	public @ResponseBody String delecrementArticleFromCartitem(
+			@RequestParam int customerId,
+			@RequestParam int articleId) {
+		
+		Customer customer = getCustomer(customerId);
+		customer.getCart().decrementArticleQuantity(articleId);
+		customerRepository.save(customer);
+		
+		return "cartitem:" + articleId + " decrement";
+	}
+	
 	// -------------------------------------------------------------------------
 	// DELETE
 	
@@ -135,18 +184,6 @@ public class CustomerRestConnectorProvider {
 		return "cartitem:" + articleId + " deleted";
 	}
 	
-	// curl -X POST -d "customerId=value&articleId=value" http://localhost:8281/customer/decrementcartitem
-		@PostMapping(path="/decrementcartitem")
-		public @ResponseBody String delecrementArticleFromCartitem(
-				@RequestParam int customerId,
-				@RequestParam int articleId) {
-			
-			Customer customer = getCustomer(customerId);
-			customer.getCart().decrementArticleQuantity(articleId);
-			customerRepository.save(customer);
-			
-			return "cartitem:" + articleId + " decrement";
-		}
 	
 	// -------------------------------------------------------------------------
 	// END OF CRUD OPERATIONS: CART ITEM
@@ -158,21 +195,34 @@ public class CustomerRestConnectorProvider {
 	// http://localhost:8281/customer/democustomers
 	@RequestMapping(path = "/democustomers")
 	public String dummys() {
+		Customer customer1;
+		Cart cart1 = new Cart();
+		Customer customer2;
+		Cart cart2 = new Cart();
+		Customer customer3;
+		Cart cart3 = new Cart();
 		
-		customerRepository.save(new Customer(
+		customer1 = customerRepository.save(new Customer(
 				"Andreas Michael Baechler", 
-				"Am Altenbruecker Ziegelhof 11",
-				new Cart()));
+				"Am Altenbruecker Ziegelhof 11"));
+		cart1.setCartId(customer1.getCustomerId());
+		customer1.setCart(cart1);
+		customerRepository.save(customer1);
 		
-		customerRepository.save(new Customer(
+		
+		customer2 = customerRepository.save(new Customer(
 				"Max Gnewuch und Henrik Pruess", 
-				"Feldstrasse 53", 
-				new Cart()));
+				"Feldstrasse 53"));
+		cart2.setCartId(customer2.getCustomerId());
+		customer2.setCart(cart2);
+		customerRepository.save(customer2);
 		
-		customerRepository.save(new Customer(
+		customer3 = customerRepository.save(new Customer(
 				"Levin Schnabel", 
-				"Am Sande", 
-				new Cart()));
+				"Am Sande"));
+		cart3.setCartId(customer3.getCustomerId());
+		customer3.setCart(cart3);
+		customerRepository.save(customer3);
 		
 		return "Demo Customers Saved";
 	}

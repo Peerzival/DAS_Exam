@@ -28,13 +28,12 @@ public class Customer {
 	@ElementCollection
 	private List<Integer> orderIds;
 
-	protected Customer() {
+	public Customer() {
 	}
 
-	public Customer(String name, String address, Cart cart) {
+	public Customer(String name, String address) {
 		this.name = name;
 		this.address = address;
-		this.cart = cart;
 		orderIds = new ArrayList<Integer>();
 
 	}

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,19 +17,27 @@ import javax.persistence.Table;
 public class Cart {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	int cartId;
 
-	@OneToMany(cascade = { CascadeType.ALL }, orphanRemoval=true)
+	@OneToMany(cascade = { CascadeType.ALL }, orphanRemoval = true)
 //	@ElementCollection
 	private Map<Integer, CartItem> cartItems;
-	
+
 	private int numberOfArticles;
 
 	public Cart() {
 		cartItems = new HashMap<Integer, CartItem>();
 
 		numberOfArticles = 0;
+	}
+
+	public int getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(int cartId) {
+		this.cartId = cartId;
 	}
 
 	public void addCartItem(int articleId) {
