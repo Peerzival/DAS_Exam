@@ -21,9 +21,22 @@ import de.leuphana.component.structure.Customer;
 @RestController
 @RequestMapping(path = "/customer")
 public class CustomerRestConnectorProvider {
+	
 
 	@Autowired
 	private CustomerRepository customerRepository;
+	
+	// Feign
+	private OrderRestConnectorRequester orderRestConnectorRequester;
+	
+	@Autowired
+	public CustomerRestConnectorProvider(
+			OrderRestConnectorRequester orderRestConnectorRequester) {
+		
+		this.orderRestConnectorRequester = orderRestConnectorRequester;
+	}
+	
+	
 	
 	// CRUD OPERATIONS: CUSTOMER
 	// -------------------------------------------------------------------------
@@ -132,6 +145,26 @@ public class CustomerRestConnectorProvider {
 			customerRepository.save(customer);
 			
 			return "new cartitem created with id: " + customer.getCustomerId();
+		}
+		
+	// curl localhost:8281/customer/checkoutCartToOrder -d customerId=1
+		@PostMapping(path="/checkoutCartToOrder")
+		public @ResponseBody String checkOutCartToOrder(@RequestParam int customerId) {
+			
+			int orderId = orderRestConnectorRequester.createOrder(customerId);
+			
+			Customer customer = customerRepository.findById(customerId);
+			Cart cart = customer.getCart();
+			
+			for (CartItem cartItem : cart.getCartItems()) {
+				orderRestConnectorRequester
+					.addArticleToOrder(cartItem.getArticleId(),
+							cartItem.getQuantity(),
+							orderId);
+			}
+			
+			return "Cart with id '" + cart.getCartId() + "' checked out " +
+				"into order with id '" + orderId + "'.\n";
 		}
 	
 	// -------------------------------------------------------------------------

@@ -20,6 +20,7 @@ public class OrderRestConnectorProvider {
 	// Spring Data
 	@Autowired
 	private OrderRepository orderRepository;
+
 	// Feign
 	final ArticleRestConnectorRequester articleRestConnectorRequester;
 
@@ -33,15 +34,15 @@ public class OrderRestConnectorProvider {
 	// -------------------------------------------------------------------------
 
 	// CREATE
-	// curl localhost:8280/order/addOrder -d customerId=value
+	// curl localhost:8280/order/createOrder -d customerId=value
 	// -------------------------------------------------------------------------
-	@PostMapping(path = "/addOrder")
-	public String addNewOrder(@RequestParam int customerId) {
+	@PostMapping(path = "/createOrder")
+	public int createOrder(@RequestParam(name = "customerId") int customerId) 
+	{
 		Order order = new Order(customerId);
 		Order savedOrder = orderRepository.save(order);
 
-		return "Order with id '" + savedOrder.getOrderId()
-				+ "' added.\n";
+		return savedOrder.getOrderId();
 	}
 
 	// READ
@@ -67,10 +68,10 @@ public class OrderRestConnectorProvider {
 
 	// TODO later change reponsebody String to int
 	@PostMapping(path = "/addArticleToOrder")
-	public String addArticleToOrder(@RequestParam int articleId,
-		@RequestParam int quantity,
-		@RequestParam int orderId,
-		@RequestParam int customerId) {
+	public String addArticleToOrder(
+		@RequestParam(name="articleId") int articleId,
+		@RequestParam(name="quantity") int quantity,
+		@RequestParam(name="orderId") int orderId) {
 
 		// Check if article exists
 		int idOfArticle = -1;
@@ -81,31 +82,19 @@ public class OrderRestConnectorProvider {
 			return ex.getClass().getSimpleName()
 					+ ex.getMessage();
 		}
-
-		// Get Order
-		Order order;
-		try {
-			order = orderRepository.findById(orderId)
-					.orElseThrow(
-							() -> new OrderNotFoundException(
-									orderId));
-		} catch (OrderNotFoundException ex) {
-			order = new Order();
-			order.setCustomerId(customerId);
-		}
-
-		// Create new OrderPosition and add to Order
+	
+		Order order = orderRepository.findById(orderId).orElseThrow(() -> 
+			new OrderNotFoundException(orderId));
+		
 		OrderPosition orderPosition = new OrderPosition();
-
 		orderPosition.setArticleId(idOfArticle);
 		orderPosition.setArticleQuantity(quantity);
+		
 		order.addOrderPosition(orderPosition);
 
-		// Persist to DB
 		orderRepository.save(order);
-		// should later return orderId
-		return "Article with id '" + orderId
-				+ "' added to order.\n";
+		
+		return "Article with id '" + orderId + "' added to order.\n";
 	}
 
 	// DELETE
