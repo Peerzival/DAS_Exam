@@ -10,12 +10,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-
-// Test-commands for Curl
-// curl localhost:8180/article/add -d name=Weihnachtsmann -d manufactor=Leuphana -d price=10.5f
-// curl localhost:8180/article/all
-// curl localhost:8180/article/get -d articleId=9
-
 // Commands for docker deployment
 // cd C:\Users\henri\git\DAS_Exam\ArticleMicroservice
 // mvn -N io.takari:maven:wrapper

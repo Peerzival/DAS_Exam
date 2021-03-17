@@ -54,10 +54,10 @@ class ArticleJPATest {
 		// Check persistence
 		Assertions.assertNotNull(articleRepository.findByName("Weihnachtsmann"));
 		
-		// additional logs TODO remove or change to DEBUG instead of INFO
-		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getName());
-		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getManufactor());
-		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getPrice());
+//		// additional logs TODO remove or change to DEBUG instead of INFO
+//		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getName());
+//		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getManufactor());
+//		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getPrice());
 	}
 
 }
