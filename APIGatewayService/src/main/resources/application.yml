@@ -1,0 +1,26 @@
+server:
+  port: 8880
+ 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka 
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+      - id: article
+        uri: http://localhost:8180/
+        predicates:
+        - Path=/article/**
+      - id: order
+        uri: http://localhost:8280/
+        predicates:
+        - Path=/order/**
+      - id: customer
+        uri: http://localhost:8281/
+        predicates:
+        - Path=/customer/**

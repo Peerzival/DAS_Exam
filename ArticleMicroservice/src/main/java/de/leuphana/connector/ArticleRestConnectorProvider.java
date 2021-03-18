@@ -84,8 +84,11 @@ public class ArticleRestConnectorProvider {
 	
 	@GetMapping(path = "/getArticleById/{articleId}")
 	public Article getArticleById(@PathVariable(name="articleId") int articleId) {
-		return articleRepository.findById(articleId)
+		Article article =  articleRepository.findById(articleId)
 				.orElseThrow(() -> new ArticleNotFoundException(articleId));
+		
+		System.out.println("GET article successful");
+		return article;
 	}
 	
 	@GetMapping(path = "/getArticleByName/{name}")

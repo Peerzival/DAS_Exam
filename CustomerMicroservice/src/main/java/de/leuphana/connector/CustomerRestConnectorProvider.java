@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.leuphana.component.behaviour.CustomerRepository;
+import de.leuphana.component.behaviour.exception.CustomerNotFoundException;
 import de.leuphana.component.structure.Cart;
 import de.leuphana.component.structure.CartItem;
 import de.leuphana.component.structure.Customer;
@@ -59,15 +60,6 @@ public class CustomerRestConnectorProvider {
 		return "new customer created with id: " + customer.getCustomerId();
 	}
 	
-	/* createOrder(customerID)
-	 * 
-	 * int orderId = orderRepositry.createOrder(customerId)
-	 * 
-	 * foreach { CartItem cartItem: Customer) orderRepository.addArticleToOrder(...) }
-	 * 
-	 * 
-	 */
-	
 	// -------------------------------------------------------------------------
 	// READ
 	
@@ -76,7 +68,9 @@ public class CustomerRestConnectorProvider {
 	public @ResponseBody Customer getCustomer(
 			@RequestParam int customerId) {
 
-		return customerRepository.findById(customerId);
+		return customerRepository.findById(customerId)
+				.orElseThrow(() -> 
+				new CustomerNotFoundException(customerId));
 	}
 	
 	// http://localhost:8281/customer/getallcustomers
@@ -119,8 +113,10 @@ public class CustomerRestConnectorProvider {
 	@DeleteMapping("/deletecustomer")
 	public @ResponseBody String deleteCustomer(
 		@RequestParam int customerId) {
-		Customer customer = customerRepository
-				.findById(customerId);
+		Customer customer = customerRepository.findById(customerId)
+				.orElseThrow(() -> 
+				new CustomerNotFoundException(customerId));
+		
 		customerRepository.delete(customer);
 		return "customer deleted with id: " + customerId;
 	}
@@ -140,7 +136,10 @@ public class CustomerRestConnectorProvider {
 				@RequestParam int customerId, 
 				@RequestParam int articleId) {
 			
-			Customer customer = customerRepository.findById(customerId);
+			Customer customer = customerRepository.findById(customerId)
+					.orElseThrow(() -> 
+					new CustomerNotFoundException(customerId));
+			
 			customer.getCart().addCartItem(articleId);
 			customerRepository.save(customer);
 			
@@ -149,11 +148,15 @@ public class CustomerRestConnectorProvider {
 		
 	// curl localhost:8281/customer/checkoutCartToOrder -d customerId=1
 		@PostMapping(path="/checkoutCartToOrder")
-		public @ResponseBody String checkOutCartToOrder(@RequestParam int customerId) {
+		public @ResponseBody String checkOutCartToOrder(
+				@RequestParam int customerId) {
+			
+			Customer customer = customerRepository.findById(customerId)
+					.orElseThrow(() -> 
+					new CustomerNotFoundException(customerId));
 			
 			int orderId = orderRestConnectorRequester.createOrder(customerId);
 			
-			Customer customer = customerRepository.findById(customerId);
 			Cart cart = customer.getCart();
 			
 			for (CartItem cartItem : cart.getCartItems()) {
@@ -161,6 +164,7 @@ public class CustomerRestConnectorProvider {
 					.addArticleToOrder(cartItem.getArticleId(),
 							cartItem.getQuantity(),
 							orderId);
+				deleteArticleFromCartitem(customerId, cartItem.getArticleId());
 			}
 			
 			return "Cart with id '" + cart.getCartId() + "' checked out " +

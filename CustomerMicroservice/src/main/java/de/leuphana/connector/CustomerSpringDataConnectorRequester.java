@@ -18,13 +18,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan("de.leuphana.connector")
 @EnableFeignClients
 @EnableDiscoveryClient
-public class AccessingDataJpaApplication {
+public class CustomerSpringDataConnectorRequester {
 
-	private static final Logger log = LoggerFactory.getLogger(AccessingDataJpaApplication.class);
+	private static final Logger log = LoggerFactory.getLogger(CustomerSpringDataConnectorRequester.class);
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(AccessingDataJpaApplication.class, args);
+		SpringApplication.run(CustomerSpringDataConnectorRequester.class, args);
 	}
 
 }

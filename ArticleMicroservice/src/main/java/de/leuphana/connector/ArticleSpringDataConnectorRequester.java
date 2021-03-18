@@ -24,11 +24,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //If the class with the annotation RestController is in a different package, this is necessary. 
 @ComponentScan("de.leuphana.connector")
 @EnableDiscoveryClient
-public class AccessingDataJpaApplication {
+public class ArticleSpringDataConnectorRequester {
 
-	public static final Logger log = LoggerFactory.getLogger(AccessingDataJpaApplication.class);
+	public static final Logger log = 
+			LoggerFactory.getLogger(ArticleSpringDataConnectorRequester.class);
 
 	public static void main(String[] args) {
-		SpringApplication.run(AccessingDataJpaApplication.class, args);
+		SpringApplication.run(
+				ArticleSpringDataConnectorRequester.class, args);
 	}
 }
