@@ -27,115 +27,145 @@ public class ArticleRestConnectorProvider {
 
 	// -------------------- CRUD -------------------- \\
 	// --------------------------------------------------------------------------------
-	
+
 	// CREATE
 	// curl localhost:8180/article/addArticle -d name=Weihnachtsmann -d manufactor=Leuphana -d price=10.5f
 	// --------------------------------------------------------------------------------
 	@PostMapping(path = "/addArticle") // Map ONLY POST Requests
-	public String addNewArticle(@RequestParam String name, 
-			@RequestParam String manufactor,
-			@RequestParam float price) {
-		
+	public String addNewArticle(@RequestParam String name,
+		@RequestParam String manufactor,
+		@RequestParam float price) {
+
 		Article article = new Article(name, manufactor, price);
 		if (!checkIfArticleNameAlreadyExists(article)) {
 			articleRepository.save(article);
-			
+
 			// Check persistence
 			int articleId = article.getArticleId();
-			article = articleRepository.findById(article.getArticleId())
-					.orElseThrow(() -> new ArticleNotFoundException(articleId));
-			
-			return "Article with Id " + article.getArticleId() + " added.";
+			article = articleRepository
+					.findById(article.getArticleId())
+					.orElseThrow(
+							() -> new ArticleNotFoundException(
+									articleId));
+
+			return "Article with Id " + article.getArticleId()
+					+ " added.";
 		}
-		return "The article you want to add already exist in our database. " + 
-				"Please add a different article.";
+		return "The article you want to add already exist in our database. "
+				+ "Please add a different article.";
 	}
-	
+
 	// UPDATE
-	// curl localhost:8180/article/updateArticle -d articleId=1 -d name=Rumpelstielzchen -d manufactor=TU_Hamburg -d price=56.5f
+	// curl localhost:8180/article/updateArticle -d articleId=1 -d
+	// name=Rumpelstielzchen -d manufactor=TU_Hamburg -d price=56.5f
 	// --------------------------------------------------------------------------------
-	
+
 	@PostMapping(path = "/updateArticle")
 	public String updateArticle(@RequestParam int articleId,
-			@RequestParam String name, 
-			@RequestParam String manufactor,
-			@RequestParam float price) {
-		
-		Article updateArticle = articleRepository.findById(articleId)
-				.orElseThrow(() -> new ArticleNotFoundException(articleId));
-		
-		if(updateArticle != null) {
+		@RequestParam String name,
+		@RequestParam String manufactor,
+		@RequestParam float price) {
+
+		Article updateArticle = articleRepository
+				.findById(articleId)
+				.orElseThrow(() -> new ArticleNotFoundException(
+						articleId));
+
+		if (updateArticle != null) {
 			updateArticle.setName(name);
 			updateArticle.setManufactor(manufactor);
 			updateArticle.setPrice(price);
-			
+
 			articleRepository.save(updateArticle);
-			return "Article with id '" + articleId + "' updated.\n";
+			return "Article with id '" + articleId
+					+ "' updated.\n";
 		}
-		return "Update of article with id '" + articleId + "' failed. " +
-			"Consider adding a new article.";
+		return "Update of article with id '" + articleId
+				+ "' failed. "
+				+ "Consider adding a new article.";
 	}
-	
+
 	// READ
 	// curl localhost:8180/article/getArticleById/1
 	// curl localhost:8180/article/getAllArticles
 	// curl localhost:8180/article/checkArticleId -d articleId=1
 	// --------------------------------------------------------------------------------
-	
+
 	@GetMapping(path = "/getArticleById/{articleId}")
-	public Article getArticleById(@PathVariable(name="articleId") int articleId) {
-		Article article =  articleRepository.findById(articleId)
-				.orElseThrow(() -> new ArticleNotFoundException(articleId));
-		
+	public Article getArticleById(
+		@PathVariable(name = "articleId") int articleId) {
+		Article article = articleRepository.findById(articleId)
+				.orElseThrow(() -> new ArticleNotFoundException(
+						articleId));
+
 		System.out.println("GET article successful");
 		return article;
 	}
-	
+
 	@GetMapping(path = "/getArticleByName/{name}")
-	public Article getArticleByName(@PathVariable(name="name") String name) {
-		return articleRepository.findByName(name).orElseThrow(() 
-				-> new ArticleNotFoundException(name));
+	public Article getArticleByName(
+		@PathVariable(name = "name") String name) {
+		return articleRepository.findByName(name).orElseThrow(
+				() -> new ArticleNotFoundException(name));
 	}
-	
+
+	@PostMapping(path = "/getArticleString")
+	public String getArticleString(@RequestParam int articleId) {
+		Article article = articleRepository.findById(articleId)
+				.orElseThrow(() -> new ArticleNotFoundException(
+						articleId));
+
+		return "Articlename: " + article.getName()
+				+ "    Articlemanufactor: "
+				+ article.getManufactor()
+				+ "\nPrice of article: " + article.getPrice()
+				+ "€.";
+	}
+
 	@GetMapping(path = "/getAllArticles")
 	public Iterable<Article> getAllArticles() {
 		return articleRepository.findAll();
 	}
-	
+
 	@PostMapping(path = "/checkArticleId")
-	public int checkArticleId(@RequestParam(name="articleId") int articleId) {
-		
-		return articleRepository.findById(articleId)
-				.orElseThrow(() -> 
-				new ArticleNotFoundException(articleId)).getArticleId();
+	public int checkArticleId(
+		@RequestParam(name = "articleId") int articleId) {
+
+		return articleRepository.findById(articleId).orElseThrow(
+				() -> new ArticleNotFoundException(articleId))
+				.getArticleId();
 	}
-	
+
 	// DELETE
 	// curl localhost:8180/article/deleteArticle -d articleId=3
 	// --------------------------------------------------------------------------------
-	
-	@PostMapping(path= "/deleteArticle")
-	public String deleteArticleById(@RequestParam int articleId) {
+
+	@PostMapping(path = "/deleteArticle")
+	public String deleteArticleById(
+		@RequestParam int articleId) {
 		try {
-			articleRepository.deleteById(articleId);	
-		} catch(EmptyResultDataAccessException ex) {
-			return("There is no article with that id.\n");
+			articleRepository.deleteById(articleId);
+		} catch (EmptyResultDataAccessException ex) {
+			return ("There is no article with that id.\n");
 		}
 		return "Article with id '" + articleId + "' deleted.\n";
 	}
 
 	// Service Methods
 	// --------------------------------------------------------------------------------
-	
-	private boolean checkIfArticleNameAlreadyExists(Article article) {
-		List<Article> articles = (List<Article>) articleRepository.findAll();
-		
+
+	private boolean checkIfArticleNameAlreadyExists(
+		Article article) {
+		List<Article> articles = (List<Article>) articleRepository
+				.findAll();
+
 		for (Article listArticle : articles) {
-			if (listArticle.getName().equals(article.getName())) {
+			if (listArticle.getName()
+					.equals(article.getName())) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 }

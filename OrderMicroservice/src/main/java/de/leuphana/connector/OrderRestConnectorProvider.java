@@ -1,5 +1,7 @@
 package de.leuphana.connector;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,11 +36,11 @@ public class OrderRestConnectorProvider {
 	// -------------------------------------------------------------------------
 
 	// CREATE
-	// curl localhost:8280/order/createOrder -d customerId=value
+	// curl localhost:8880/order/createOrder -d customerId=value
 	// -------------------------------------------------------------------------
 	@PostMapping(path = "/createOrder")
-	public int createOrder(@RequestParam(name = "customerId") int customerId) 
-	{
+	public int createOrder(
+		@RequestParam(name = "customerId") int customerId) {
 		Order order = new Order(customerId);
 		Order savedOrder = orderRepository.save(order);
 
@@ -56,22 +58,58 @@ public class OrderRestConnectorProvider {
 				() -> new OrderNotFoundException(orderId));
 	}
 
+	@PostMapping(path = "/getOrderString")
+	public String getOrderString(@RequestParam int orderId) {
+		Order order = orderRepository.findById(orderId)
+				.orElseThrow(() -> new OrderNotFoundException(
+						orderId));
+
+		List<OrderPosition> orderPositions = order
+				.getOrderPositions();
+
+		String orderString = "> Order id: " + order.getOrderId()
+				+ "\n";
+
+		for (OrderPosition orderPosition : orderPositions) {
+			orderString = orderString + "Order position: "
+					+ orderPosition.getOrderPositionId()
+					+ "    Article id: "
+					+ orderPosition.getArticleId()
+					+ "    Article quantity: "
+					+ orderPosition.getArticleQuantity() + "\n";
+		}
+
+		return orderString;
+	}
+
 	@GetMapping(path = "/getAllOrders")
 	public Iterable<Order> getAllOrders() {
 		return orderRepository.findAll();
 	}
 
+	@GetMapping(path = "/getAllOrdersAsString")
+	public String getAllOrdersAsString() {
+		List<Order> orders = (List<Order>) orderRepository
+				.findAll();
+		String orderString = new String();
+
+		for (Order order : orders) {
+			orderString = orderString + "> Order id: "
+					+ order.getOrderId() + "\n";
+		}
+		return orderString;
+	}
+
 	// UPDATE
-	// curl localhost:8280/order/addArticleToOrder -d articleId=value -d quantity=value -d
-	// orderId=value -d customerId=value
+	// curl localhost:8280/order/addArticleToOrder -d articleId=value -d quantity=value -d orderId=value
 	// -------------------------------------------------------------------------
 
 	// TODO later change reponsebody String to int
 	@PostMapping(path = "/addArticleToOrder")
 	public String addArticleToOrder(
-		@RequestParam(name="articleId") int articleId,
-		@RequestParam(name="quantity") int quantity,
-		@RequestParam(name="orderId") int orderId) {
+		@RequestParam(name = "articleId") int articleId,
+		@RequestParam(name = "quantity") int quantity,
+		@RequestParam(name = "orderId") int orderId) {
 
 		// Check if article exists
 		int idOfArticle = -1;
@@ -82,19 +120,21 @@ public class OrderRestConnectorProvider {
 			return ex.getClass().getSimpleName()
 					+ ex.getMessage();
 		}
-	
-		Order order = orderRepository.findById(orderId).orElseThrow(() -> 
-			new OrderNotFoundException(orderId));
-		
+
+		Order order = orderRepository.findById(orderId)
+				.orElseThrow(() -> new OrderNotFoundException(
+						orderId));
+
 		OrderPosition orderPosition = new OrderPosition();
 		orderPosition.setArticleId(idOfArticle);
 		orderPosition.setArticleQuantity(quantity);
-		
+
 		order.addOrderPosition(orderPosition);
 
 		orderRepository.save(order);
-		
-		return "Article with id '" + orderId + "' added to order.\n";
+
+		return "Article with id '" + orderId
+				+ "' added to order.\n";
 	}
 
 	// DELETE
@@ -107,25 +147,27 @@ public class OrderRestConnectorProvider {
 		return "order deleted with id: " + orderId;
 	}
 
-	// curl localhost:8280/order/deleteOrderPosition -d positionId=value -d orderId=value
+	// curl localhost:8280/order/deleteOrderPosition -d positionId=value -d
+	// orderId=value
 	// -------------------------------------------------------------------------
-	@PostMapping(path = "/deleteOrderPosition")
-	public String deleteOrderPosition(
-		@RequestParam int positionId,
-		@RequestParam int orderId) {
-		Order order = orderRepository.findById(orderId)
-				.orElseThrow(() -> new OrderNotFoundException(
-						orderId));
 
-		OrderPosition orderPosition = order
-				.deleteOrderPosition(positionId);
-
-		if (orderPosition != null) {
-			orderRepository.save(order);
-			return "orderPosition with id " + positionId
-					+ " in order " + order.getOrderId()
-					+ " got deleted.";
-		} else
-			return "Not a valid order position Id.";
-	}
+//	@PostMapping(path = "/deleteOrderPosition")
+//	public String deleteOrderPosition(
+//		@RequestParam int positionId,
+//		@RequestParam int orderId) {
+//		Order order = orderRepository.findById(orderId)
+//				.orElseThrow(() -> new OrderNotFoundException(
+//						orderId));
+//
+//		OrderPosition orderPosition = order
+//				.deleteOrderPosition(positionId);
+//
+//		if (orderPosition != null) {
+//			orderRepository.save(order);
+//			return "orderPosition with id " + positionId
+//					+ " in order " + order.getOrderId()
+//					+ " got deleted.";
+//		} else
+//			return "Not a valid order position Id.";
+//	}
 }

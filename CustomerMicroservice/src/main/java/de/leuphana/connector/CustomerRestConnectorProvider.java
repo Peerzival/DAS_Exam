@@ -1,8 +1,7 @@
 package de.leuphana.connector;
 
-
-
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.leuphana.component.behaviour.CustomerRepository;
@@ -22,70 +20,96 @@ import de.leuphana.component.structure.Customer;
 @RestController
 @RequestMapping(path = "/customer")
 public class CustomerRestConnectorProvider {
-	
 
 	@Autowired
 	private CustomerRepository customerRepository;
-	
+
 	// Feign
 	private OrderRestConnectorRequester orderRestConnectorRequester;
-	
+
 	@Autowired
 	public CustomerRestConnectorProvider(
 			OrderRestConnectorRequester orderRestConnectorRequester) {
-		
+
 		this.orderRestConnectorRequester = orderRestConnectorRequester;
 	}
-	
-	
-	
+
 	// CRUD OPERATIONS: CUSTOMER
 	// -------------------------------------------------------------------------
-	// CREATE 
-	
-	// curl -X POST -d "name=value&address=value" http://localhost:8281/customer/addcustomer
-	@PostMapping(path = "/addcustomer") 
-	public @ResponseBody String addNewCustomer(
-			@RequestParam String name, 
-			@RequestParam String address) {
-		
+	// CREATE
+
+	// curl -X POST -d "name=value&address=value"
+	// http://localhost:8281/customer/addcustomer
+	@PostMapping(path = "/addcustomer")
+	public String addNewCustomer(@RequestParam String name,
+		@RequestParam String address) {
+
 		Customer customer = new Customer(name, address);
-		customer = customerRepository.save(customer);	
-		
+		customer = customerRepository.save(customer);
+
 		Cart cart = new Cart();
 		cart.setCartId(customer.getCustomerId());
 		customer.setCart(cart);
 		customer = customerRepository.save(customer);
-		
-		return "new customer created with id: " + customer.getCustomerId();
+
+		return "new customer created with id: "
+				+ customer.getCustomerId();
 	}
-	
+
 	// -------------------------------------------------------------------------
 	// READ
-	
+
 	// curl -X POST -d "customerId=value" http://localhost:8281/customer/getcustomer
 	@PostMapping(path = "/getcustomer")
-	public @ResponseBody Customer getCustomer(
-			@RequestParam int customerId) {
+	public Customer getCustomer(@RequestParam int customerId) {
 
 		return customerRepository.findById(customerId)
-				.orElseThrow(() -> 
-				new CustomerNotFoundException(customerId));
+				.orElseThrow(() -> new CustomerNotFoundException(
+						customerId));
 	}
-	
+
+	@PostMapping(path = "/getCustomerString")
+	public String getCustomerString(
+		@RequestParam int customerId) {
+		Customer customer = customerRepository
+				.findById(customerId)
+				.orElseThrow(() -> new CustomerNotFoundException(
+						customerId));
+
+		return "\n> Customername: " + customer.getName()
+				+ "    Customeraddress: " + customer.getAddress()
+				+ "\n";
+	}
+
 	// http://localhost:8281/customer/getallcustomers
 	@GetMapping(path = "/getallcustomers")
-	public @ResponseBody Iterable<Customer> getAllCustomers() {
-		
+	public Iterable<Customer> getAllCustomers() {
+
 		return customerRepository.findAll();
 	}
-	
+
+	@GetMapping(path = "/getAllCustomersAsString")
+	public String getAllCustomersAsString() {
+		List<Customer> customers = (List<Customer>) customerRepository
+				.findAll();
+		String s = new String();
+		for (Customer customer : customers) {
+			s = s + " > CustomerId: " + customer.getCustomerId()
+					+ "    Customername: " + customer.getName()
+					+ "    Customeraddress: "
+					+ customer.getAddress()
+					+ "\n";
+		}
+		return s;
+	}
+
 	// -------------------------------------------------------------------------
 	// UPDATE
-	
-	// curl -X POST -d "customerId=value&address=value" http://localhost:8281/customer/changecustomer/address
+
+	// curl -X POST -d "customerId=value&address=value"
+	// http://localhost:8281/customer/changecustomer/address
 	@PostMapping(path = "/changecustomer/address")
-	public @ResponseBody String changeCustomerAddress(
+	public String changeCustomerAddress(
 		@RequestParam int customerId,
 		@RequestParam String address) {
 		Customer customer = getCustomer(customerId);
@@ -94,10 +118,11 @@ public class CustomerRestConnectorProvider {
 		return "changed address of selected customer to: "
 				+ address;
 	}
-	
-	// curl -X POST -d "customerId=value&name=value" http://localhost:8281/customer/changecustomer/name
+
+	// curl -X POST -d "customerId=value&name=value"
+	// http://localhost:8281/customer/changecustomer/name
 	@PostMapping(path = "/changecustomer/name")
-	public @ResponseBody String changeCustomerName(
+	public String changeCustomerName(
 		@RequestParam int customerId,
 		@RequestParam String name) {
 		Customer customer = getCustomer(customerId);
@@ -108,127 +133,138 @@ public class CustomerRestConnectorProvider {
 
 	// -------------------------------------------------------------------------
 	// DELETE
-	
-	// curl -X DELETE -d "customerId=value" http://localhost:8281/customer/deletecustomer
+
+	// curl -X DELETE -d "customerId=value"
+	// http://localhost:8281/customer/deletecustomer
 	@DeleteMapping("/deletecustomer")
-	public @ResponseBody String deleteCustomer(
+	public String deleteCustomer(
 		@RequestParam int customerId) {
-		Customer customer = customerRepository.findById(customerId)
-				.orElseThrow(() -> 
-				new CustomerNotFoundException(customerId));
-		
+		Customer customer = customerRepository
+				.findById(customerId)
+				.orElseThrow(() -> new CustomerNotFoundException(
+						customerId));
+
 		customerRepository.delete(customer);
 		return "customer deleted with id: " + customerId;
 	}
-	
+
 	// -------------------------------------------------------------------------
 	// END OF CRUD OPERATIONS: CUSTOMER
 	// -------------------------------------------------------------------------
 
-	
 	// CRUD OPERATIONS: CART ITEM
 	// -------------------------------------------------------------------------
-	// CREATE	
-	
-	// curl -X POST -d "customerId=value&articleId=value" http://localhost:8281/customer/addcartitem
-		@PostMapping(path = "/addcartitem") 
-		public @ResponseBody String addCartItem(
-				@RequestParam int customerId, 
-				@RequestParam int articleId) {
-			
-			Customer customer = customerRepository.findById(customerId)
-					.orElseThrow(() -> 
-					new CustomerNotFoundException(customerId));
-			
-			customer.getCart().addCartItem(articleId);
-			customerRepository.save(customer);
-			
-			return "new cartitem created with id: " + customer.getCustomerId();
-		}
-		
+	// CREATE
+
+	// curl -X POST -d "customerId=value&articleId=value"
+	// http://localhost:8281/customer/addcartitem
+	@PostMapping(path = "/addcartitem")
+	public String addCartItem(
+		@RequestParam int customerId,
+		@RequestParam int articleId) {
+
+		Customer customer = customerRepository
+				.findById(customerId)
+				.orElseThrow(() -> new CustomerNotFoundException(
+						customerId));
+
+		customer.getCart().addCartItem(articleId);
+		customerRepository.save(customer);
+
+		return "new cartitem created with id: "
+				+ customer.getCustomerId();
+	}
+
 	// curl localhost:8281/customer/checkoutCartToOrder -d customerId=1
-		@PostMapping(path="/checkoutCartToOrder")
-		public @ResponseBody String checkOutCartToOrder(
-				@RequestParam int customerId) {
-			
-			Customer customer = customerRepository.findById(customerId)
-					.orElseThrow(() -> 
-					new CustomerNotFoundException(customerId));
-			
-			int orderId = orderRestConnectorRequester.createOrder(customerId);
-			
-			Cart cart = customer.getCart();
-			
-			for (CartItem cartItem : cart.getCartItems()) {
-				orderRestConnectorRequester
-					.addArticleToOrder(cartItem.getArticleId(),
-							cartItem.getQuantity(),
-							orderId);
-				deleteArticleFromCartitem(customerId, cartItem.getArticleId());
-			}
-			
-			return "Cart with id '" + cart.getCartId() + "' checked out " +
-				"into order with id '" + orderId + "'.\n";
+	@PostMapping(path = "/checkoutCartToOrder")
+	public String checkOutCartToOrder(
+		@RequestParam int customerId) {
+
+		Customer customer = customerRepository
+				.findById(customerId)
+				.orElseThrow(() -> new CustomerNotFoundException(
+						customerId));
+
+		int orderId = orderRestConnectorRequester
+				.createOrder(customerId);
+
+		Cart cart = customer.getCart();
+
+		for (CartItem cartItem : cart.getCartItems()) {
+			orderRestConnectorRequester.addArticleToOrder(
+					cartItem.getArticleId(),
+					cartItem.getQuantity(), orderId);
+			deleteArticleFromCartitem(customerId,
+					cartItem.getArticleId());
 		}
-	
+
+		return "Cart with id '" + cart.getCartId()
+				+ "' checked out " + "into order with id '"
+				+ orderId + "'.\n";
+	}
+
 	// -------------------------------------------------------------------------
 	// READ
-	
-	// curl -X POST -d "customerId=value" http://localhost:8281/customer/getcartitems
-	@PostMapping(path="/getcartitems")
-	public @ResponseBody String getCartItemsFromCustomer(
-			@RequestParam int customerId) {
-		
+
+	// curl -X POST -d "customerId=value"
+	// http://localhost:8281/customer/getcartitems
+	@PostMapping(path = "/getcartitems")
+	public String getCartItemsFromCustomer(
+		@RequestParam int customerId) {
+
 		String cartItemsInCustomer = "";
-		
+
 		Customer customer = getCustomer(customerId);
-		Collection<CartItem> cartItems = customer.getCart().getCartItems();
-		
+		Collection<CartItem> cartItems = customer.getCart()
+				.getCartItems();
+
 		for (CartItem cartItem : cartItems) {
-			cartItemsInCustomer = cartItemsInCustomer + 
-					"articleId: " + cartItem.getArticleId() + ", " +
-					"quantity: " + cartItem.getQuantity() + "\n";
+			cartItemsInCustomer = cartItemsInCustomer
+					+ "articleId: " + cartItem.getArticleId()
+					+ ", " + "quantity: "
+					+ cartItem.getQuantity() + "\n";
 		}
-		
+
 		return "cartitems:\n" + cartItemsInCustomer;
 	}
 
-	// curl -X POST -d "customerId=value&articleId=value" http://localhost:8281/customer/decrementcartitem
-	@PostMapping(path="/decrementcartitem")
-	public @ResponseBody String delecrementArticleFromCartitem(
-			@RequestParam int customerId,
-			@RequestParam int articleId) {
-		
+	// curl -X POST -d "customerId=value&articleId=value"
+	// http://localhost:8281/customer/decrementcartitem
+	@PostMapping(path = "/decrementcartitem")
+	public String delecrementArticleFromCartitem(
+		@RequestParam int customerId,
+		@RequestParam int articleId) {
+
 		Customer customer = getCustomer(customerId);
 		customer.getCart().decrementArticleQuantity(articleId);
 		customerRepository.save(customer);
-		
+
 		return "cartitem:" + articleId + " decrement";
 	}
-	
+
 	// -------------------------------------------------------------------------
 	// DELETE
-	
-	// curl -X POST -d "customerId=value&articleId=value" http://localhost:8281/customer/deletecartitem
-	@PostMapping(path="/deletecartitem")
-	public @ResponseBody String deleteArticleFromCartitem(
-			@RequestParam int customerId,
-			@RequestParam int articleId) {
+
+	// curl -X POST -d "customerId=value&articleId=value"
+	// http://localhost:8281/customer/deletecartitem
+	@PostMapping(path = "/deletecartitem")
+	public String deleteArticleFromCartitem(
+		@RequestParam int customerId,
+		@RequestParam int articleId) {
 		Customer customer = getCustomer(customerId);
 		customer.getCart().deleteCartItem(articleId);
 		customerRepository.save(customer);
-		
+
 		return "cartitem:" + articleId + " deleted";
 	}
-	
-	
+
 	// -------------------------------------------------------------------------
 	// END OF CRUD OPERATIONS: CART ITEM
 	// -------------------------------------------------------------------------
-	
+
 	// -------------------------------------------------------------------------
 	// DEMO METHOD: GET DUMMY CUSTOMERS FOR DATABASE
-	
+
 	// http://localhost:8281/customer/democustomers
 	@RequestMapping(path = "/democustomers")
 	public String dummys() {
@@ -238,29 +274,27 @@ public class CustomerRestConnectorProvider {
 		Cart cart2 = new Cart();
 		Customer customer3;
 		Cart cart3 = new Cart();
-		
-		customer1 = customerRepository.save(new Customer(
-				"Andreas Michael Baechler", 
-				"Am Altenbruecker Ziegelhof 11"));
+
+		customer1 = customerRepository
+				.save(new Customer("Andreas Michael Baechler",
+						"Am Altenbruecker Ziegelhof 11"));
 		cart1.setCartId(customer1.getCustomerId());
 		customer1.setCart(cart1);
 		customerRepository.save(customer1);
-		
-		
-		customer2 = customerRepository.save(new Customer(
-				"Max Gnewuch und Henrik Pruess", 
-				"Feldstrasse 53"));
+
+		customer2 = customerRepository.save(
+				new Customer("Max Gnewuch und Henrik Pruess",
+						"Feldstrasse 53"));
 		cart2.setCartId(customer2.getCustomerId());
 		customer2.setCart(cart2);
 		customerRepository.save(customer2);
-		
-		customer3 = customerRepository.save(new Customer(
-				"Levin Schnabel", 
-				"Am Sande"));
+
+		customer3 = customerRepository.save(
+				new Customer("Levin Schnabel", "Am Sande"));
 		cart3.setCartId(customer3.getCustomerId());
 		customer3.setCart(cart3);
 		customerRepository.save(customer3);
-		
+
 		return "Demo Customers Saved";
 	}
 }
