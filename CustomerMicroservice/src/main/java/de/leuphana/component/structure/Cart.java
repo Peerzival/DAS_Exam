@@ -1,13 +1,10 @@
 package de.leuphana.component.structure;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -74,8 +71,8 @@ public class Cart {
 		}
 	}
 
-	public Collection<CartItem> getCartItems() {
-		return cartItems.values();
+	public Map<Integer, CartItem> getCartItems() {
+		return cartItems;
 	}
 
 	public int getNumberOfArticles() {
