@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.leuphana.component.behaviour.ArticleComponentService;
 import de.leuphana.component.behaviour.ArticleRepository;
 import de.leuphana.component.behaviour.exception.ArticleNotFoundException;
 import de.leuphana.component.structure.Article;
 
 @RestController
 @RequestMapping(path = "/article")
-public class ArticleRestConnectorProvider {
+public class ArticleRestConnectorProvider implements ArticleComponentService {
 
 	@Autowired
 	private ArticleRepository articleRepository;
@@ -31,8 +32,9 @@ public class ArticleRestConnectorProvider {
 	// CREATE
 	// curl localhost:8180/article/addArticle -d name=Weihnachtsmann -d manufactor=Leuphana -d price=10.5f
 	// --------------------------------------------------------------------------------
-	@PostMapping(path = "/addArticle") // Map ONLY POST Requests
-	public String addNewArticle(@RequestParam String name,
+	@Override
+	@PostMapping(path = "/createArticle") // Map ONLY POST Requests
+	public int createArticle(@RequestParam String name,
 		@RequestParam String manufactor,
 		@RequestParam float price) {
 
@@ -48,11 +50,9 @@ public class ArticleRestConnectorProvider {
 							() -> new ArticleNotFoundException(
 									articleId));
 
-			return "Article with Id " + article.getArticleId()
-					+ " added.";
+			return articleId;
 		}
-		return "The article you want to add already exist in our database. "
-				+ "Please add a different article.";
+		return -1;
 	}
 
 	// UPDATE
@@ -60,6 +60,7 @@ public class ArticleRestConnectorProvider {
 	// name=Rumpelstielzchen -d manufactor=TU_Hamburg -d price=56.5f
 	// --------------------------------------------------------------------------------
 
+	@Override
 	@PostMapping(path = "/updateArticle")
 	public String updateArticle(@RequestParam int articleId,
 		@RequestParam String name,
@@ -91,6 +92,7 @@ public class ArticleRestConnectorProvider {
 	// curl localhost:8180/article/checkArticleId -d articleId=1
 	// --------------------------------------------------------------------------------
 
+	@Override
 	@GetMapping(path = "/getArticleById/{articleId}")
 	public Article getArticleById(
 		@PathVariable(name = "articleId") int articleId) {
@@ -102,6 +104,7 @@ public class ArticleRestConnectorProvider {
 		return article;
 	}
 
+	@Override
 	@GetMapping(path = "/getArticleByName/{name}")
 	public Article getArticleByName(
 		@PathVariable(name = "name") String name) {
@@ -109,6 +112,7 @@ public class ArticleRestConnectorProvider {
 				() -> new ArticleNotFoundException(name));
 	}
 
+	@Override
 	@PostMapping(path = "/getArticleString")
 	public String getArticleString(@RequestParam int articleId) {
 		Article article = articleRepository.findById(articleId)
@@ -122,11 +126,13 @@ public class ArticleRestConnectorProvider {
 				+ "€.";
 	}
 
+	@Override
 	@GetMapping(path = "/getAllArticles")
 	public Iterable<Article> getAllArticles() {
 		return articleRepository.findAll();
 	}
 
+	@Override
 	@PostMapping(path = "/checkArticleId")
 	public int checkArticleId(
 		@RequestParam(name = "articleId") int articleId) {
@@ -140,6 +146,7 @@ public class ArticleRestConnectorProvider {
 	// curl localhost:8180/article/deleteArticle -d articleId=3
 	// --------------------------------------------------------------------------------
 
+	@Override
 	@PostMapping(path = "/deleteArticle")
 	public String deleteArticleById(
 		@RequestParam int articleId) {

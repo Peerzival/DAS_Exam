@@ -1,58 +1,74 @@
 package de.leuphana.connector;
 
+import java.io.IOException;
+
+import org.apache.hc.client5.http.fluent.Form;
+import org.apache.hc.client5.http.fluent.Request;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 class ShopJPAConnectorTest {
-
-//	private OrderSpringDataConnectorRequester shopJPAConnector;
-	private Integer createdArticleId;
-	private Integer createdOrderId;
 	
 	@BeforeEach
-	void setUp() throws Exception {
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext(
-				"applicationContext-JPA-Connector.xml");
-		
-//		shopJPAConnector = (OrderSpringDataConnectorRequester)applicationContext.getBean("shopJPAConnector");
-				
-//		Article article = new Article();
-//		article.setName("Weihnachtsmann");
-//		article.setManufactor("Leuphana");
-//		
-//		createdArticleId = shopJPAConnector.createArticle(article);
-//		
-//		// same time later
-//		
-//		Article foundArticle = shopJPAConnector.getArticle(createdArticleId);
-//		
-//		OrderPosition orderPosition = new OrderPosition();
-//		orderPosition.setArticle(foundArticle);
-//		orderPosition.setArticleQuantity(2);
-//		
-//		Order order = new Order();
-//		order.setCustomerId(1);
-//		
-//		List<OrderPosition> orderPositions = new ArrayList<OrderPosition>();
-//		orderPositions.add(orderPosition);
-//		order.setOrderPositions(orderPositions);
-//		
-//		createdOrderId = shopJPAConnector.createOrder(order);
-//		Assertions.assertNotNull(createdOrderId);
-	}
+	void setUp() throws Exception {}
 
 	@AfterEach
-	void tearDown() throws Exception {
-//		Assertions.assertTrue(shopJPAConnector.deleteOrder(createdOrderId));
-//		Assertions.assertTrue(shopJPAConnector.deleteArticle(createdArticleId));
-	}
+	void tearDown() throws Exception {}
 
 	@Test
-	void canArticleBeFetched() {
-//		Assertions.assertNotNull(shopJPAConnector.getArticle(createdArticleId));
+	void canShopAccessArticleMicroService() {
+		try {
+			String confirmation =
+					Request.post("http://localhost:8880/article/")
+						.bodyForm(Form.form()
+						.build())
+						.execute()
+						.returnContent().toString();
+			
+			System.out.println(confirmation);
+			Assertions.assertNotNull(confirmation);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
-
+	
+	@Test
+	void canShopAccessOrderMicroService() {
+		try {
+			String confirmation =
+					Request.post("http://localhost:8880/order/")
+						.bodyForm(Form.form()
+						.build())
+						.execute()
+						.returnContent().toString();
+			
+			System.out.println(confirmation);
+			Assertions.assertNotNull(confirmation);
+					
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	void canShopAccessCustomerMicroService() {
+		try {
+			String confirmation =
+					Request.post("http://localhost:8880/customer/")
+						.bodyForm(Form.form()
+						.build())
+						.execute()
+						.returnContent().toString();
+			
+			System.out.println(confirmation);
+			Assertions.assertNotNull(confirmation);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

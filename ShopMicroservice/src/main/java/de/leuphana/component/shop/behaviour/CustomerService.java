@@ -1,51 +1,40 @@
 package de.leuphana.component.shop.behaviour;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
 public interface CustomerService {
 
 	// -------------------- CUSTOMER -------------------- \\
 	// --------------------------------------------------------------------------------
 
-	String addNewCustomer(@RequestParam String name,
-		@RequestParam String address);
+	void createCustomer(String name, String address);
 
-	String getCustomerString(@RequestParam int customerId);
+	void getCustomerString(int customerId);
 
-	String getAllCustomersAsString();
+	void getAllCustomersAsString();
 
-	String changeCustomerAddress(@RequestParam int customerId,
-		@RequestParam String address);
+	void changeCustomerAddress(int customerId, String address);
 
-	String changeCustomerName(@RequestParam int customerId,
-		@RequestParam String name);
+	void changeCustomerName(int customerId, String name);
 
-	String deleteCustomer(@RequestParam int customerId);
+	void deleteCustomer(int customerId);
 
-	String addCartItem(@RequestParam int customerId,
-		@RequestParam int articleId);
+	void addCartItem(int customerId, int articleId);
 
-	String checkOutCartToOrder(@RequestParam int customerId);
+	void checkOutCartToOrder(int customerId);
 
-	String getCartItemsFromCustomer(
-		@RequestParam int customerId);
+	void getCartItemsFromCustomer(int customerId);
 
-	String delecrementArticleFromCartitem(
-		@RequestParam int customerId,
-		@RequestParam int articleId);
+	void decrementArticleFromCartItem(int customerId, int articleId);
 
-	String deleteArticleFromCartitem(
-		@RequestParam int customerId,
-		@RequestParam int articleId);
+	void deleteArticleFromCartItem(int customerId, int articleId);
 
 	// -------------------- ORDER -------------------- \\
 	// --------------------------------------------------------------------------------
 
-	String getOrderString(@RequestParam int orderId);
+	void getOrder(int orderId);
 	
-	String getAllOrdersAsString();
+	void getAllOrdersAsString();
 	
-	String deleteOrder(@RequestParam int orderId);
+	void deleteOrder(int orderId);
 
 	
 }

@@ -15,27 +15,27 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import de.leuphana.component.behaviour.ArticleComponentService;
 import de.leuphana.component.behaviour.ArticleRepository;
+import de.leuphana.component.behaviour.exception.ArticleNotFoundException;
 import de.leuphana.component.structure.Article;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class ArticleJPATest {
+class ArticleSpringDataConnecterRequesterTest {
 
 	@Autowired private EntityManager entityManager;
 	@Autowired private ArticleRepository articleRepository;
 	
-	private Logger logger;
-	
 	@BeforeEach
 	void setUp() throws Exception {			
-		logger = LogManager.getLogger(this.getClass());
+		Article article = new Article("Leupht-Craftbeer", "Leupht", 2.5f);
+		articleRepository.save(article);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-//		Assertions.assertTrue(shopJPAConnector.deleteArticle(createdArticleId));
 	}
 
 	@Test
@@ -47,17 +47,19 @@ class ArticleJPATest {
 	@Test
 	void canArticleBePersisted() {
 		Article article = new Article("Weihnachtsmann", "Leuphana", 7.77f);
+		Assertions.assertNotNull(articleRepository.save(article));
+	}
+	
+	@Test
+	void canArticleBeFetched() {
+		Article article = articleRepository.findByName("Leupht-Craftbeer").orElseThrow(
+				() -> new ArticleNotFoundException("Leupht-Craftbeer"));
 		
-		// Persist
-		articleRepository.save(article);
+		System.out.println("\nFetched article: ");
+		System.out.println(article.getName() + " by " + article.getManufactor());
+		System.out.println("Price: " + article.getPrice() + " Euro\n");
 		
-		// Check persistence
-		Assertions.assertNotNull(articleRepository.findByName("Weihnachtsmann"));
-		
-//		// additional logs TODO remove or change to DEBUG instead of INFO
-//		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getName());
-//		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getManufactor());
-//		logger.info(articleRepository.findByName("Weihnachtsmann").get(0).getPrice());
+		Assertions.assertNotNull(article.getName());
 	}
 
 }

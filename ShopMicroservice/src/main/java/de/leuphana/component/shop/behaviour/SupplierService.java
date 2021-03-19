@@ -11,20 +11,20 @@ public interface SupplierService {
 		@RequestParam String manufactor,
 		@RequestParam float price);
 
-	String updateArticle(@RequestParam int articleId,
+	void updateArticle(@RequestParam int articleId,
 		@RequestParam String name,
 		@RequestParam String manufactor,
 		@RequestParam float price);
 
-	String deleteArticleById(@RequestParam int articleId);
+	void deleteArticleById(@RequestParam int articleId);
 
-	String getArticleString(@RequestParam int articleId);
+	void getArticle(int articleId);
 
 	// -------------------- ORDER -------------------- \\
 	// --------------------------------------------------------------------------------
 	
-	String getOrderString(@RequestParam int orderId);
+	void getOrder(int orderId);
 
-	String getAllOrdersAsString();
+	void getAllOrdersAsString();
 
 }
