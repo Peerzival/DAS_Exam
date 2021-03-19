@@ -61,9 +61,15 @@ class OrderSpringDataConnectorRequesterTest {
 		Assertions.assertNotNull(entityManager);
 		Assertions.assertNotNull(orderRepository);
 	}
-
+	
 	@Test
 	void canOrderBePersisted() {
+		Order savedOrder = orderRepository.save(order);
+		Assertions.assertNotNull(savedOrder);
+	}
+
+	@Test
+	void hasTheOrderBenSaved() {
 		// Check persistence of order
 		Assertions.assertNotNull(orderRepository
 				.findById(order.getOrderId()).orElseThrow(
