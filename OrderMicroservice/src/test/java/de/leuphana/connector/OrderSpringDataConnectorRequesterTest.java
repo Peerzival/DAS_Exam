@@ -32,7 +32,6 @@ class OrderSpringDataConnectorRequesterTest {
 	@Autowired
 	private OrderRepository orderRepository;
 
-	private static Logger logger;
 	private static Order order;
 	private static OrderPosition orderPosition;
 
@@ -40,7 +39,6 @@ class OrderSpringDataConnectorRequesterTest {
 	void setUp() throws Exception {
 		order = new Order();
 		orderPosition = new OrderPosition();
-		logger = LogManager.getLogger(this.getClass());
 
 		orderPosition.setArticleId(3);
 		order.addOrderPosition(orderPosition);
@@ -51,9 +49,10 @@ class OrderSpringDataConnectorRequesterTest {
 	@AfterEach
 	void tearDown() throws Exception {
 		//Delete order isn´t necessary because Spring does a rollback after the test
+		entityManager = null;
+		orderRepository = null;
 		order = null;
 		orderPosition = null;
-		logger = null;
 	}
 
 	@Test

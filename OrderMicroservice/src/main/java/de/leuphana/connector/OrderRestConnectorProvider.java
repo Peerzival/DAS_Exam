@@ -151,8 +151,8 @@ public class OrderRestConnectorProvider
 
 		orderRepository.save(order);
 
-		return "Article with id '" + orderId
-				+ "' added to order.\n";
+		return "Article with id " + idOfArticle
+				+ " added to order.\n";
 	}
 
 	// DELETE
