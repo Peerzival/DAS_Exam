@@ -8,22 +8,24 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
-import org.springframework.cloud.openfeign.FeignContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ImportAutoConfiguration(FeignAutoConfiguration.class)
+
+@ImportAutoConfiguration({FeignAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class}) //FeignAutoConfiguration  HttpMessageConvertersAutoConfiguration
 class OrderRestConnectorRequesterTest {
 
 	@Autowired
 	private EntityManager entityManager;
 
-	FeignContext feignContext;
+	
+	// FeignContext feignContext;
 
 	private static int customerId;
 
@@ -32,7 +34,7 @@ class OrderRestConnectorRequesterTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		feignContext.getInstance("order", OrderRestConnectorRequester.class);
+	//	feignContext.getInstance("order", OrderRestConnectorRequester.class);
 		
 		customerId = customerRestConnectorProvider.createCustomer("TestName", "TestAddress");
 		customerRestConnectorProvider.addCartItem(customerId, 1);
@@ -44,13 +46,14 @@ class OrderRestConnectorRequesterTest {
 	@AfterEach
 	void tearDown() throws Exception {
 		entityManager = null;
-		feignContext = null;
+	//	feignContext = null;
 
 	}
 
 	@Test
 	void checkOutCartToOrder() {
 		System.out.println(customerRestConnectorProvider.checkOutCartToOrder(customerId));
+		System.out.println(customerRestConnectorProvider.getCartItemsFromCustomer(customerId));
 	}
 
 }

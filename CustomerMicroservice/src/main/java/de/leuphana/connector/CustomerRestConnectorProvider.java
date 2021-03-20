@@ -1,7 +1,9 @@
 package de.leuphana.connector;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,8 +36,6 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 		this.orderRestConnectorRequester = orderRestConnectorRequester;
 	}
 
-	
-	
 	// CRUD OPERATIONS: CUSTOMER
 	// -------------------------------------------------------------------------
 	// CREATE
@@ -179,18 +179,23 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 	public String checkOutCartToOrder(@RequestParam int customerId) {
 
 		Customer customer = getCustomer(customerId);
-		Cart cart = customer.getCart();
 
+		Collection<CartItem> cars = customer.getCart().getCartItems().values();
 		int orderId = orderRestConnectorRequester.createOrder(customerId);
 
-		for (CartItem cartItem : cart.getCartItems().values()) {
+		for (CartItem cartItem : cars) {
 
 			orderRestConnectorRequester.addArticleToOrder(cartItem.getArticleId(), cartItem.getQuantity(), orderId);
 
-			deleteArticleFromCartItem(customerId, cartItem.getArticleId());
 		}
+		Cart cart = new Cart();
+		cart.setCartId(customer.getCustomerId());
+		customer.setCart(cart);
+		customer.setCart(cart);
+		customerRepository.save(customer);
+	//	deleteArticleFromCartItem(customerId, cartItem.getArticleId());
 
-		return " > CustomerId: " + customer.getCustomerId() + "\n    CartId: " + cart.getCartId()
+		return " > CustomerId: " + customer.getCustomerId() + "\n    CartId: " + customer.getCart().getCartId()
 				+ " was checked out into order" + "\n    OrderId: " + orderId;
 
 	}
@@ -208,13 +213,14 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 
 		Customer customer = getCustomer(customerId);
 		Collection<CartItem> cartItems = customer.getCart().getCartItems().values();
-
+		
 		for (CartItem cartItem : cartItems) {
 			cartItemsInCustomer = cartItemsInCustomer + "\n    ArticleId: " + cartItem.getArticleId()
 					+ "\n    Article quantity: " + cartItem.getQuantity();
 		}
 
-		return " > CustomerId: " + customer.getCustomerId() + cartItemsInCustomer;
+		return " > CustomerId: " + customer.getCustomerId() + "\n    CartId: " + customer.getCart().getCartId()
+				+ cartItemsInCustomer;
 	}
 
 	// curl -X POST -d "customerId=value&articleId=value"
@@ -224,7 +230,7 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 	public String decrementArticleFromCartItem(@RequestParam int customerId, @RequestParam int articleId) {
 
 		Customer customer = getCustomer(customerId);
-		
+
 		customer.getCart().decrementArticleQuantity(articleId);
 		customer = customerRepository.save(customer);
 
