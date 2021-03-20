@@ -8,24 +8,26 @@ public interface SupplierService {
 	// -------------------- ARTICLE -------------------- \\
 	// --------------------------------------------------------------------------------
 
-	void addNewArticle(@RequestParam String name,
-		@RequestParam String manufactor,
-		@RequestParam float price);
+	String createArticle(String name,
+		String manufactor,
+		double price);
 
-	void updateArticle(@RequestParam int articleId,
-		@RequestParam String name,
-		@RequestParam String manufactor,
-		@RequestParam float price);
+	String updateArticle(int articleId,
+		String name,
+		String manufactor,
+		double price);
 
-	void deleteArticleById(@RequestParam int articleId);
+	String deleteArticleById(int articleId);
 
 	String getArticle(int articleId);
+	
+	String getAllArticles();
 
 	// -------------------- ORDER -------------------- \\
 	// --------------------------------------------------------------------------------
 	
-	void getOrder(int orderId);
+	String getOrder(int orderId);
 
-	void getAllOrdersAsString();
+	String getAllOrders();
 
 }

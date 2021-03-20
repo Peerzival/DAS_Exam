@@ -9,9 +9,9 @@ import de.leuphana.component.structure.Article;
 
 public interface ArticleComponentService {
 
-	int createArticle(String name, String manufactor, float price);
+	int createArticle(String name, String manufactor, double price);
 
-	String updateArticle(int articleId, String name, String manufactor, float price);
+	String updateArticle(int articleId, String name, String manufactor, double price);
 
 	Article getArticleById(int articleId);
 

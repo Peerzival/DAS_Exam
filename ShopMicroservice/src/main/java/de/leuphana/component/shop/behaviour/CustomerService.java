@@ -30,9 +30,9 @@ public interface CustomerService {
 	// -------------------- ORDER -------------------- \\
 	// --------------------------------------------------------------------------------
 
-	void getOrder(int orderId);
+	String getOrder(int orderId);
 	
-	void getAllOrdersAsString();
+	String getAllOrders();
 	
 	void deleteOrder(int orderId);
 

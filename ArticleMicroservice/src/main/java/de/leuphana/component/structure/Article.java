@@ -15,12 +15,12 @@ public class Article {
 	private Integer articleId;
 	private String manufactor;
 	private String name;
-	private float price;
+	private double price;
 
 	protected Article() {
 	};
 
-	public Article(String name, String manufactor, float price) {
+	public Article(String name, String manufactor, double price) {
 		this.name = name;
 		this.manufactor = manufactor;
 		this.price = price;
@@ -50,11 +50,11 @@ public class Article {
 		this.name = name;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
