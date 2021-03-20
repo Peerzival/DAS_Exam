@@ -2,6 +2,8 @@ package de.leuphana.connector;
 
 import javax.persistence.EntityManager;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,8 +27,8 @@ class OrderRestConnectorProviderTest {
 	@Autowired
 	private EntityManager entityManager;
 	@Autowired
-	private OrderService orderRestConnectorProvider;
-
+	private OrderRestConnectorProvider orderRestConnectorProvider;
+	private static Logger logger;
 	private static int orderId;
 	private static int orderIdForDeleteMethod;
 
@@ -38,11 +40,16 @@ class OrderRestConnectorProviderTest {
 		orderIdForDeleteMethod = orderRestConnectorProvider
 				.createOrder(2);
 
+		logger = LogManager.getLogger(this.getClass());
+
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		// Delete isn´t necessary because Spring does a rollback after the test
+		logger = null;
+		orderRestConnectorProvider = null;
+		entityManager = null;
 	}
 
 	@Test
@@ -50,6 +57,7 @@ class OrderRestConnectorProviderTest {
 		Assertions.assertNotNull(entityManager);
 		Assertions.assertNotNull(
 				orderRestConnectorProvider);
+		Assertions.assertNotNull(logger);
 	}
 
 	@Test
@@ -82,6 +90,9 @@ class OrderRestConnectorProviderTest {
 		Assertions.assertNotNull(
 				orderRestConnectorProvider
 						.getOrderString(orderId));
+
+		logger.info(orderRestConnectorProvider
+				.getOrderString(orderId));
 	}
 
 	@Test
@@ -89,6 +100,9 @@ class OrderRestConnectorProviderTest {
 		Assertions.assertNotNull(
 				orderRestConnectorProvider
 						.getAllOrdersAsString());
+
+		logger.info(orderRestConnectorProvider
+				.getAllOrdersAsString());
 	}
 
 	@Test
