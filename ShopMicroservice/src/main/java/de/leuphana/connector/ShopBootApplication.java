@@ -21,9 +21,4 @@ public class ShopBootApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShopBootApplication.class);
 	}
-
-	@Bean
-	public void demo() {
-		apiGatewayRestConnectorRequester.addNewArticle("Müll", "LeLeLe", 35.78f);
-	}
 }

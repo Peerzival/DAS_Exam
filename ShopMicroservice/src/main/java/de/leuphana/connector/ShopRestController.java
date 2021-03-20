@@ -1,17 +1,15 @@
 package de.leuphana.connector;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.time.Duration;
 
+import org.apache.hc.client5.http.fluent.Content;
 import org.apache.hc.client5.http.fluent.Form;
 import org.apache.hc.client5.http.fluent.Request;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.leuphana.component.shop.behaviour.CustomerService;
@@ -20,6 +18,11 @@ import de.leuphana.component.shop.behaviour.SupplierService;
 @RestController
 public class ShopRestController implements CustomerService, SupplierService 
 {
+	// IP Max:
+	// IP Andy:
+	// IP Henrik: 192.168.178.121
+	
+	private static String ipString = "http://192.168.178.121:8880";
 	
 
 	// -------------------- ARTICLE -------------------- \\
@@ -33,7 +36,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		
 		try {
 			System.out.println(
-					Request.post("http://localhost:8880/article/createArticle")
+					Request.post(ipString + "/article/createArticle")
 						.bodyForm(Form.form()
 						.add("name", name)
 						.add("manufactor", manufactor)
@@ -57,7 +60,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		
 		try {
 			System.out.println(
-					Request.post("http://localhost:8880/article/updateArticle")
+					Request.post(ipString + "article/updateArticle")
 						.bodyForm(Form.form()
 						.add("articleId", "" + articleId)
 						.add("name", name)
@@ -78,7 +81,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		
 		try {
 			System.out.println(
-					Request.post("http://localhost:8880/article/deleteArticle")
+					Request.post(ipString + "/article/deleteArticle")
 						.bodyForm(Form.form()
 						.add("articleId", "" + articleId)
 						.build())
@@ -92,22 +95,25 @@ public class ShopRestController implements CustomerService, SupplierService
 	
 	@Override
 	@GetMapping(path = "/article/getArticle/{articleId}")
-	public void getArticle(@PathVariable("articleId") int articleId) {
+	public @ResponseBody String getArticle(@PathVariable("articleId") int articleId) {
 		
 		try {
-			System.out.println(
+			return
 					Request
-						.post("http://localhost:8880/article/getArticleString")
+						.post(ipString + "/article/getArticleString")
 							.bodyForm(Form.form()
 							.add("articleId", "" + articleId)
 							.build())
 							.execute()
-							.returnContent());
+							.returnContent()
+							.asString();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		return null;
+		
 	}
 
 	// -------------------- CUSTOMER -------------------- \\
@@ -121,7 +127,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.post("http://localhost:8880/customer/createCustomer")
+						.post(ipString + "/customer/createCustomer")
 							.bodyForm(Form.form()
 							.add("name", "" + name)
 							.add("address", "" + address)
@@ -141,7 +147,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/customer/getCustomerString")
+						.get(ipString + "/customer/getCustomerString")
 							.bodyForm(Form.form()
 							.add("name", "" + customerId)
 							.build())
@@ -160,7 +166,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/customer/getAllCustomersAsString")
+						.get(ipString + "/customer/getAllCustomersAsString")
 							.bodyForm(Form.form()
 							.build())
 							.execute()
@@ -178,7 +184,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/customer/changeCustomerAddress")
+						.get(ipString + "/customer/changeCustomerAddress")
 							.bodyForm(Form.form()
 							.add("customerId", "" + customerId)
 							.add("address", address)
@@ -198,7 +204,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/customer/changeCustomerName")
+						.get(ipString + "/customer/changeCustomerName")
 							.bodyForm(Form.form()
 							.add("customerId", "" + customerId)
 							.add("name", name)
@@ -217,7 +223,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/customer/deleteCustomer")
+						.get(ipString + "/customer/deleteCustomer")
 							.bodyForm(Form.form()
 							.add("customerId", "" + customerId)
 							.build())
@@ -236,7 +242,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/customer/addCartItem")
+						.get(ipString + "/customer/addCartItem")
 							.bodyForm(Form.form()
 							.add("customerId", "" + customerId)
 							.add("articleId", "" + articleId)
@@ -256,7 +262,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/customer/checkOutCartToOrder")
+						.get(ipString + "/customer/checkOutCartToOrder")
 							.bodyForm(Form.form()
 							.add("customerId", "" + customerId)
 							.build())
@@ -274,7 +280,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/customer/getCartItemsFromCustomer")
+						.get(ipString + "/customer/getCartItemsFromCustomer")
 							.bodyForm(Form.form()
 							.add("customerId", "" + customerId)
 							.build())
@@ -294,7 +300,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/customer/decrementArticleFromCartItem")
+						.get(ipString + "/customer/decrementArticleFromCartItem")
 							.bodyForm(Form.form()
 							.add("customerId", "" + customerId)
 							.add("articleId", "" + articleId)
@@ -316,7 +322,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/customer/deleteArticleFromCartItem")
+						.get(ipString + "/customer/deleteArticleFromCartItem")
 							.bodyForm(Form.form()
 							.add("customerId", "" + customerId)
 							.add("articleId", "" + articleId)
@@ -339,7 +345,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.post("http://localhost:8880/order/getOrderString")
+						.post(ipString + "/order/getOrderString")
 						.bodyForm(Form.form()
 						.add("orderId", "" + orderId)
 						.build())
@@ -358,7 +364,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/order/getAllOrdersAsString")
+						.get(ipString + "/order/getAllOrdersAsString")
 						.bodyForm(Form.form()
 						.build())
 						.execute()
@@ -376,7 +382,7 @@ public class ShopRestController implements CustomerService, SupplierService
 		try {
 			System.out.println(
 					Request
-						.get("http://localhost:8880/order/deleteOrder")
+						.get(ipString + "/order/deleteOrder")
 						.bodyForm(Form.form()
 						.add("orderId", "" + orderId)
 						.build())

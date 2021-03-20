@@ -1,1 +1,3 @@
-/Users/max/GitHub/Repositories/DAS_Exam/OrderMicroservice/src/test/java/de/leuphana/connector/OrderJPATest.java
+/Users/henrik/GitHub/DAS_Exam/OrderMicroservice/src/test/java/de/leuphana/connector/OrderSpringDataConnectorRequesterTest.java
+/Users/henrik/GitHub/DAS_Exam/OrderMicroservice/src/test/java/de/leuphana/connector/OrderRestConnectorProviderTest.java
+/Users/henrik/GitHub/DAS_Exam/OrderMicroservice/src/test/java/de/leuphana/connector/ArticleRestConnectorRequesterTest.java

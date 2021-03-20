@@ -1,0 +1,5 @@
+cd .../ShopMicroService
+mvn -N io.takari:maven:wrapper
+./mvnw package
+docker build -t vas/shop-microservice .
+docker run -p 8888:8888 vas/shop-microservice

@@ -11,6 +11,12 @@ import org.junit.jupiter.api.Test;
 
 class ShopJPAConnectorTest {
 	
+	// IP Max:
+	// IP Andy:
+	// IP Henrik: 192.168.178.121
+		
+	private static String ipString = "http://192.168.178.121:8880";
+	
 	@BeforeEach
 	void setUp() throws Exception {}
 
@@ -21,7 +27,7 @@ class ShopJPAConnectorTest {
 	void canShopAccessArticleMicroService() {
 		try {
 			String confirmation =
-					Request.post("http://localhost:8880/article/")
+					Request.post(ipString + "/article/")
 						.bodyForm(Form.form()
 						.build())
 						.execute()
@@ -39,7 +45,7 @@ class ShopJPAConnectorTest {
 	void canShopAccessOrderMicroService() {
 		try {
 			String confirmation =
-					Request.post("http://localhost:8880/order/")
+					Request.post(ipString + "/order/")
 						.bodyForm(Form.form()
 						.build())
 						.execute()
@@ -57,7 +63,7 @@ class ShopJPAConnectorTest {
 	void canShopAccessCustomerMicroService() {
 		try {
 			String confirmation =
-					Request.post("http://localhost:8880/customer/")
+					Request.post(ipString + "/customer/")
 						.bodyForm(Form.form()
 						.build())
 						.execute()

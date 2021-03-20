@@ -1,0 +1,5 @@
+cd .../DiscoveryService
+mvn -N io.takari:maven:wrapper
+./mvnw package
+docker build -t vas/eureka-discoveryservice .
+docker run -p 8761:8761 vas/eureka-discoveryservice

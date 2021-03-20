@@ -1,0 +1,5 @@
+cd .../ArticleMicroService
+mvn -N io.takari:maven:wrapper
+./mvnw package
+docker build -t vas/article-microservice .
+docker run -p 8180:8180 vas/article-microservice
