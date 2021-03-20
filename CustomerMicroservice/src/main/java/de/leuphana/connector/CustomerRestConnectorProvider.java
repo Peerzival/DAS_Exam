@@ -1,10 +1,10 @@
 package de.leuphana.connector;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +29,13 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 
 	// Feign
 	final OrderRestConnectorRequester orderRestConnectorRequester;
+	
+	private static Logger log;
 
 	@Autowired
 	public CustomerRestConnectorProvider(OrderRestConnectorRequester orderRestConnectorRequester) {
-
 		this.orderRestConnectorRequester = orderRestConnectorRequester;
+		log = LogManager.getLogger(this.getClass());
 	}
 
 	// CRUD OPERATIONS: CUSTOMER
@@ -63,7 +65,6 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 	// curl -X POST -d "customerId=value" http://localhost:8281/customer/getCustomer
 	@PostMapping(path = "/getCustomer")
 	public Customer getCustomer(@RequestParam int customerId) {
-
 		return customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException(customerId));
 	}
 
@@ -75,15 +76,17 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 
 		Customer customer = customerRepository.findById(customerId)
 				.orElseThrow(() -> new CustomerNotFoundException(customerId));
-
-		return "> CustomerId: " + customer.getCustomerId() + "\n    Customername: " + customer.getName()
-				+ "\n    Customeraddress: " + customer.getAddress() + "\n";
+		//For console representation
+		log.info("> CustomerId: " + customer.getCustomerId() + "\n    Customername: " + customer.getName()
+				+ "\n    Customeraddress: " + customer.getAddress() + "\n");
+		//For browser representation
+		return "> CustomerId: " + customer.getCustomerId() + "<br>Customername: " + customer.getName()
+				+ "<br>Customeraddress: " + customer.getAddress() + "<br>";
 	}
 
 	// http://localhost:8281/customer/getAllCustomers
 	@GetMapping(path = "/getAllCustomers")
 	public Iterable<Customer> getAllCustomers() {
-
 		return customerRepository.findAll();
 	}
 
@@ -92,12 +95,22 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 	@GetMapping(path = "/getAllCustomersAsString")
 	public String getAllCustomersAsString() {
 		List<Customer> customers = (List<Customer>) customerRepository.findAll();
-		String s = new String();
+		//For browser representation
+		String customerHtmlString = new String();
+		//For console representation
+		String customerString = new String();
+		
 		for (Customer customer : customers) {
-			s = s + "> CustomerId: " + customer.getCustomerId() + "\n    Customername: " + customer.getName()
-					+ "\n    Customeraddress: " + customer.getAddress() + "\n";
+			customerHtmlString = customerHtmlString + "> CustomerId: " + customer.getCustomerId() + "<br>Customername: " + customer.getName()
+					+ "<br>Customeraddress: " + customer.getAddress() + "<br>";
+			
+			customerString = customerString + "> CustomerId: " + customer.getCustomerId() + "\n    Customername: " + customer.getName()
+			+ "\n    Customeraddress: " + customer.getAddress() + "\n";
 		}
-		return s;
+		
+		log.info(customerString);
+		
+		return customerHtmlString;
 	}
 
 	// -------------------------------------------------------------------------
@@ -114,8 +127,11 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 		String oldAddress = customer.getAddress();
 		customer.setAddress(address);
 		customerRepository.save(customer);
-
-		return " > CustomerId: " + customer.getCustomerId() + "\n    Old Address: " + oldAddress + "\n    New Address: "
+		//For console representation
+		log.info(" > CustomerId: " + customer.getCustomerId() + "\n    Old Address: " + oldAddress + "\n    New Address: "
+				+ customer.getAddress());
+		//For browser representation
+		return " > CustomerId: " + customer.getCustomerId() + "<br>Old Address: " + oldAddress + "<br>New Address: "
 				+ customer.getAddress();
 	}
 
@@ -130,8 +146,11 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 		String oldName = customer.getName();
 		customer.setName(name);
 		customerRepository.save(customer);
-
-		return " > CustomerId: " + customer.getCustomerId() + "\n    Old Name: " + oldName + "\n    New Name: "
+		//For console representation
+		log.info(" > CustomerId: " + customer.getCustomerId() + "\n    Old Name: " + oldName + "\n    New Name: "
+				+ customer.getName());
+		//For browser representation
+		return " > CustomerId: " + customer.getCustomerId() + "<br>Old Name: " + oldName + "<br>New Name: "
 				+ customer.getName();
 	}
 
@@ -147,6 +166,8 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 		Customer customer = customerRepository.findById(customerId)
 				.orElseThrow(() -> new CustomerNotFoundException(customerId));
 		customerRepository.delete(customer);
+		
+		log.info(" > CustomerId: " + customer.getCustomerId() + ", was successfully deleted.");
 
 		return " > CustomerId: " + customer.getCustomerId() + ", was successfully deleted.";
 	}
@@ -169,8 +190,10 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 
 		customer.getCart().addCartItem(articleId);
 		customerRepository.save(customer);
-
-		return " > CustomerId: " + customer.getCustomerId() + "\n    CartItem: " + articleId + ", was added";
+		//For console representation
+		log.info(" > CustomerId: " + customer.getCustomerId() + "\n    CartItem: " + articleId + ", was added");
+		//For browser representation
+		return " > CustomerId: " + customer.getCustomerId() + "<br>CartItem: " + articleId + ", was added";
 	}
 
 	// curl localhost:8281/customer/checkOutCartToOrder -d customerId=1
@@ -193,10 +216,12 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 		customer.setCart(cart);
 		customer.setCart(cart);
 		customerRepository.save(customer);
-	//	deleteArticleFromCartItem(customerId, cartItem.getArticleId());
-
-		return " > CustomerId: " + customer.getCustomerId() + "\n    CartId: " + customer.getCart().getCartId()
-				+ " was checked out into order" + "\n    OrderId: " + orderId;
+		//For console representation
+		log.info(" > CustomerId: " + customer.getCustomerId() + "\n    CartId: " + customer.getCart().getCartId()
+				+ " was checked out into order" + "\n    OrderId: " + orderId);
+		//For browser representation
+		return " > CustomerId: " + customer.getCustomerId() + "<br>CartId: " + customer.getCart().getCartId()
+				+ " was checked out into order" + "<br>OrderId: " + orderId;
 
 	}
 
@@ -208,19 +233,27 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 	@Override
 	@PostMapping(path = "/getCartItemsFromCustomer")
 	public String getCartItemsFromCustomer(@RequestParam int customerId) {
-
+		//For browser representation
+		String cartItemsInCustomerHtml = "";
+		//For console representation
 		String cartItemsInCustomer = "";
 
 		Customer customer = getCustomer(customerId);
 		Collection<CartItem> cartItems = customer.getCart().getCartItems().values();
 		
 		for (CartItem cartItem : cartItems) {
+			cartItemsInCustomerHtml = cartItemsInCustomerHtml + "<br>ArticleId: " + cartItem.getArticleId()
+					+ "<br>Article quantity: " + cartItem.getQuantity();
+			
 			cartItemsInCustomer = cartItemsInCustomer + "\n    ArticleId: " + cartItem.getArticleId()
-					+ "\n    Article quantity: " + cartItem.getQuantity();
+			+ "\n    Article quantity: " + cartItem.getQuantity();
 		}
+		
+		log.info(" > CustomerId: " + customer.getCustomerId() + "\n    CartId: " + customer.getCart().getCartId()
+				+ cartItemsInCustomer);
 
-		return " > CustomerId: " + customer.getCustomerId() + "\n    CartId: " + customer.getCart().getCartId()
-				+ cartItemsInCustomer;
+		return " > CustomerId: " + customer.getCustomerId() + "<br>CartId: " + customer.getCart().getCartId()
+				+ cartItemsInCustomerHtml;
 	}
 
 	// curl -X POST -d "customerId=value&articleId=value"
@@ -233,8 +266,10 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 
 		customer.getCart().decrementArticleQuantity(articleId);
 		customer = customerRepository.save(customer);
-
-		return " > CustomerId: " + customer.getCustomerId() + "\n    ArticleId: " + articleId + " decremented by 1";
+		//For console representation
+		log.info(" > CustomerId: " + customer.getCustomerId() + "\n    ArticleId: " + articleId + " decremented by 1");
+		//For browser representation
+		return " > CustomerId: " + customer.getCustomerId() + "<br>ArticleId: " + articleId + " decremented by 1";
 
 	}
 
@@ -250,8 +285,10 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 		Customer customer = getCustomer(customerId);
 		customer.getCart().deleteCartItem(articleId);
 		customerRepository.save(customer);
-
-		return " > CustomerId: " + customer.getCustomerId() + "\n    ArticleId: " + articleId + " deleted";
+		//For console representation
+		log.info(" > CustomerId: " + customer.getCustomerId() + "\n    ArticleId: " + articleId + " deleted");
+		//For browser representation
+		return " > CustomerId: " + customer.getCustomerId() + "<br>ArticleId: " + articleId + " deleted";
 	}
 
 	// -------------------------------------------------------------------------
@@ -286,6 +323,8 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 		customer3.setCart(cart3);
 		customerRepository.save(customer3);
 
+		log.info("Demo Customers Saved");
+		
 		return "Demo Customers Saved";
 	}
 

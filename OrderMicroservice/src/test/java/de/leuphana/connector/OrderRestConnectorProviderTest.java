@@ -16,8 +16,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import de.leuphana.component.behaviour.OrderService;
-
 @ExtendWith(SpringExtension.class)
 @DataJpaTest // Ist ein spezieller Test, mit dem Autowired nutzbar ist
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // Damit keine h2 Datenbank benutzt wird

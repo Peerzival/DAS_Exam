@@ -2,6 +2,8 @@ package de.leuphana.connector;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,11 +29,14 @@ public class OrderRestConnectorProvider
 
 	// Feign
 	final ArticleRestConnectorRequester articleRestConnectorRequester;
+	
+	private static Logger log;
 
 	@Autowired
 	public OrderRestConnectorProvider(
 			ArticleRestConnectorRequester articleRestConnectorRequester) {
 		this.articleRestConnectorRequester = articleRestConnectorRequester;
+		log = LogManager.getLogger(this.getClass());
 	}
 
 	// -------------------- CRUD -------------------- \\
@@ -76,10 +81,25 @@ public class OrderRestConnectorProvider
 		List<OrderPosition> orderPositions = order
 				.getOrderPositions();
 
+		//For browser representation
+		String orderHtmlString = "> Order id: "
+				+ order.getOrderId() + "<br>";
+		//For console representation
 		String orderString = "> Order id: "
 				+ order.getOrderId() + "\n";
 
 		for (OrderPosition orderPosition : orderPositions) {
+			orderHtmlString = orderHtmlString
+					+ "Order position: "
+					+ orderPosition
+							.getOrderPositionId()
+					+ "<br>Article id: "
+					+ orderPosition.getArticleId()
+					+ "<br>Article quantity: "
+					+ orderPosition
+							.getArticleQuantity()
+					+ "<br>";
+
 			orderString = orderString
 					+ "Order position: "
 					+ orderPosition
@@ -91,8 +111,10 @@ public class OrderRestConnectorProvider
 							.getArticleQuantity()
 					+ "\n";
 		}
+		
+		log.info(orderString);
 
-		return orderString;
+		return orderHtmlString;
 	}
 
 	@Override
@@ -106,13 +128,24 @@ public class OrderRestConnectorProvider
 	public String getAllOrdersAsString() {
 		List<Order> orders = (List<Order>) orderRepository
 				.findAll();
+		
+		//For browser representation
+		String orderHtmlString = new String();
+		//For console representation
 		String orderString = new String();
 
 		for (Order order : orders) {
+			orderHtmlString = orderHtmlString + "> Order id: "
+					+ order.getOrderId()
+					+ "<br>Customer who owns this order: "
+					+ order.getCustomerId() + "<br>";
+			
 			orderString = orderString + "> Order id: "
-					+ order.getOrderId() + "    Customer who owns this order: " + order.getCustomerId() + "\n";
+					+ order.getOrderId()
+					+ "    Customer who owns this order: "
+					+ order.getCustomerId() + "\n";
 		}
-		return orderString;
+		return orderHtmlString;
 	}
 
 	// UPDATE
@@ -150,9 +183,12 @@ public class OrderRestConnectorProvider
 		order.addOrderPosition(orderPosition);
 
 		orderRepository.save(order);
-
+		//For console representation
+		log.info("Article with id " + idOfArticle
+				+ " added to order.\n");
+		//For browser representation
 		return "Article with id " + idOfArticle
-				+ " added to order.\n";
+				+ " added to order.<br>";
 	}
 
 	// DELETE
@@ -164,6 +200,9 @@ public class OrderRestConnectorProvider
 	public String deleteOrder(
 		@RequestParam int orderId) {
 		orderRepository.deleteById(orderId);
+		//For console representation
+		log.info("order deleted with id: " + orderId);
+		//For browser representation
 		return "order deleted with id: " + orderId;
 	}
 

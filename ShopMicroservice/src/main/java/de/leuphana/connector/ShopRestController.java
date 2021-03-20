@@ -2,7 +2,6 @@ package de.leuphana.connector;
 
 import java.io.IOException;
 
-import org.apache.hc.client5.http.fluent.Content;
 import org.apache.hc.client5.http.fluent.Form;
 import org.apache.hc.client5.http.fluent.Request;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +17,14 @@ import de.leuphana.component.shop.behaviour.SupplierService;
 @RestController
 public class ShopRestController implements CustomerService, SupplierService 
 {
-	// IP Max:
+	// IP Max: 192.168.178.22
 	// IP Andy:
 	// IP Henrik: 192.168.178.121
 	
 	private static String ipString = "http://192.168.178.121:8880";
+	
+	//TODO uncomment
+//	private static String ipString = "http://insertOwnIP:8880";
 	
 
 	// -------------------- ARTICLE -------------------- \\

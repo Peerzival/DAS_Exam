@@ -11,11 +11,14 @@ import org.junit.jupiter.api.Test;
 
 class ShopJPAConnectorTest {
 	
-	// IP Max:
+	// IP Max: 192.168.178.22
 	// IP Andy:
 	// IP Henrik: 192.168.178.121
 		
 	private static String ipString = "http://192.168.178.121:8880";
+	
+	//TODO uncomment
+//	private static String ipString = "http://insertOwnIP:8880";
 	
 	@BeforeEach
 	void setUp() throws Exception {}

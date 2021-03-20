@@ -11,6 +11,9 @@ eureka:
     serviceUrl:
       defaultZone: http://192.168.178.121:8761/eureka 
 
+# defaultZone: http://insertOwnIP:8761/eureka 
+
+
 spring:
   application:
     name: gateway-service
@@ -19,13 +22,16 @@ spring:
       routes:
       - id: article
         uri: http://192.168.178.121:8180/
+# uri: http://insertOwnIP:8180/
         predicates:
         - Path=/article/**
       - id: order
         uri: http://192.168.178.121:8280/
+# uri: http://insertOwnIP:8180/
         predicates:
         - Path=/order/**
       - id: customer
         uri: http://192.168.178.121:8380/
+# uri: http://insertOwnIP:8180/
         predicates:
         - Path=/customer/**
