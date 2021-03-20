@@ -114,7 +114,7 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 
 	@Override
 	@PostMapping(path = "/getArticleString")
-	public String getArticleString(@RequestParam int articleId) {
+	public @ResponseBody String getArticleString(@RequestParam int articleId) {
 		Article article = articleRepository.findById(articleId)
 				.orElseThrow(() -> new ArticleNotFoundException(
 						articleId));

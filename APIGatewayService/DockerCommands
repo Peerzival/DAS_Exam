@@ -1,0 +1,5 @@
+cd .../APIGatewayService
+mvn -N io.takari:maven:wrapper
+./mvnw package
+docker build -t vas/api-gatewayservice .
+docker run -p 8880:8880 vas/api-gatewayservice

@@ -1,1 +1,3 @@
-C:\Users\Asus\git\DAS_Exam\CustomerMicroservice\src\test\java\de\leuphana\connector\CustomerJPAConnectorTest.java
+/Users/henrik/GitHub/DAS_Exam/CustomerMicroservice/src/test/java/de/leuphana/connector/CustomerSpringDataConnectorRequesterTest.java
+/Users/henrik/GitHub/DAS_Exam/CustomerMicroservice/src/test/java/de/leuphana/connector/CustomerRestConnectorProviderTest.java
+/Users/henrik/GitHub/DAS_Exam/CustomerMicroservice/src/test/java/de/leuphana/connector/OrderRestConnectorRequesterTest.java
