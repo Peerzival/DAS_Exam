@@ -30,12 +30,12 @@ public class ShopRestController implements CustomerService, SupplierService
 
 	@Override
 	@PostMapping(path = "/article/createArticle")
-	public void addNewArticle(@RequestParam("name") String name,
+	public String createArticle(@RequestParam("name") String name,
 		@RequestParam("manufactor") String manufactor,
-		@RequestParam("price") float price) {
+		@RequestParam("price") double price) {
 		
 		try {
-			System.out.println(
+			return
 					Request.post(ipString + "/article/createArticle")
 						.bodyForm(Form.form()
 						.add("name", name)
@@ -43,24 +43,27 @@ public class ShopRestController implements CustomerService, SupplierService
 						.add("price", "" + price)
 						.build())
 						.execute()
-						.returnContent());
-			
+						.returnContent()
+						.asString();
+					
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return "";
 		
 	};
 
 	@Override
 	@PostMapping(path = "/article/updateArticle")
-	public void updateArticle(@RequestParam("articleId")int articleId, 
+	public String updateArticle(@RequestParam("articleId")int articleId, 
 			@RequestParam("name")String name, 
 			@RequestParam("manufactor")String manufactor, 
-			@RequestParam("price")float price) {
+			@RequestParam("price")double price) {
 		
 		try {
-			System.out.println(
-					Request.post(ipString + "article/updateArticle")
+			return
+					Request.post(ipString + "/article/updateArticle")
 						.bodyForm(Form.form()
 						.add("articleId", "" + articleId)
 						.add("name", name)
@@ -68,34 +71,40 @@ public class ShopRestController implements CustomerService, SupplierService
 						.add("price", "" + price)
 						.build())
 						.execute()
-						.returnContent());
+						.returnContent()
+						.asString();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return "";
 	};
 	
 	@Override
 	@PostMapping(path = "/article/deleteArticle")
-	public void deleteArticleById(@RequestParam int articleId) {
+	public String deleteArticleById(@RequestParam int articleId) {
 		
 		try {
-			System.out.println(
+			return
 					Request.post(ipString + "/article/deleteArticle")
 						.bodyForm(Form.form()
 						.add("articleId", "" + articleId)
 						.build())
 						.execute()
-						.returnContent());
+						.returnContent()
+						.asString();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return "";
 	}
 	
 	@Override
 	@GetMapping(path = "/article/getArticle/{articleId}")
-	public @ResponseBody String getArticle(@PathVariable("articleId") int articleId) {
+	public String getArticle(@PathVariable("articleId") int articleId) {
 		
 		try {
 			return
@@ -112,8 +121,23 @@ public class ShopRestController implements CustomerService, SupplierService
 			e.printStackTrace();
 		}
 		
-		return null;
+		return "";
+	}
+	
+	@GetMapping(path = "/article/getAllArticles")
+	public String getAllArticles() {
+		try {
+			return
+					Request
+					.get(ipString + "/article/getAllArticlesString")
+						.execute()
+						.returnContent()
+						.asString();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
+		return "";
 	}
 
 	// -------------------- CUSTOMER -------------------- \\
@@ -340,38 +364,44 @@ public class ShopRestController implements CustomerService, SupplierService
 
 	@Override
 	@GetMapping(path = "/order/getOrderString/{orderId}")
-	public void getOrder(@PathVariable("orderId") int orderId) {
+	public String getOrder(@PathVariable("orderId") int orderId) {
 		
 		try {
-			System.out.println(
+			return
 					Request
 						.post(ipString + "/order/getOrderString")
 						.bodyForm(Form.form()
 						.add("orderId", "" + orderId)
 						.build())
 						.execute()
-						.returnContent());
+						.returnContent()
+						.asString();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return "";
 	}
 
 	@Override
 	@GetMapping(path = "/order/getAllOrders")
-	public void getAllOrdersAsString() {
+	public String getAllOrders() {
 		
 		try {
-			System.out.println(
+			return
 					Request
 						.get(ipString + "/order/getAllOrdersAsString")
 						.bodyForm(Form.form()
 						.build())
 						.execute()
-						.returnContent());
+						.returnContent()
+						.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return "";
 		
 	};
 

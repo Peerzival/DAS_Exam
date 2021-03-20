@@ -12,9 +12,6 @@ import org.springframework.context.annotation.Bean;
 		DataSourceAutoConfiguration.class })
 public class ShopBootApplication {
 
-	@Autowired
-	private ShopRestController apiGatewayRestConnectorRequester;
-
 	private static final Logger log = LoggerFactory
 			.getLogger(ShopBootApplication.class);
 

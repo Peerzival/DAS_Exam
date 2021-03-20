@@ -3,6 +3,8 @@ package de.leuphana.connector;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,8 +25,14 @@ import de.leuphana.component.structure.Article;
 @RequestMapping(path = "/article")
 public class ArticleRestConnectorProvider implements ArticleComponentService {
 
+	private static Logger log;
+	
 	@Autowired
 	private ArticleRepository articleRepository;
+	
+	public ArticleRestConnectorProvider() {
+		log = LogManager.getLogger(this.getClass());
+	}
 
 	// -------------------- CRUD -------------------- \\
 	// --------------------------------------------------------------------------------
@@ -36,7 +44,7 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 	@PostMapping(path = "/createArticle") // Map ONLY POST Requests
 	public int createArticle(@RequestParam String name,
 		@RequestParam String manufactor,
-		@RequestParam float price) {
+		@RequestParam double price) {
 
 		Article article = new Article(name, manufactor, price);
 		if (!checkIfArticleNameAlreadyExists(article)) {
@@ -56,8 +64,7 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 	}
 
 	// UPDATE
-	// curl localhost:8180/article/updateArticle -d articleId=1 -d
-	// name=Rumpelstielzchen -d manufactor=TU_Hamburg -d price=56.5f
+	// curl localhost:8180/article/updateArticle -d articleId=1 -d name=Rumpelstielzchen -d manufactor=TU_Hamburg -d price=56.5f
 	// --------------------------------------------------------------------------------
 
 	@Override
@@ -65,7 +72,7 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 	public String updateArticle(@RequestParam int articleId,
 		@RequestParam String name,
 		@RequestParam String manufactor,
-		@RequestParam float price) {
+		@RequestParam double price) {
 
 		Article updateArticle = articleRepository
 				.findById(articleId)
@@ -78,12 +85,22 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 			updateArticle.setPrice(price);
 
 			articleRepository.save(updateArticle);
-			return "Article with id '" + articleId
+			
+			String successMessage = "Article with id '" 
+					+ articleId
 					+ "' updated.\n";
+			
+			log.info(successMessage);
+			return successMessage;
 		}
-		return "Update of article with id '" + articleId
+		
+		String failMessage = "Update of article with id '" 
+				+ articleId
 				+ "' failed. "
-				+ "Consider adding a new article.";
+				+ "Consider adding a new article.\n";
+		
+		log.info(failMessage);
+		return failMessage;
 	}
 
 	// READ
@@ -100,7 +117,6 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 				.orElseThrow(() -> new ArticleNotFoundException(
 						articleId));
 
-		System.out.println("GET article successful");
 		return article;
 	}
 
@@ -118,11 +134,17 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 		Article article = articleRepository.findById(articleId)
 				.orElseThrow(() -> new ArticleNotFoundException(
 						articleId));
-
-		return "Articlename: " + article.getName()
-				+ "    Articlemanufactor: "
+		
+		log.info("Articlename: " + article.getName()
+				+ "\nArticlemanufactor: "
 				+ article.getManufactor()
 				+ "\nPrice of article: " + article.getPrice()
+				+ "€.");
+		
+		return "Articlename: " + article.getName()
+				+ "<br>Articlemanufactor: "
+				+ article.getManufactor()
+				+ "<br>Price of article: " + article.getPrice()
 				+ "€.";
 	}
 
@@ -130,6 +152,35 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 	@GetMapping(path = "/getAllArticles")
 	public Iterable<Article> getAllArticles() {
 		return articleRepository.findAll();
+	}
+	
+	@GetMapping(path = "/getAllArticlesString")
+	public String getAllArticlesString() {
+		
+		List<Article> articles = (List<Article>) getAllArticles();
+		String articlesString = "";
+		
+		for (Article article: articles) {
+			articlesString = articlesString +
+					"Articlename: " + article.getName()
+					+ " - Articlemanufactor: "
+					+ article.getManufactor()
+					+ " - Price of article: " + article.getPrice()
+					+ "€.\n";
+		}
+		log.info(articlesString);
+		
+		articlesString="";
+		for (Article article: articles) {
+			articlesString = articlesString +
+					"Articlename: " + article.getName()
+					+ " - Articlemanufactor: "
+					+ article.getManufactor()
+					+ " - Price of article: " + article.getPrice()
+					+ "€.<br>";
+		}
+		
+		return articlesString;
 	}
 
 	@Override
