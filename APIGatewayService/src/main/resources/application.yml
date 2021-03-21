@@ -10,7 +10,7 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://192.168.178.121:8761/eureka 
-
+#          Insert here your own IP
 # defaultZone: http://insertOwnIP:8761/eureka 
 
 
@@ -22,16 +22,19 @@ spring:
       routes:
       - id: article
         uri: http://192.168.178.121:8180/
+#          Insert here your own IP
 # uri: http://insertOwnIP:8180/
         predicates:
         - Path=/article/**
       - id: order
         uri: http://192.168.178.121:8280/
+#          Insert here your own IP
 # uri: http://insertOwnIP:8180/
         predicates:
         - Path=/order/**
       - id: customer
         uri: http://192.168.178.121:8380/
+#          Insert here your own IP
 # uri: http://insertOwnIP:8180/
         predicates:
         - Path=/customer/**
