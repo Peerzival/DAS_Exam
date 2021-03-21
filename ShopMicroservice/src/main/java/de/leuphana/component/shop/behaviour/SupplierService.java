@@ -1,8 +1,5 @@
 package de.leuphana.component.shop.behaviour;
 
-import org.apache.hc.client5.http.fluent.Content;
-import org.springframework.web.bind.annotation.RequestParam;
-
 public interface SupplierService {
 
 	// -------------------- ARTICLE -------------------- \\

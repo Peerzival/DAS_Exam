@@ -9,22 +9,29 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ShopJPAConnectorTest {
+class ShopSpringConnectorRequesterTest {
 	
+	//TODO delete
 	// IP Max: 192.168.178.22
 	// IP Andy:
 	// IP Henrik: 192.168.178.121
 		
-	private static String ipString = "http://192.168.178.121:8880";
+	private static String ipString;
 	
 	//TODO uncomment
-//	private static String ipString = "http://insertOwnIP:8880";
+//	private static String ipString;
 	
 	@BeforeEach
-	void setUp() throws Exception {}
+	void setUp() throws Exception {
+		ipString = "http://192.168.178.121:8880";
+		//TODO uncomment
+//		ipString = "http://insertOwnIP:8880"
+	}
 
 	@AfterEach
-	void tearDown() throws Exception {}
+	void tearDown() throws Exception {
+		ipString = null;
+	}
 
 	@Test
 	void canShopAccessArticleMicroService() {

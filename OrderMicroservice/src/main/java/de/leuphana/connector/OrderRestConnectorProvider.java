@@ -153,7 +153,6 @@ public class OrderRestConnectorProvider
 	// quantity=value -d orderId=value
 	// -------------------------------------------------------------------------
 
-	// TODO later change reponsebody String to int
 	@Override
 	@PostMapping(path = "/addArticleToOrder")
 	public String addArticleToOrder(
