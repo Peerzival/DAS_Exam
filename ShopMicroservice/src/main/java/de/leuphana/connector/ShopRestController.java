@@ -15,8 +15,8 @@ import de.leuphana.component.shop.behaviour.SupplierService;
 
 /**
  * @author Max Gnewuch
- * @author Henrik Prüß
- * @author Andreas Bächler
+ * @author Henrik Prueß
+ * @author Andreas Baechler
  * 
  *         This microservice represents our Httpclient. It sends an Httprequest
  *         to the API Gateway. This distributes the request to the corresponding
