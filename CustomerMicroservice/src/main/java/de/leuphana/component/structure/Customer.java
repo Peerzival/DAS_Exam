@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Customer {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer customerId;
 	private String name;
 	private String address;
@@ -77,8 +77,4 @@ public class Customer {
 	public void addOrder(int orderId) {
 		orderIds.add(orderId);
 	}
-//	public Map<Integer, Order> getOrders() {
-//		return this.orders;
-//	}
-
 }

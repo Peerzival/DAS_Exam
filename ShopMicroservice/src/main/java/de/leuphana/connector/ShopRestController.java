@@ -50,10 +50,8 @@ public class ShopRestController implements CustomerService, SupplierService
 					
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "Creation of new article failed. Please try again.\n";
 		}
-		
-		return "";
-		
 	};
 
 	@Override
@@ -78,9 +76,9 @@ public class ShopRestController implements CustomerService, SupplierService
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No article with id '" + articleId + "' found. " + 
+			"Update command canceled.\n";
 		}
-		
-		return "";
 	};
 	
 	@Override
@@ -99,9 +97,9 @@ public class ShopRestController implements CustomerService, SupplierService
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No article with id '" + articleId + "' found. " + 
+					"Delete command canceled.\n";
 		}
-		
-		return "";
 	}
 	
 	@Override
@@ -121,9 +119,8 @@ public class ShopRestController implements CustomerService, SupplierService
 			
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No article with id '" + articleId + "' found.\n";
 		}
-		
-		return "";
 	}
 	
 	@GetMapping(path = "/article/getAllArticles")
@@ -137,9 +134,8 @@ public class ShopRestController implements CustomerService, SupplierService
 						.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
-		return "";
+			return "";
+		}	
 	}
 
 	// -------------------- CUSTOMER -------------------- \\

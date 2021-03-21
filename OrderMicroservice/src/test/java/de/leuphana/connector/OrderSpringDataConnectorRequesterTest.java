@@ -2,8 +2,6 @@ package de.leuphana.connector;
 
 import javax.persistence.EntityManager;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
@@ -22,9 +21,11 @@ import de.leuphana.component.structure.Order;
 import de.leuphana.component.structure.OrderPosition;
 
 @ExtendWith(SpringExtension.class)
-@DataJpaTest // Ist ein spezieller Test, mit dem Autowired nutzbar ist
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // Damit keine h2 Datenbank benutzt wird
-@ImportAutoConfiguration(FeignAutoConfiguration.class)
+@DataJpaTest
+@AutoConfigureTestDatabase
+@ImportAutoConfiguration({
+	FeignAutoConfiguration.class,
+	HttpMessageConvertersAutoConfiguration.class })
 class OrderSpringDataConnectorRequesterTest {
 
 	@Autowired

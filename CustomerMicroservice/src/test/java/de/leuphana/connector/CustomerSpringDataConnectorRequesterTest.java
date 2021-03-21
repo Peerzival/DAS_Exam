@@ -20,7 +20,7 @@ import de.leuphana.component.structure.Customer;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase
 @ImportAutoConfiguration(FeignAutoConfiguration.class)
 class CustomerSpringDataConnectorRequesterTest {
 

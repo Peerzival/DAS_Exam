@@ -16,9 +16,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-
-@ImportAutoConfiguration({FeignAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class}) //FeignAutoConfiguration  HttpMessageConvertersAutoConfiguration
+@AutoConfigureTestDatabase
+@ImportAutoConfiguration({FeignAutoConfiguration.class,
+	HttpMessageConvertersAutoConfiguration.class})
 class OrderRestConnectorRequesterTest {
 
 	@Autowired

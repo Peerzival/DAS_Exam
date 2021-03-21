@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class OrderPosition {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int orderPositionId;
 	private int articleId;
 	private int articleQuantity;
