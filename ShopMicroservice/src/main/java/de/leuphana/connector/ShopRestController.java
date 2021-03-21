@@ -42,8 +42,9 @@ public class ShopRestController
 	// -------------------- ARTICLE -------------------- \\
 	// -------------------------------------------------------------------------
 
+	// localhost:8888/article/createArticle?name=Schaufel&manufactor=Hornbach&price=15.99
 	@Override
-	@PostMapping(path = "/article/createArticle")
+	@GetMapping(path = "/article/createArticle")
 	public String createArticle(
 		@RequestParam("name") String name,
 		@RequestParam("manufactor") String manufactor,
@@ -68,8 +69,9 @@ public class ShopRestController
 		}
 	};
 
+	// localhost:8888/article/updateArticle?articleId=1&name=Besen&manufactor=Loewe&price=7.99
 	@Override
-	@PostMapping(path = "/article/updateArticle")
+	@GetMapping(path = "/article/updateArticle")
 	public String updateArticle(
 		@RequestParam("articleId") int articleId,
 		@RequestParam("name") String name,
@@ -98,8 +100,9 @@ public class ShopRestController
 		}
 	};
 
+	// localhost:8888/article/deleteArticle?articleId=5
 	@Override
-	@PostMapping(path = "/article/deleteArticle")
+	@GetMapping(path = "/article/deleteArticle")
 	public String deleteArticleById(
 		@RequestParam int articleId) {
 
@@ -121,6 +124,7 @@ public class ShopRestController
 		}
 	}
 
+	// localhost:8888/article/getArticle/5
 	@Override
 	@GetMapping(path = "/article/getArticle/{articleId}")
 	public String getArticle(
@@ -142,6 +146,7 @@ public class ShopRestController
 		}
 	}
 
+	// localhost:8888/article/getAllArticles
 	@GetMapping(path = "/article/getAllArticles")
 	public String getAllArticles() {
 		try {
@@ -158,126 +163,141 @@ public class ShopRestController
 	// -------------------- CUSTOMER -------------------- \\
 	// -------------------------------------------------------------------------
 
+	// localhost:8888/customer/createCustomer?name=Andeas&address=Ziegenhof 13
 	@Override
-	@PostMapping(path = "/customer/createCustomer")
-	public void createCustomer(
+	@GetMapping(path = "/customer/createCustomer")
+	public String createCustomer(
 		@RequestParam String name,
 		@RequestParam String address) {
 
 		try {
-			System.out.println(Request.post(ipString
+			return Request.post(ipString
 					+ "/customer/createCustomer")
 					.bodyForm(Form.form()
 							.add("name", "" + name)
 							.add("address",
 									"" + address)
 							.build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "Creation of customer failed.";
 		}
 	};
 
+	// localhost:8888/customer/getCustomer/1
 	@Override
-	@GetMapping(path = "/customer/getCustomerString")
-	public void getCustomerString(
+	@GetMapping(path = "/customer/getCustomer/{customerId}")
+	public String getCustomerString(
 		@PathVariable("customerId") int customerId) {
 
 		try {
-			System.out.println(Request.get(ipString
+			return Request.post(ipString
 					+ "/customer/getCustomerString")
 					.bodyForm(Form.form()
-							.add("name",
+							.add("customerId",
 									"" + customerId)
 							.build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No customer with id '" + customerId + "' found.\n";
 		}
 	};
 
+	// localhost:8888/customer/getAllCustomers
 	@Override
-	@GetMapping(path = "/customer/getAllCustomersAsString")
-	public void getAllCustomersAsString() {
+	@GetMapping(path = "/customer/getAllCustomers")
+	public String getAllCustomersAsString() {
 
 		try {
-			System.out.println(Request.get(ipString
+			return Request.get(ipString
 					+ "/customer/getAllCustomersAsString")
-					.bodyForm(Form.form().build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "";
 		}
 	};
 
+	// localhost:8888/customer/changeCustomerAddress?customerId=1&address=Strandschuppen
 	@Override
-	@PostMapping(path = "/customer/changeCustomerAddress")
-	public void changeCustomerAddress(
+	@GetMapping(path = "/customer/changeCustomerAddress")
+	public String changeCustomerAddress(
 		@RequestParam int customerId,
 		@RequestParam String address) {
 
 		try {
-			System.out.println(Request.get(ipString
+			return Request.post(ipString
 					+ "/customer/changeCustomerAddress")
 					.bodyForm(Form.form()
 							.add("customerId",
 									"" + customerId)
 							.add("address", address)
 							.build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No customer with id '" + customerId + "' found. " + 
+			"Update command canceled.\n";
 		}
 	};
 
+	// localhost:8888/customer/changeCustomerName?customerId=1&name=Shisha
 	@Override
-	@PostMapping(path = "/customer/changeCustomerName")
-	public void changeCustomerName(
+	@GetMapping(path = "/customer/changeCustomerName")
+	public String changeCustomerName(
 		@RequestParam int customerId,
 		@RequestParam String name) {
 
 		try {
-			System.out.println(Request.get(ipString
+			return Request.post(ipString
 					+ "/customer/changeCustomerName")
 					.bodyForm(Form.form()
 							.add("customerId",
 									"" + customerId)
 							.add("name", name).build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No customer with id '" + customerId + "' found. " + 
+					"Update command canceled.\n";
 		}
 	};
 
+	// localhost:8888/customer/deleteCustomer?customerId=2
 	@Override
-	@PostMapping(path = "/customer/deleteCustomer")
-	public void deleteCustomer(
+	@GetMapping(path = "/customer/deleteCustomer")
+	public String deleteCustomer(
 		@RequestParam int customerId) {
 
 		try {
-			System.out.println(Request.get(ipString
+			return Request.delete(ipString
 					+ "/customer/deleteCustomer")
 					.bodyForm(Form.form()
 							.add("customerId",
 									"" + customerId)
 							.build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No customer with id '" + customerId + "' found. " + 
+					"Update command canceled.\n";
 		}
 	};
 
+	// localhost:8888/customer/addCartItem?customerId=1&articleId=1
 	@Override
-	@PostMapping(path = "/customer/addCartItem")
-	public void addCartItem(
+	@GetMapping(path = "/customer/addCartItem")
+	public String addCartItem(
 		@RequestParam int customerId,
 		@RequestParam int articleId) {
 
 		try {
-			System.out.println(Request
-					.get(ipString
+			return Request
+					.post(ipString
 							+ "/customer/addCartItem")
 					.bodyForm(Form.form()
 							.add("customerId",
@@ -285,57 +305,63 @@ public class ShopRestController
 							.add("articleId",
 									"" + articleId)
 							.build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No customer with id '" + customerId + "' found.\n";
 		}
 
 	};
 
+	// localhost:8888/customer/checkOutCartToOrder?customerId=1
 	@Override
-	@PostMapping(path = "/customer/checkOutCartToOrder")
-	public void checkOutCartToOrder(
+	@GetMapping(path = "/customer/checkOutCartToOrder")
+	public String checkOutCartToOrder(
 		@RequestParam int customerId) {
 
 		try {
-			System.out.println(Request.get(ipString
+			return Request.post(ipString
 					+ "/customer/checkOutCartToOrder")
 					.bodyForm(Form.form()
 							.add("customerId",
 									"" + customerId)
 							.build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No customer with id '" + customerId + "' found.\n";
 		}
 	};
 
+	// localhost:8888/customer/getCartItemsFromCustomer?customerId=1
 	@Override
-	@PostMapping(path = "/customer/getCartItemsFromCustomer")
-	public void getCartItemsFromCustomer(
+	@GetMapping(path = "/customer/getCartItemsFromCustomer")
+	public String getCartItemsFromCustomer(
 		@RequestParam int customerId) {
 
 		try {
-			System.out.println(Request.get(ipString
+			return Request.post(ipString
 					+ "/customer/getCartItemsFromCustomer")
 					.bodyForm(Form.form()
 							.add("customerId",
 									"" + customerId)
 							.build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No customer with id '" + customerId + "' found.\n";
 		}
 	};
 
+	// localhost:8888/customer/decrementArticleFromCartItem?customerId=1&articleId=1
 	@Override
-	@PostMapping(path = "/customer/decrementArticleFromCartItem")
-	public void decrementArticleFromCartItem(
+	@GetMapping(path = "/customer/decrementArticleFromCartItem")
+	public String decrementArticleFromCartItem(
 		@RequestParam int customerId,
 		@RequestParam int articleId) {
 
 		try {
-			System.out.println(Request.get(ipString
+			return Request.post(ipString
 					+ "/customer/decrementArticleFromCartItem")
 					.bodyForm(Form.form()
 							.add("customerId",
@@ -343,21 +369,22 @@ public class ShopRestController
 							.add("articleId",
 									"" + articleId)
 							.build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No customer with id '" + customerId + "' found.\n";
 		}
-
 	};
 
+	// localhost:8888/customer/deleteArticleFromCartItem?customerId=1&articleId=2
 	@Override
-	@PostMapping(path = "/customer/deleteArticleFromCartItem")
-	public void deleteArticleFromCartItem(
+	@GetMapping(path = "/customer/deleteArticleFromCartItem")
+	public String deleteArticleFromCartItem(
 		@RequestParam int customerId,
 		@RequestParam int articleId) {
 
 		try {
-			System.out.println(Request.get(ipString
+			return Request.post(ipString
 					+ "/customer/deleteArticleFromCartItem")
 					.bodyForm(Form.form()
 							.add("customerId",
@@ -365,9 +392,10 @@ public class ShopRestController
 							.add("articleId",
 									"" + articleId)
 							.build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No customer with id '" + customerId + "' found.\n";
 		}
 
 	};
@@ -375,8 +403,9 @@ public class ShopRestController
 	// -------------------- ORDER -------------------- \\
 	// -------------------------------------------------------------------------
 
+	// localhost:8888/order/getOrder/1
 	@Override
-	@GetMapping(path = "/order/getOrderString/{orderId}")
+	@GetMapping(path = "/order/getOrder/{orderId}")
 	public String getOrder(
 		@PathVariable("orderId") int orderId) {
 
@@ -393,11 +422,12 @@ public class ShopRestController
 
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No order with id '" + orderId + "' found.\n";
 		}
 
-		return "";
 	}
 
+	// localhost:8888/order/getAllOrders
 	@Override
 	@GetMapping(path = "/order/getAllOrders")
 	public String getAllOrders() {
@@ -405,33 +435,32 @@ public class ShopRestController
 		try {
 			return Request.get(ipString
 					+ "/order/getAllOrdersAsString")
-					.bodyForm(Form.form().build())
 					.execute().returnContent()
 					.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "";
 		}
-
-		return "";
-
 	};
 
+	// localhost:8888/order/deleteOrder?orderId=2
 	@Override
-	@PostMapping(path = "/order/deleteOrder")
-	public void deleteOrder(
+	@GetMapping(path = "/order/deleteOrder")
+	public String deleteOrder(
 		@RequestParam int orderId) {
 
 		try {
-			System.out.println(Request
-					.get(ipString
+			return Request
+					.post(ipString
 							+ "/order/deleteOrder")
 					.bodyForm(Form.form()
 							.add("orderId",
 									"" + orderId)
 							.build())
-					.execute().returnContent());
+					.execute().returnContent().asString();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "No order with id '" + orderId + "' found.\n";
 		}
 	};
 }

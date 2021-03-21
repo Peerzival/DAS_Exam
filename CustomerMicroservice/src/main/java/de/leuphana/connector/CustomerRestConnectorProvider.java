@@ -279,7 +279,7 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 	// curl -X POST -d "customerId=value&articleId=value"
 	// http://localhost:8281/customer/deleteArticleFromCartitem
 	@Override
-	@PostMapping(path = "/deleteArticleFromCartitem")
+	@PostMapping(path = "/deleteArticleFromCartItem")
 	public String deleteArticleFromCartItem(@RequestParam int customerId, @RequestParam int articleId) {
 
 		Customer customer = getCustomer(customerId);

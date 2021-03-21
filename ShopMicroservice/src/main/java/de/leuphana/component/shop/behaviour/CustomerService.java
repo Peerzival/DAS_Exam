@@ -5,27 +5,27 @@ public interface CustomerService {
 	// -------------------- CUSTOMER -------------------- \\
 	// --------------------------------------------------------------------------------
 
-	void createCustomer(String name, String address);
+	String createCustomer(String name, String address);
 
-	void getCustomerString(int customerId);
+	String getCustomerString(int customerId);
 
-	void getAllCustomersAsString();
+	String getAllCustomersAsString();
 
-	void changeCustomerAddress(int customerId, String address);
+	String changeCustomerAddress(int customerId, String address);
 
-	void changeCustomerName(int customerId, String name);
+	String changeCustomerName(int customerId, String name);
 
-	void deleteCustomer(int customerId);
+	String deleteCustomer(int customerId);
 
-	void addCartItem(int customerId, int articleId);
+	String addCartItem(int customerId, int articleId);
 
-	void checkOutCartToOrder(int customerId);
+	String checkOutCartToOrder(int customerId);
 
-	void getCartItemsFromCustomer(int customerId);
+	String getCartItemsFromCustomer(int customerId);
 
-	void decrementArticleFromCartItem(int customerId, int articleId);
+	String decrementArticleFromCartItem(int customerId, int articleId);
 
-	void deleteArticleFromCartItem(int customerId, int articleId);
+	String deleteArticleFromCartItem(int customerId, int articleId);
 
 	// -------------------- ORDER -------------------- \\
 	// --------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ public interface CustomerService {
 	
 	String getAllOrders();
 	
-	void deleteOrder(int orderId);
+	String deleteOrder(int orderId);
 
 	
 }
