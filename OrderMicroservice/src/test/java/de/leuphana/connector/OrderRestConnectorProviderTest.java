@@ -17,8 +17,8 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@DataJpaTest // Ist ein spezieller Test, mit dem Autowired nutzbar ist
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // Damit keine h2 Datenbank benutzt wird
+@DataJpaTest
+@AutoConfigureTestDatabase
 @ImportAutoConfiguration(FeignAutoConfiguration.class)
 class OrderRestConnectorProviderTest {
 

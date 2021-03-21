@@ -22,7 +22,6 @@ import de.leuphana.component.structure.Article;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class ArticleSpringDataConnecterRequesterTest {
 
 	@Autowired private EntityManager entityManager;

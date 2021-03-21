@@ -11,7 +11,7 @@ import javax.persistence.Table;
 public class Article {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer articleId;
 	private String manufactor;
 	private String name;

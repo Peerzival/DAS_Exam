@@ -19,7 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // Damit keine h2 Datenbank benutzt wird
+@AutoConfigureTestDatabase
 @ImportAutoConfiguration({
 		FeignAutoConfiguration.class,
 		HttpMessageConvertersAutoConfiguration.class })
@@ -65,10 +65,9 @@ class ArticleRestConnectorRequesterTest {
 		// You have make sure that an article with id 1 already exist in the database
 		// before you start the test
 		Assertions.assertEquals(
-				"Article with id 1 added to order.\n",
+				"Article with id 1 added to order.<br>",
 				orderRestConnectorProvider
-						.addArticleToOrder(1, 5,
-								orderId));
+				.addArticleToOrder(1, 5, orderId));
 	}
 
 }
