@@ -1,11 +1,7 @@
 /Users/henrik/GitHub/DAS_Exam/ArticleMicroservice/src/main/java/de/leuphana/component/behaviour/ArticleComponentService.java
-/Users/henrik/GitHub/DAS_Exam/ArticleMicroservice/src/main/java/de/leuphana/component/structure/Catalog.java
 /Users/henrik/GitHub/DAS_Exam/ArticleMicroservice/src/main/java/de/leuphana/component/behaviour/exception/ArticleNotFoundAdvice.java
-/Users/henrik/GitHub/DAS_Exam/ArticleMicroservice/src/main/java/de/leuphana/component/structure/BookCategory.java
 /Users/henrik/GitHub/DAS_Exam/ArticleMicroservice/src/main/java/de/leuphana/component/behaviour/ArticleRepository.java
 /Users/henrik/GitHub/DAS_Exam/ArticleMicroservice/src/main/java/de/leuphana/connector/ArticleRestConnectorProvider.java
-/Users/henrik/GitHub/DAS_Exam/ArticleMicroservice/src/main/java/de/leuphana/component/structure/CD.java
 /Users/henrik/GitHub/DAS_Exam/ArticleMicroservice/src/main/java/de/leuphana/connector/ArticleSpringDataConnectorRequester.java
 /Users/henrik/GitHub/DAS_Exam/ArticleMicroservice/src/main/java/de/leuphana/component/behaviour/exception/ArticleNotFoundException.java
 /Users/henrik/GitHub/DAS_Exam/ArticleMicroservice/src/main/java/de/leuphana/component/structure/Article.java
-/Users/henrik/GitHub/DAS_Exam/ArticleMicroservice/src/main/java/de/leuphana/component/structure/Book.java

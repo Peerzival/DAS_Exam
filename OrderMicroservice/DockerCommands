@@ -1,0 +1,5 @@
+cd .../OrderMicroService
+mvn -N io.takari:maven:wrapper
+./mvnw package
+docker build -t vas/order-microservice .
+docker run -p 8280:8280 vas/order-microservice

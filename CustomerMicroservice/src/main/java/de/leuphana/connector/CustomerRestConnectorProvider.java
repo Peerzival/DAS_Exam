@@ -202,6 +202,9 @@ public class CustomerRestConnectorProvider implements CustomerComponentService {
 	public String checkOutCartToOrder(@RequestParam int customerId) {
 
 		Customer customer = getCustomer(customerId);
+		if(customer.getCart().getNumberOfArticles() == 0) {
+			return "Empty cart. Nothing to check out.";
+		}
 
 		Collection<CartItem> cars = customer.getCart().getCartItems().values();
 		int orderId = orderRestConnectorRequester.createOrder(customerId);

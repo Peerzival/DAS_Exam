@@ -2,7 +2,6 @@ package de.leuphana.connector;
 
 import java.io.IOException;
 
-import org.apache.hc.client5.http.fluent.Form;
 import org.apache.hc.client5.http.fluent.Request;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -25,7 +24,7 @@ class ShopSpringConnectorRequesterTest {
 	void setUp() throws Exception {
 		ipString = "http://192.168.178.121:8880";
 		//TODO uncomment
-//		ipString = "http://insertOwnIP:8880"
+//		ipString = "http://insertOwnIP:8880"	
 	}
 
 	@AfterEach
@@ -37,13 +36,11 @@ class ShopSpringConnectorRequesterTest {
 	void canShopAccessArticleMicroService() {
 		try {
 			String confirmation =
-					Request.post(ipString + "/article/")
-						.bodyForm(Form.form()
-						.build())
+					Request.get(ipString + "/article/")
 						.execute()
 						.returnContent().toString();
 			
-			System.out.println(confirmation);
+			System.out.println("\n" + confirmation + "\n");
 			Assertions.assertNotNull(confirmation);
 			
 		} catch (IOException e) {
@@ -55,13 +52,11 @@ class ShopSpringConnectorRequesterTest {
 	void canShopAccessOrderMicroService() {
 		try {
 			String confirmation =
-					Request.post(ipString + "/order/")
-						.bodyForm(Form.form()
-						.build())
+					Request.get(ipString + "/order/")
 						.execute()
 						.returnContent().toString();
 			
-			System.out.println(confirmation);
+			System.out.println("\n" + confirmation + "\n");
 			Assertions.assertNotNull(confirmation);
 					
 		} catch (IOException e) {
@@ -73,18 +68,15 @@ class ShopSpringConnectorRequesterTest {
 	void canShopAccessCustomerMicroService() {
 		try {
 			String confirmation =
-					Request.post(ipString + "/customer/")
-						.bodyForm(Form.form()
-						.build())
+					Request.get(ipString + "/customer/")
 						.execute()
 						.returnContent().toString();
 			
-			System.out.println(confirmation);
+			System.out.println("\n" + confirmation + "\n");
 			Assertions.assertNotNull(confirmation);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
+	}	
 }

@@ -149,8 +149,7 @@ public class OrderRestConnectorProvider
 	}
 
 	// UPDATE
-	// curl localhost:8280/order/addArticleToOrder -d articleId=value -d
-	// quantity=value -d orderId=value
+	// curl localhost:8280/order/addArticleToOrder -d articleId=value -d quantity=value -d orderId=value
 	// -------------------------------------------------------------------------
 
 	@Override
@@ -208,11 +207,10 @@ public class OrderRestConnectorProvider
 	// Demo method for shop microservice
 	// curl localhost:8280/order/
 	// -------------------------------------------------------------------------
-
-	@Override
+	
 	@GetMapping(path = "/")
-	public String demoHelloSpring() {
-		return "Hello Spring World from order microservice.";
+	public String demo() {
+		return "Hello from Order-MicroService.";
 	}
 
 }

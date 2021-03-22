@@ -1,10 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: de.leuphana.connector.OrderSpringDataConnectorRequesterTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in de.leuphana.connector.OrderSpringDataConnectorRequesterTest
-canArticleBeFetched  Time elapsed: 0.001 s  <<< ERROR!
-org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext-JPA-Connector.xml]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext-JPA-Connector.xml] cannot be opened because it does not exist
-	at de.leuphana.connector.OrderSpringDataConnectorRequesterTest.setUp(OrderSpringDataConnectorRequesterTest.java:24)
-Caused by: java.io.FileNotFoundException: class path resource [applicationContext-JPA-Connector.xml] cannot be opened because it does not exist
-	at de.leuphana.connector.OrderSpringDataConnectorRequesterTest.setUp(OrderSpringDataConnectorRequesterTest.java:24)
-
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.441 s - in de.leuphana.connector.OrderSpringDataConnectorRequesterTest

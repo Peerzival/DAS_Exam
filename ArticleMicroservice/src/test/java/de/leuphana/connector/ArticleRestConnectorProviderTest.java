@@ -27,12 +27,14 @@ public class ArticleRestConnectorProviderTest {
 	@Autowired private ArticleComponentService articleService;
 	
 	private static int articleId;
+	private static int articleId2;
 	
 	@BeforeEach
 	void setUp() throws Exception {			
 		
 		// Dummy-Instance
 		articleId = articleService.createArticle("Leupht-Craftbeer", "Leupht", 2.5f);
+		articleId2 = articleService.createArticle("Leuphana-Drink", "Leupht", 2.5f);
 		
 	}
 
@@ -53,11 +55,26 @@ public class ArticleRestConnectorProviderTest {
 	
 	@Test
 	void canArticleBeUpdated() {
-		String articleAsString = articleService
-				.updateArticle(articleId, "Fusspils", "InnovativeDrinks", 0.50f);
 		
-		System.out.println("\nUpdated article: ");
-		System.out.println(articleAsString);
+		
+		// update to name that is still available -> no Rollback
+		String articleAsString = articleService.updateArticle(articleId2, 
+				"Leupht-Wein", "InnovativeDrinks", 0.50f);
+		
+		System.out.println("\nUpdate status: ");
+		System.out.println(articleAsString + "\n");
+		
+		Assertions.assertNotNull(articleAsString);
+	}
+	
+	@Test
+	void canArticleBeUpdatedWithRollback() {
+		// update to name that is alreay taken -> Rollback
+		String articleAsString = articleService.updateArticle(articleId2,
+				"Leupht-Craftbeer", "InnovativeDrinks", 0.50f);
+		
+		System.out.println("\nUpdate status: ");
+		System.out.println(articleAsString + "\n");
 		
 		Assertions.assertNotNull(articleAsString);
 	}
@@ -102,7 +119,7 @@ public class ArticleRestConnectorProviderTest {
 	void canArticleBeDeleted() {
 		String confirmation = articleService.deleteArticleById(articleId);
 		
-		System.out.println(confirmation);
+		System.out.println("\n" + confirmation);
 		
 		Assertions.assertNotNull(confirmation);
 	}

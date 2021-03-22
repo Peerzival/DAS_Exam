@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@FeignClient(name = "order", url = "localhost:8280/order")
+@FeignClient(name = "order", url = "http://192.168.178.121:8280/order")
 public interface OrderRestConnectorRequester {
 	
 	@PostMapping(path = "/createOrder")

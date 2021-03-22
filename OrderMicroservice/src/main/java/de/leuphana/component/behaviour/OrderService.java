@@ -19,7 +19,4 @@ public interface OrderService {
 		int orderId);
 
 	String deleteOrder(int orderId);
-
-	String demoHelloSpring();
-
 }

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: de.leuphana.connector.ArticleRestConnectorProviderTest
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.135 s - in de.leuphana.connector.ArticleRestConnectorProviderTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.132 s - in de.leuphana.connector.ArticleRestConnectorProviderTest

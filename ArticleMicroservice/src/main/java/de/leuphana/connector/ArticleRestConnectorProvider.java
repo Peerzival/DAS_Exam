@@ -1,13 +1,11 @@
 package de.leuphana.connector;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +45,8 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 		@RequestParam double price) {
 
 		Article article = new Article(name, manufactor, price);
-		if (!checkIfArticleNameAlreadyExists(article)) {
+		
+		if (checkArticleNameExistence(article) == 0) {
 			articleRepository.save(article);
 
 			// Check persistence
@@ -73,12 +72,16 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 		@RequestParam String name,
 		@RequestParam String manufactor,
 		@RequestParam double price) {
-
+		
 		Article updateArticle = articleRepository
 				.findById(articleId)
 				.orElseThrow(() -> new ArticleNotFoundException(
 						articleId));
-
+		
+		String oldName = updateArticle.getName();
+		String oldManufactor = updateArticle.getManufactor();
+		double oldPrice = updateArticle.getPrice();
+		
 		if (updateArticle != null) {
 			updateArticle.setName(name);
 			updateArticle.setManufactor(manufactor);
@@ -86,22 +89,16 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 
 			articleRepository.save(updateArticle);
 			
-			String successMessage = "Article with id '" 
-					+ articleId
-					+ "' updated.\n";
-			
-			log.info(successMessage);
-			return successMessage;
+			if (checkArticleNameExistence(updateArticle) > 1) {
+				return rollbackArticleUpdate(updateArticle, oldName, 
+						oldManufactor, oldPrice, articleId);
+			}
 		}
 		
-		String failMessage = "Update of article with id '" 
-				+ articleId
-				+ "' failed. "
-				+ "Consider adding a new article.\n";
-		
-		log.info(failMessage);
-		return failMessage;
+		return createArticleUpdateSuccessMessage(articleId, oldName,
+				oldManufactor, oldPrice, updateArticle);
 	}
+
 
 	// READ
 	// curl localhost:8180/article/getArticleById/1
@@ -211,19 +208,76 @@ public class ArticleRestConnectorProvider implements ArticleComponentService {
 
 	// Service Methods
 	// --------------------------------------------------------------------------------
+	
+	@GetMapping(path="/")
+	public String demo() {
+		return "Hello from Article-Microservice";
+	}
 
-	private boolean checkIfArticleNameAlreadyExists(
+	private int checkArticleNameExistence(
 		Article article) {
 		List<Article> articles = (List<Article>) articleRepository
 				.findAll();
 
+		int nameCount = 0;
 		for (Article listArticle : articles) {
 			if (listArticle.getName()
 					.equals(article.getName())) {
-				return true;
+				nameCount++;
 			}
 		}
-
-		return false;
+		return nameCount;
+	}
+	
+	private String rollbackArticleUpdate(Article updateArticle, 
+			String oldName, String oldManufactor, double oldPrice, 
+			int articleId) {
+		// Simulation of rollback
+		updateArticle.setName(oldName);
+		updateArticle.setManufactor(oldManufactor);
+		updateArticle.setPrice(oldPrice);
+		articleRepository.save(updateArticle);
+		
+		String failMessage = "Update of article with id '" 
+				+ articleId
+				+ "' failed. "
+				+ "Article name already taken.\n";
+		
+		String failHTMLMessage = "Update of article with id '" + 
+				articleId + "' failed. " + 
+				"Article name already taken.<br>";
+		
+		log.info(failMessage);
+		return failHTMLMessage;
+	}
+	
+	private String createArticleUpdateSuccessMessage(int articleId, 
+			String oldName, String oldManufactor, double oldPrice, 
+			Article updateArticle) {
+		
+		String successMessage = "Article with id '" 
+				+ articleId + "' updated.\n" + 
+				"Old article:\n" +
+				"Name: " + oldName +
+				"\nManufactor: " + oldManufactor + 
+				"\nPrice: " + oldPrice + "\n" + 
+				"Updated article:\n" + 
+				"Name: " + updateArticle.getName() +
+				"\nManufactor: " + updateArticle.getManufactor() + 
+				"\nPrice: " + updateArticle.getPrice() + "\n";
+		
+		String successHTMLMessage = "Article with id '" 
+				+ articleId + "' updated.<br>" + 
+				"Old article:<br>" +
+				"Name: " + oldName +
+				"<br>Manufactor: " + oldManufactor + 
+				"<br>Price: " + oldPrice + "<br>" + 
+				"Updated article:<br>" + 
+				"Name: " + updateArticle.getName() +
+				"<br>Manufactor: " + updateArticle.getManufactor() + 
+				"<br>Price: " + updateArticle.getPrice() + "<br>";
+		
+		log.info(successMessage);
+		return successHTMLMessage;
 	}
 }

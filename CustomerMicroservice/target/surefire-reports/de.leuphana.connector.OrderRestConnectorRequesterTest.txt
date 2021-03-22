@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: de.leuphana.connector.OrderRestConnectorRequesterTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.087 s - in de.leuphana.connector.OrderRestConnectorRequesterTest
