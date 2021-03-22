@@ -6,7 +6,6 @@ import org.apache.hc.client5.http.fluent.Form;
 import org.apache.hc.client5.http.fluent.Request;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,17 +13,17 @@ import de.leuphana.component.shop.behaviour.CustomerService;
 import de.leuphana.component.shop.behaviour.SupplierService;
 
 /**
+ * This microservice represents our Httpclient. It sends an Httprequest to the
+ * API Gateway. This distributes the request to the corresponding microservice
+ * order, article or customer.
+ * 
+ * The shop microservice provides various functionalities via two interfaces.
+ * Depending on which interface is used, the shop offers different
+ * functionality. E.g. only the "SupplierService" can insert new articles.
+ * 
  * @author Max Gnewuch
  * @author Henrik Prueß
  * @author Andreas Baechler
- * 
- *         This microservice represents our Httpclient. It sends an Httprequest
- *         to the API Gateway. This distributes the request to the corresponding
- *         microservice order, article or customer.
- * 
- *         The shop microservice provides various functionalities via two interfaces. 
- *         Depending on which interface is used, the shop offers different functionality. 
- *         E.g. only the "SupplierService" can insert new articles.
  */
 @RestController
 public class ShopRestController
@@ -95,8 +94,9 @@ public class ShopRestController
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No article with id '" + articleId + "' found. " + 
-			"Update command canceled.\n";
+			return "No article with id '" + articleId
+					+ "' found. "
+					+ "Update command canceled.\n";
 		}
 	};
 
@@ -119,8 +119,9 @@ public class ShopRestController
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No article with id '" + articleId + "' found. " + 
-					"Delete command canceled.\n";
+			return "No article with id '" + articleId
+					+ "' found. "
+					+ "Delete command canceled.\n";
 		}
 	}
 
@@ -142,7 +143,8 @@ public class ShopRestController
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No article with id '" + articleId + "' found.\n";
+			return "No article with id '" + articleId
+					+ "' found.\n";
 		}
 	}
 
@@ -157,7 +159,7 @@ public class ShopRestController
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "";
-		}	
+		}
 	}
 
 	// -------------------- CUSTOMER -------------------- \\
@@ -178,7 +180,8 @@ public class ShopRestController
 							.add("address",
 									"" + address)
 							.build())
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -199,11 +202,13 @@ public class ShopRestController
 							.add("customerId",
 									"" + customerId)
 							.build())
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No customer with id '" + customerId + "' found.\n";
+			return "No customer with id '" + customerId
+					+ "' found.\n";
 		}
 	};
 
@@ -215,7 +220,8 @@ public class ShopRestController
 		try {
 			return Request.get(ipString
 					+ "/customer/getAllCustomersAsString")
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "";
@@ -237,11 +243,13 @@ public class ShopRestController
 									"" + customerId)
 							.add("address", address)
 							.build())
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No customer with id '" + customerId + "' found. " + 
-			"Update command canceled.\n";
+			return "No customer with id '" + customerId
+					+ "' found. "
+					+ "Update command canceled.\n";
 		}
 	};
 
@@ -259,11 +267,13 @@ public class ShopRestController
 							.add("customerId",
 									"" + customerId)
 							.add("name", name).build())
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No customer with id '" + customerId + "' found. " + 
-					"Update command canceled.\n";
+			return "No customer with id '" + customerId
+					+ "' found. "
+					+ "Update command canceled.\n";
 		}
 	};
 
@@ -280,11 +290,13 @@ public class ShopRestController
 							.add("customerId",
 									"" + customerId)
 							.build())
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No customer with id '" + customerId + "' found. " + 
-					"Update command canceled.\n";
+			return "No customer with id '" + customerId
+					+ "' found. "
+					+ "Update command canceled.\n";
 		}
 	};
 
@@ -305,10 +317,12 @@ public class ShopRestController
 							.add("articleId",
 									"" + articleId)
 							.build())
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No customer with id '" + customerId + "' found.\n";
+			return "No customer with id '" + customerId
+					+ "' found.\n";
 		}
 
 	};
@@ -326,10 +340,12 @@ public class ShopRestController
 							.add("customerId",
 									"" + customerId)
 							.build())
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No customer with id '" + customerId + "' found.\n";
+			return "No customer with id '" + customerId
+					+ "' found.\n";
 		}
 	};
 
@@ -346,10 +362,12 @@ public class ShopRestController
 							.add("customerId",
 									"" + customerId)
 							.build())
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No customer with id '" + customerId + "' found.\n";
+			return "No customer with id '" + customerId
+					+ "' found.\n";
 		}
 	};
 
@@ -369,10 +387,12 @@ public class ShopRestController
 							.add("articleId",
 									"" + articleId)
 							.build())
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No customer with id '" + customerId + "' found.\n";
+			return "No customer with id '" + customerId
+					+ "' found.\n";
 		}
 	};
 
@@ -392,10 +412,12 @@ public class ShopRestController
 							.add("articleId",
 									"" + articleId)
 							.build())
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No customer with id '" + customerId + "' found.\n";
+			return "No customer with id '" + customerId
+					+ "' found.\n";
 		}
 
 	};
@@ -422,7 +444,8 @@ public class ShopRestController
 
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No order with id '" + orderId + "' found.\n";
+			return "No order with id '" + orderId
+					+ "' found.\n";
 		}
 
 	}
@@ -457,10 +480,12 @@ public class ShopRestController
 							.add("orderId",
 									"" + orderId)
 							.build())
-					.execute().returnContent().asString();
+					.execute().returnContent()
+					.asString();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "No order with id '" + orderId + "' found.\n";
+			return "No order with id '" + orderId
+					+ "' found.\n";
 		}
 	};
 }
